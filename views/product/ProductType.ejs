@@ -1,0 +1,293 @@
+<% include ../partials/Header %>
+
+<body>
+	<div class="wrapper">
+		<% include ../partials/RightBar %>
+
+		<div class="main">
+			<% include ../partials/SearchBar %>
+
+			<main class="content">
+				<!--Form Account-->
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-body">
+							<!-- BEGIN AddProductType modal -->
+							<button type="button" class="btn btn-success" data-toggle="modal" data-target="#addTypeModal">
+								Thêm loại sản phẩm
+							</button>
+							<div class="modal fade" id="addTypeModal" tabindex="-1" role="dialog" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title">Thêm loại sản phẩm</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body m-3">
+											<form id="proTypeForm" enctype="multipart/form-data">
+												<div class="form-group">
+													<label class="form-label">Tên loại</label>
+													<input type="text" name="typeName" class="form-control" placeholder="Tên loại sản phẩm">
+												</div>
+												<div class="form-group">
+													<label class="form-label">Mô tả</label>
+													<textarea class="form-control" name="addDescription" placeholder="Mô tả loại sản phẩm"
+														rows="3"></textarea>
+												</div>
+												<div class="form-group">
+													<label class="form-label w-100">Ảnh loại</label>
+													<input name="typeImg" id="typeImg" type="file" onchange="loadImg(event)"
+														accept="image/png, image/jpeg">
+													<small class="form-text text-muted">
+														<img name="typeImgForm" id="typeImgForm" src="#" height="200px" width="200px" alt="No IMG">
+													</small>
+												</div>
+												<div class="form-group">
+													<label class="custom-control custom-checkbox">
+													</label>
+												</div>
+											</form>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+											<button type="button" id="btnSubmit" onclick="addType(event)" name="btnCreate"
+												class="btn btn-success">Thêm mới</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- END AddProductType modal -->
+							<!-- BEGIN EditProductType modal -->
+							<div class="modal fade" id="editTypeModal" tabindex="-1" role="dialog" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title">Cập nhật loại sản phẩm</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body m-3">
+											<form id="editProTypeForm" enctype="multipart/form-data">
+												<div class="form-group">
+													<input type="text" name="editTypeId" hidden class="form-control">
+													<label class="form-label">Tên loại</label>
+													<input type="text" name="editTypeName" class="form-control" placeholder="Tên loại sản phẩm">
+												</div>
+												<div class="form-group">
+													<label class="form-label">Mô tả</label>
+													<textarea class="form-control" name="editDescription" placeholder="Mô tả loại sản phẩm"
+														rows="3"></textarea>
+												</div>
+												<div class="form-group">
+													<label class="form-label w-100">Ảnh loại</label>
+													<input name="editTypeImg" id="editTypeImg" type="file" onchange="loadImgEdit(event)"
+														accept="image/png, image/jpeg">
+													<small class="form-text text-muted">
+														<img name="editTypeImgForm" id="editTypeImgForm" src="#" height="200px" width="200px"
+															alt="No IMG">
+													</small>
+												</div>
+												<div class="form-group">
+													<label class="custom-control custom-checkbox">
+													</label>
+												</div>
+											</form>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+											<button type="button" id="btnSubmit" onclick="editType(event)" name="btnCreate"
+												class="btn btn-success">Cập nhật</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- END EditProductType modal -->
+							<!-- BEGIN DeleteProductType modal -->
+							<div class="modal modal-colored modal-danger fade" id="DeleteProductTypeModal" tabindex="-1" role="dialog"
+								aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title">Cảnh báo</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body m-3">
+											<p name="typeIdDel" hidden></p>
+											<p class="mb-0">Bạn có muốn xoá loại sản phẩm này?</p>
+											<p name="typeNameDel"></p>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-light" data-dismiss="modal">Huỷ</button>
+											<button type="button" onclick="deleteType(event)" class="btn btn-light">Xoá</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- END DeleteProductType modal -->
+						</div>
+					</div>
+				</div>
+				<!--ListAccount-->
+				<div class="col-12 col-xl-12">
+					<div class="card">
+						<div class="card-header">
+							<h5 class="card-title">Danh sách loại sản phẩm</h5>
+							<h6 class="card-subtitle text-muted">Loại sản phẩm</h6>
+						</div>
+						<table class="table">
+							<thead>
+								<tr>
+									<th hidden></th>
+									<th style="width:20%;">Tên loại sản phẩm</th>
+									<th style="width:20%">Mô tả</th>
+									<th style="width:20%">Hình ảnh</th>
+									<th style="width:20%">Tuỳ chỉnh</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% for (var i = 0; i < listProductType.length; i++) { %>
+								<tr>
+									<td hidden><%= listProductType[i]._id %></td>
+									<td><%= listProductType[i].typeName %></td>
+									<td><%= listProductType[i].description %></td>
+									<td>
+										<img src="<%= listProductType[i].typeImg %>" class="avatar img-fluid" alt="No IMG">
+									</td>
+									<td class="table-action">
+										<button type="button" name="btn_edit" data-toggle="modal" data-target="#editTypeModal"><i
+												class="align-middle" data-feather="edit-2"></i></button>
+										<button type="button" name="btn_delete" data-toggle="modal" data-target="#DeleteProductTypeModal"><i
+												class="align-middle" data-feather="trash"></i></button>
+									</td>
+								</tr>
+								<% } %>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</main>
+			<% include ../partials/Footer %>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var addType = function (event) {
+			event.preventDefault();
+			var formData = new FormData();
+
+			var typeName = $('[name=typeName]').val();
+			var des = $('[name=addDescription]').val();
+			var file = $('[name=typeImg]').get(0).files;
+
+			formData.append('imgType', file[0]);
+			formData.append('typeName', typeName);
+			formData.append('description', des);
+
+			$.ajax({
+				url: 'productType/addType',
+				type: 'POST',
+				data: formData,
+				cache: false,
+				contentType: false,
+				processData: false,
+			}).done(function (result) {
+				if (result.success) {
+					alert(result.mgs)
+					location.reload()
+				} else {
+					alert(result.mgs)
+				}
+			}).fail(() => {
+				alert("Không kết nối được với server")
+			})
+		}
+		var editType = function (event) {
+			event.preventDefault();
+
+			var formData = new FormData();
+			var typeId = $('[name=editTypeId]').val();
+			var typeName = $('[name=editTypeName]').val();
+			var des = $('[name=editDescription]').val();
+			var file = $('[name=editTypeImg]').get(0).files;
+
+			formData.append('typeId', typeId);
+			formData.append('imgType', file[0]);
+			formData.append('typeName', typeName);
+			formData.append('description', des);
+
+			$.ajax({
+				url: 'productType/editType',
+				type: 'POST',
+				data: formData,
+				cache: false,
+				contentType: false,
+				processData: false,
+			}).done(function (result) {
+				if (result.success) {
+					alert(result.mgs)
+					location.reload()
+				} else {
+					alert(result.mgs)
+				}
+			}).fail(() => {
+				alert("Không kết nối được với server")
+			})
+		}
+		var deleteType = function (event) {
+			event.preventDefault();
+
+			var formData = new FormData();
+			var typeId = $('[name=typeIdDel]').text();
+
+			formData.append('typeId', typeId);
+
+			$.ajax({
+				url: 'productType/deleteType',
+				type: 'POST',
+				data: formData,
+				cache: false,
+				contentType: false,
+				processData: false,
+			}).done(function (result) {
+				if (result.success) {
+					alert(result.mgs)
+					location.reload()
+				} else {
+					alert(result.mgs)
+				}
+			}).fail(() => {
+				alert("Không kết nối được với server")
+			})
+		}
+		var loadImg = function (event) {
+			$('#typeImgForm').attr('src', URL.createObjectURL(event.target.files[0]));
+		};
+		var loadImgEdit = function (event) {
+			$('#editTypeImgForm').attr('src', URL.createObjectURL(event.target.files[0]));
+		};
+		$('[name=btn_edit]').click(function () {
+			var typeId = ($(this).parent().parent().children().eq(0).html());
+			var name = ($(this).parent().parent().children().eq(1).html());
+			var des = ($(this).parent().parent().children().eq(2).html());
+			var img = ($(this).parent().parent().children().eq(3).children().eq(0).attr("src"));
+			$('#editTypeImgForm').attr('src', img);
+			$('[name=editTypeId]').val(typeId);
+			$('[name=editTypeName]').val(name);
+			$('[name=editDescription]').val(des);
+		});
+		$('[name=btn_delete]').click(function () {
+			var typeIdDel = ($(this).parent().parent().children().eq(0).html());
+			var name = ($(this).parent().parent().children().eq(1).html());
+			$('[name=typeIdDel]').text(typeIdDel);
+			$('[name=typeNameDel]').text(name);
+		});
+	</script>
+	<script src="js/app.js"></script>
+</body>
+
+</html>

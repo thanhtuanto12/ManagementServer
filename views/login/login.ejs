@@ -1,0 +1,76 @@
+<% include ../partials/Header %>
+
+<body>
+	<div class="wrapper" >
+		<div class="main">
+			<main class="content" style="margin-left: 33%; width: 1500px;">
+				<div class="container-fluid p-0">
+					<div class="row">
+						<!--Form Account-->
+						<div class="col-md-4">
+							<div class="card">
+								<div class="card-header">
+									<h2 class="card-title">Đăng nhập</h2>
+									<!-- <h6 class="card-subtitle text-muted">Thêm tài khoản</h6> -->
+								</div>
+								<div class="card-body">
+									<form >
+										<div >
+											<label class="form-label">Tài khoản</label>
+											<input type="text" name="username"  class="form-control" placeholder="Tài khoản">
+										</div>
+										<div >
+											<label class="form-label">Mật khẩu</label>
+											<input name="password"  type="password" class="form-control" placeholder="Mật khẩu">
+										</div>
+										<div >
+											<label class="custom-control custom-checkbox">
+											</label>
+										</div>
+
+									</form>
+									<button  name="btn_Login" onclick="Login()" class="btn btn-primary">Đăng nhập</button>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+			<% include ../partials/Footer %>
+		</div>
+	</div>
+	<script type="text/javascript">
+		Login = () => {
+			// event.preventDefault();
+			var user = $("[name='username']").val();
+			var pass = $("[name='password']").val();
+			// if(user == '' || pass == ''){
+			// 	alert('Username and password must required');
+			// }
+			$.ajax({
+				url: '/login',
+				type: 'POST',
+				contentType: "application/x-www-form-urlencoded; charset=utf-8",
+				dataType: "json",
+				data: {
+					username: user,
+					password: pass,
+				},
+			}).done(function (result) {
+				if(result!== undefined){
+					if(result.success){
+					window.location.href = '/home'
+					} else if(result.mgs != undefined && result.mgs !=""){
+						alert(''+ result.mgs);
+					}
+				}
+			}).fail(function (result) {
+				alert('error')
+			});
+		}
+	</script>
+
+</body>
+
+</html>

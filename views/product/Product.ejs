@@ -1,0 +1,155 @@
+<% include ../partials/Header %>
+
+<body>
+	<div class="wrapper">
+		<% include ../partials/RightBar %>
+
+		<div class="main">
+			<% include ../partials/SearchBar %>
+
+			<main class="content">
+				<!--Form Product-->
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header">
+							<h2 class="card-title">Thêm sản phẩm</h2>
+						</div>
+						<div class="card-body">
+							<form id="productForm" action="/product/addProduct" method="POST" enctype="multipart/form-data">
+								<div class="form-group">
+									<div class="row">
+										<div class="col-md-6">
+											<label class="form-label col-6 col-xl-6">Tên sản phẩm</label>
+											<input type="text" name="productName" class="form-control" required="required"
+												placeholder="Tên sản phẩm">
+										</div>
+										<div class="col-md-6">
+											<label class="form-label">Loại sản phẩm</label>
+											<select name="typeProduct" class="custom-select mb-3">
+												<option value="<%= listProductType[0].typeName %>" selected="">
+													<%= listProductType[0].typeName %></option>
+												<% for (var i = 1; i < listProductType.length; i++) { %>
+												<option value="<%= listProductType[i].typeName %>"><%= listProductType[i].typeName %>
+												</option>
+												<% } %>
+											</select>
+										</div>
+										<div class="col-md-6">
+											<label class="form-label">Trạng thái</label>
+											<select name="status" class="custom-select mb-3">
+												<option value="1" selected="">Còn hàng</option>
+												<option value="0" selected="">Hết hàng</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="row">
+										<div class="col-md-4">
+											<label class="form-label col-6 col-xl-6">Đơn vị</label>
+											<input type="text" name="unit" class="form-control" required="required" placeholder="Đơn vị">
+										</div>
+										<div class="col-md-4">
+											<label class="form-label">Số lượng</label>
+											<input type="number" min="0" name="quan" required="required" class="form-control"
+												placeholder="Số lượng">
+										</div>
+										<div class="col-md-4">
+											<label class="form-label col-6 col-xl-6">Đơn giá</label>
+											<input type="number" min="0" name="price" required="required" class="form-control"
+												placeholder="Đơn giá">
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="form-label">Mô tả</label>
+									<textarea class="form-control" name="description" placeholder="Mô tả sản phẩm" rows="3"></textarea>
+								</div>
+								<div class="form-group">
+									<label class="form-label w-100">Ảnh sản phẩm</label>
+									<input name="inputImg" id="inputImg" type="file" required="required" onchange="loadImg(event)"
+										accept="image/png, image/jpeg">
+									<small class="form-text text-muted">
+										<img name="productImg" id="productImg" src="#" height="200px" width="200px" alt="No IMG">
+									</small>
+								</div>
+								<div class="form-group">
+									<label class="custom-control custom-checkbox">
+									</label>
+								</div>
+								<button type="submit" name="btnCreate" class="btn btn-primary">Thêm loại sản phẩm</button>
+							</form>
+						</div>
+					</div>
+				</div>
+				<!--ListAccount-->
+				<div class="col-12 col-xl-12">
+					<div class="card">
+						<div class="card-header">
+							<h5 class="card-title">Danh sách sản phẩm</h5>
+							<h6 class="card-subtitle text-muted">Sản phẩm</h6>
+						</div>
+						<table class="table">
+							<thead>
+								<tr>
+									<th style="width:15%;">Tên sản phẩm</th>
+									<th style="width:15%">Mô tả</th>
+									<th style="width:15%">Hình ảnh</th>
+									<th style="width:15%;">Số lượng</th>
+									<th style="width:15%">Đơn vị</th>
+									<th style="width:15%">Giá</th>
+									<th>Tuỳ chỉnh</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% for (var i = 0; i < listProduct.length; i++) { %>
+								<tr>
+									<td><%= listProduct[i].productName %></td>
+									<td><%= listProduct[i].description %></td>
+									<td>
+										<img src="<%= listProduct[i].productImg %>" class="avatar img-fluid" alt="No IMG">
+									</td>
+									<td><%= listProduct[i].quan %></td>
+									<td><%= listProduct[i].unit %></td>
+									<td><%= listProduct[i].price %></td>
+
+									<td class="table-action">
+										<button type="button" name="btn_edit"><i class="align-middle" data-feather="edit-2"></i></button>
+										<button type="button" name="btn_delete"><i class="align-middle" data-feather="trash"></i></button>
+									</td>
+								</tr>
+								<% } %>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</main>
+			<% include ../partials/Footer %>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var loadImg = function (event) {
+			$('#productImg').attr('src', URL.createObjectURL(event.target.files[0]));
+		};
+		$('[name=btn_edit]').click(function () {
+			var name = ($(this).parent().parent().children().eq(0).html());
+			var des = ($(this).parent().parent().children().eq(1).html());
+			var img = ($(this).parent().parent().children().eq(2).children().eq(0).attr("src"));
+			var quan = ($(this).parent().parent().children().eq(3).html());
+			var unit = ($(this).parent().parent().children().eq(4).html());
+			var price = ($(this).parent().parent().children().eq(5).html());
+			$('[name=producName]').val(name);
+			$('[name=description]').val(des);
+			$('[name=productImg]').attr('src', img);
+			$('[name=btnCreate]').html('Cập nhật');
+			$('#productForm').attr('action', '/productType/editType');
+			$('[name=btnCreate]').attr('name', 'btnUpdate');
+		});
+	</script>
+	<script src="js/vendor.js"></script>
+	<script src="js/app.js"></script>
+
+</body>
+
+</html>

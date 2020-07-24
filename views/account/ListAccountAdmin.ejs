@@ -1,0 +1,153 @@
+<% include ../partials/Header %>
+
+<body>
+  <div class="wrapper">
+    <% include ../partials/RightBar %>
+
+    <div class="main">
+      <% include ../partials/SearchBar %>
+
+      <main class="content">
+        <!--Form Account-->
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Thêm tài khoản</h2>
+              <!-- <h6 class="card-subtitle text-muted">Thêm tài khoản</h6> -->
+            </div>
+            <div class="card-body">
+              <form>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="txt_UserName">Tài khoản</label>
+                    <input type="text" class="form-control" id="txt_UserName" placeholder="Nhập tài khoản">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="txt_Email">Email</label>
+                    <input type="email" class="form-control" id="txt_Email" placeholder="Nhập Email">
+                  </div>
+                </div>
+                <div class="form-group">
+                  </br>
+                  <h6 class="card-subtitle text-muted">Địa chỉ</h6></br>
+                  <label for="txt_Address">Số nhà / Đường</label>
+                  <input type="text" class="form-control" id="txt_Address" placeholder="Số nhà / Đường">
+                </div>
+                <div class="form-group">
+                  <label for="txt_Address2">Phường / Quận / Huyện</label>
+                  <input type="text" class="form-control" id="txt_Address2"
+                    placeholder="Công ty, Xã, Phường, Quận, Huyện">
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="txt_City">Tỉnh Thành Phố</label>
+                    <input type="text" class="form-control" id="txt_City">
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputState">Trạng thái</label>
+                    <select id="inputState" class="form-control">
+                      <option selected>Hoạt Động</option>
+                      <option>Khoá</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="custom-control custom-checkbox m-0">
+                    <input type="checkbox" class="custom-control-input">
+                    <span class="custom-control-label">Quyền Admin</span>
+                  </label>
+                </div>
+                <button type="submit" class="btn btn-primary">Thêm tài khoản</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!--ListAccount-->
+        <div class="col-12 col-xl-12">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="card-title">Danh sách tài khoản</h5>
+              <h6 class="card-subtitle text-muted">Danh sách tài khoản khách hàng.</h6>
+            </div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th style="width:20%;">Tên tài khoản</th>
+                  <th style="width:20%">Tên khách hàng</th>
+                  <th style="width:20%">Số điện thoại</th>
+                  <th class="d-none d-md-table-cell" style="width:20%">Email</th>
+                  <th style="width:20%">Địa chỉ</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Vanessa Tucker</td>
+                  <td>Vanessa Tucker</td>
+                  <td>864-348-0485</td>
+                  <td class="d-none d-md-table-cell">June 21, 1961</td>
+                  <td class="d-none d-md-table-cell">June 21, 1961</td>
+                  <td class="table-action">
+                    <a href="#"><i class="align-middle" data-feather="edit-2"></i></a>
+                    <a href="#"><i class="align-middle" data-feather="trash"></i></a>
+                  </td>
+                </tr>
+                <tr class="table-primary">
+                  <td>William Harris</td>
+                  <td>William Harris</td>
+                  <td>914-939-2458</td>
+                  <td class="d-none d-md-table-cell">June 21, 1961</td>
+                  <td class="d-none d-md-table-cell">May 15, 1948</td>
+                  <td class="table-action">
+                    <a href="#"><i class="align-middle" data-feather="edit-2"></i></a>
+                    <a href="#"><i class="align-middle" data-feather="trash"></i></a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Sharon Lessman</td>
+                  <td>Sharon Lessman</td>
+                  <td>704-993-5435</td>
+                  <td class="d-none d-md-table-cell">June 21, 1961</td>
+                  <td class="d-none d-md-table-cell">September 14, 1965</td>
+                  <td class="table-action">
+                    <a href="#"><i class="align-middle" data-feather="edit-2"></i></a>
+                    <a href="#"><i class="align-middle" data-feather="trash"></i></a>
+                  </td>
+                </tr>
+                <tr class="table-success">
+                  <td>Christina Mason</td>
+                  <td>Christina Mason</td>
+                  <td>765-382-8195</td>
+                  <td class="d-none d-md-table-cell">June 21, 1961</td>
+                  <td class="d-none d-md-table-cell">April 2, 1971</td>
+                  <td class="table-action">
+                    <a href="#"><i class="align-middle" data-feather="edit-2"></i></a>
+                    <a href="#"><i class="align-middle" data-feather="trash"></i></a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Robin Schneiders</td>
+                  <td>Robin Schneiders</td>
+                  <td>202-672-1407</td>
+                  <td class="d-none d-md-table-cell">June 21, 1961</td>
+                  <td class="d-none d-md-table-cell">October 12, 1966</td>
+                  <td class="table-action">
+                    <a href="#"><i class="align-middle" data-feather="edit-2"></i></a>
+                    <a href="#"><i class="align-middle" data-feather="trash"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+      <% include ../partials/Footer %>
+    </div>
+  </div>
+
+  <script src="js/vendor.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+
+</html>
