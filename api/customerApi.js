@@ -11,23 +11,23 @@ let api = require("../config");
 API_URL = api.API_URL;
 
 exports.login = async (req, res) => {
-  let username = req.body.username;
+  let phone = req.body.phone;
   let password = req.body.password;
   if (
-    username === null ||
-    username === undefined ||
+    phone === null ||
+    phone === undefined ||
     password === null ||
     password === undefined
   ) {
     return res.json({
       status: -1,
-      message: "Vui lòng nhập đầy đủ tài khoản và mật khẩu",
+      message: "Vui lòng nhập đầy đủ số điện thoại và mật khẩu",
       data: null,
     });
   }
 
-  username = username.toLowerCase();
-  const check = await Customer.findOne({ username: username });
+  phone = phone;
+  const check = await Customer.findOne({ phone: phone });
   if (check !== null) {
     const token1 = jwt.sign({ id: check.id }, "jwt-secret");
     return res.json({
@@ -39,6 +39,7 @@ exports.login = async (req, res) => {
         username: check.username,
         fullName: check.fullName,
         email: check.email,
+        phone: check.phone,
         avatarUrl: check.avatarUrl,
         address: check.address,
       },
@@ -46,7 +47,7 @@ exports.login = async (req, res) => {
   } else {
     return res.json({
       status: -1,
-      message: "Tên đăng nhập hoặc mật khẩu không chính xác",
+      message: "Số điện thoại hoặc mật khẩu không chính xác",
       data: null,
     });
   }
@@ -82,13 +83,14 @@ exports.register = async (req, res) => {
   try {
     let email = req.body.email;
     let username = req.body.username.toLowerCase();
+    let phone = req.body.phone;
     let password = req.body.password;
     let retypePassword = req.body.retypePassword;
     email = email.toLowerCase();
-    if (email === undefined || email === null) {
+    if (phone === undefined || phone === null) {
       return res.json({
         status: -1,
-        message: " Email không được bỏ trống!",
+        message: " Số điện thoại không được bỏ trống!",
         data: null,
       });
     }
@@ -104,26 +106,29 @@ exports.register = async (req, res) => {
         data: null,
       });
     }
-    const checkAccount = await Customer.findOne({ email: email });
-    const checkUsername = await Customer.findOne({ username: username });
+    const checkAccount = await Customer.findOne({ phone: phone });
+    // const checkUsername = await Customer.findOne({ username: username });
     if (checkAccount !== null) {
       return res.json({
         status: -1,
-        message: "Email đã được đăng ký!",
+        message: "Số điện thoại đã được đăng ký!",
         data: null,
       });
-    } else if (checkUsername !== null) {
-      return res.json({
-        status: -1,
-        message: "Tên tài khoản đã tồn tại!",
-        data: null,
-      });
-    } else {
+    }
+    // else if (checkUsername !== null) {
+    //   return res.json({
+    //     status: -1,
+    //     message: "Tên tài khoản đã tồn tại!",
+    //     data: null,
+    //   });
+    // }
+    else {
       const newCustomer = new Customer({
         _id: new mongoose.Types.ObjectId(),
         email: email,
         username: username,
         password: password,
+        phone: phone,
         status: 1,
         created_at: new Date(),
       });
@@ -145,6 +150,47 @@ exports.register = async (req, res) => {
     });
   }
 };
+
+exports.getUserByPhone = async (req, res) => {
+  try {
+    let phone = req.body.phone;
+    if (phone === null || phone === undefined) {
+      return res.json({
+        status: -1,
+        message: "Vui lòng nhập số điện thoại",
+        data: null,
+      });
+    }
+    const Customer = await Customer.findOne({ phone: phone });
+    if (user !== null) {
+      return res.json({
+        status: 1,
+        message: "Lấy thông tin thành công",
+        data: {
+          userID: Customer._id,
+          username: Customer.username,
+          fullName: Customer.fullName,
+          email: Customer.email,
+          phone: Customer.phone,
+          address: Customer.address,
+          avatarUrl: Customer.avatarUrl,
+        },
+      });
+    } else {
+      return res.json({
+        status: -1,
+        message: "Không tìm thấy người dùng này",
+        data: null,
+      });
+    }
+  } catch {
+    return res.json({
+      status: -1,
+      message: "Có lỗi xảy ra! Không lấy được thông tin",
+      data: null,
+    });
+  }
+};
 exports.getUserByName = async (req, res) => {
   try {
     let username = req.body.username;
@@ -156,7 +202,7 @@ exports.getUserByName = async (req, res) => {
       });
     }
     const Customer = await Customer.findOne({ username: username });
-    if (user !== null) {
+    if (Customer !== null) {
       return res.json({
         status: 1,
         message: "Lấy thông tin thành công",

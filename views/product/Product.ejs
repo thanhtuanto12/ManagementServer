@@ -1,155 +1,726 @@
-<% include ../partials/Header %>
+<!DOCTYPE html>
+<html lang="en">
+  <% include ../partials/Header %>
+  <body>
+    <div id="container" class="ui-notify"></div>
+    <div class="wrapper">
+      <!-- side-navigation -->
+      <% include ../partials/side-navigation %>
 
-<body>
-	<div class="wrapper">
-		<% include ../partials/RightBar %>
+      <!-- Header End -->
 
-		<div class="main">
-			<% include ../partials/SearchBar %>
+      <section class="main-section">
+        <div class="responsive-logo">
+          <img src="images/logo.png" alt="" />
+        </div>
+        <div class="responsive-menu">
+          <div class="responsive-menu-dropdown">
+            <a title="" class="red">MENU <i class="icon-align-justify"></i></a>
+          </div>
 
-			<main class="content">
-				<!--Form Product-->
-				<div class="col-md-12">
-					<div class="card">
-						<div class="card-header">
-							<h2 class="card-title">Thêm sản phẩm</h2>
-						</div>
-						<div class="card-body">
-							<form id="productForm" action="/product/addProduct" method="POST" enctype="multipart/form-data">
-								<div class="form-group">
-									<div class="row">
-										<div class="col-md-6">
-											<label class="form-label col-6 col-xl-6">Tên sản phẩm</label>
-											<input type="text" name="productName" class="form-control" required="required"
-												placeholder="Tên sản phẩm">
-										</div>
-										<div class="col-md-6">
-											<label class="form-label">Loại sản phẩm</label>
-											<select name="typeProduct" class="custom-select mb-3">
-												<option value="<%= listProductType[0].typeName %>" selected="">
-													<%= listProductType[0].typeName %></option>
-												<% for (var i = 1; i < listProductType.length; i++) { %>
-												<option value="<%= listProductType[i].typeName %>"><%= listProductType[i].typeName %>
-												</option>
-												<% } %>
-											</select>
-										</div>
-										<div class="col-md-6">
-											<label class="form-label">Trạng thái</label>
-											<select name="status" class="custom-select mb-3">
-												<option value="1" selected="">Còn hàng</option>
-												<option value="0" selected="">Hết hàng</option>
-											</select>
-										</div>
+          <ul>
+            <li>
+              <a href="dashboard.html" title=""
+                ><i class="icon-laptop"></i>Dashboard</a
+              >
+            </li>
+            <li>
+              <a href="hosting-dashboard.html" title=""
+                ><i class="icon-laptop"></i>Hosting Dashboard</a
+              >
+            </li>
+            <li>
+              <a href="sale-purchase-dashboard.html" title=""
+                ><i class="icon-laptop"></i>For Sale & Purchase</a
+              >
+            </li>
+            <li>
+              <a title=""><i class="icon-cogs"></i>Components<span>13</span></a>
+              <ul>
+                <li>
+                  <a href="charts.html" title=""
+                    ><i class="icon-angle-right"></i>Charts</a
+                  >
+                </li>
+                <li>
+                  <a href="notification.html" title=""
+                    ><i class="icon-angle-right"></i>Notifications</a
+                  >
+                </li>
+                <li>
+                  <a href="grids.html" title=""
+                    ><i class="icon-angle-right"></i>Grids</a
+                  >
+                </li>
+                <li>
+                  <a href="ribbon-grids.html" title=""
+                    ><i class="icon-angle-right"></i>Ribbon Grids</a
+                  >
+                </li>
+                <li>
+                  <a href="buttons.html" title=""
+                    ><i class="icon-angle-right"></i>Buttons</a
+                  >
+                </li>
+                <li>
+                  <a href="calendars.html" title=""
+                    ><i class="icon-angle-right"></i>Calendars</a
+                  >
+                </li>
+                <li>
+                  <a href="progressbar.html" title=""
+                    ><i class="icon-angle-right"></i>Progress Bar</a
+                  >
+                </li>
+                <li>
+                  <a href="file-manager.html" title=""
+                    ><i class="icon-angle-right"></i>File Manager</a
+                  >
+                </li>
+                <li>
+                  <a href="gallery.html" title=""
+                    ><i class="icon-angle-right"></i>Gallery</a
+                  >
+                </li>
+                <li>
+                  <a href="slider.html" title=""
+                    ><i class="icon-angle-right"></i>Slider</a
+                  >
+                </li>
+                <li>
+                  <a href="dashboard.html" title=""
+                    ><i class="icon-angle-right"></i>Page Tour</a
+                  >
+                </li>
+                <li>
+                  <a href="collapse.html" title=""
+                    ><i class="icon-angle-right"></i>Collapse</a
+                  >
+                </li>
+                <li>
+                  <a href="range-slider.html" title=""
+                    ><i class="icon-angle-right"></i>Range Slider</a
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="main-bg">
+              <div class="top-stats">
+                <input type="text" placeholder="Your Search Here" /><i
+                  class="icon-search"
+                ></i>
+                <div class="top-bar-chart">
+                  <div class="bar-chart-details">
+                    <p>New User</p>
+                    <h5>17,561</h5>
+                  </div>
+                  <span id="new-orders" class="sparkline"
+                    >4,5,6,7,6,5,4,3,2,2,4</span
+                  >
+                </div>
+
+                <div class="top-bar-chart">
+                  <div class="bar-chart-details">
+                    <p>My Balance</p>
+                    <h5>$21,561.01</h5>
+                  </div>
+                  <span id="my-balance" class="sparkline"
+                    >4,5,6,7,6,5,4,3,2,2,4</span
+                  >
+                </div>
+                <div class="top-stats-icons">
+                  <i class="icon-rocket"></i><i class="icon-user"></i
+                  ><i class="icon-laptop"></i><i class="icon-tasks"></i>
+                </div>
+              </div>
+
+              <div class="breadcrumbs-notify">
+                <a href="#" title="">Home / </a>
+                <a href="#" class="current-page" title=""> Product Type </a>
+                <div class="notification-auto">
+                  <div class="fade-notification">
+                    <h5><i class="icon-warning-sign"></i> Notification :</h5>
+                  </div>
+                  <div class="notification-slideshow">
+                    <h6 class="notify-fade">
+                      Server 3 is Over Loader Please Check. <i>3:45pm</i>
+                    </h6>
+                    <h6 class="notify-fade">
+                      Server # 10 is Not Responding<i>1:30 Am</i>
+                    </h6>
+                    <h6 class="notify-fade">
+                      New User Registration Error . <i>Today</i>
+                    </h6>
+                    <h6 class="notify-fade">
+                      Domain Expiration Error <i>Yesterday</i>
+                    </h6>
+                    <h6 class="notify-fade">
+                      Database Over loaded 2% Remaining <i>9:59 pm</i>
+                    </h6>
+                    <h6 class="notify-fade">
+                      Application Erro Delete it Now <i>Last Week</i>
+                    </h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="heading-buttons-sec">
+                <h1>Product Type</h1>
+                <div class="heading-buttons">
+                  <ul>
+                    <li class="dropdown heading-dropdown">
+                      <a
+                        href="#"
+                        data-toggle="dropdown"
+                        role="button"
+                        id="drop1"
+                        >Dropdown <b class="caret"></b
+                      ></a>
+                      <ul
+                        aria-labelledby="drop1"
+                        role="menu"
+                        class="dropdown-menu"
+                        id="menu1"
+                      >
+                        <li role="presentation">
+                          <a href="#" tabindex="-1" role="menuitem">Action</a>
+                        </li>
+                        <li role="presentation">
+                          <a href="#" tabindex="-1" role="menuitem"
+                            >Another action</a
+                          >
+                        </li>
+                        <li role="presentation">
+                          <a href="#" tabindex="-1" role="menuitem"
+                            >Something else here</a
+                          >
+                        </li>
+                        <li class="divider" role="presentation"></li>
+                        <li role="presentation">
+                          <a href="#" tabindex="-1" role="menuitem"
+                            >Separated link</a
+                          >
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                  <a href="#" title=""><i class="icon-paper-clip"></i></a
+                  ><a href="#" title=""><i class="icon-calendar"></i></a
+                  ><a href="#" title=""><i class="icon-envelope"></i></a
+                  ><a href="#" title=""><i class="icon-refresh"></i></a>
+                </div>
+              </div>
+            </div>
+            <!-- main-bg-->
+          </div>
+          <!-- Row -->
+        </div>
+        <!-- Container -->
+        <div class="container">
+          <div class="col-md-12">
+            <div class="widget-sec">
+              <div
+                aria-hidden="true"
+                role="dialog"
+                tabindex="-1"
+                class="modal fade"
+                id="myModalAddProduct"
+                style="display: none;"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button
+                          aria-hidden="true"
+                          data-dismiss="modal"
+                          class="close"
+                          type="button"
+                        >
+                          ×
+                        </button>
+                        <h4 class="modal-title">Thêm sản phẩm</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="col-md-12">
+                          <form id="productForm" enctype="multipart/form-data">
+							<div class="form-group">
+								<div class="row">
+									<div class="col-md-6">
+										<label class="form-label col-6 col-xl-6">Tên sản phẩm</label>
+										<input type="text" name="productName" class="form-control" required="required"
+											placeholder="Tên sản phẩm">
+									</div>
+									<div class="col-md-6">
+										<label class="form-label">Loại sản phẩm</label>
+										<select name="typeProduct" class="form-control">
+											<option value="<%= listProductType[0].typeName %>" selected="">
+												<%= listProductType[0].typeName %></option>
+											<% for (var i = 1; i < listProductType.length; i++) { %>
+											<option value="<%= listProductType[i].typeName %>"><%= listProductType[i].typeName %>
+											</option>
+											<% } %>
+										</select>
 									</div>
 								</div>
-								<div class="form-group">
-									<div class="row">
-										<div class="col-md-4">
-											<label class="form-label col-6 col-xl-6">Đơn vị</label>
-											<input type="text" name="unit" class="form-control" required="required" placeholder="Đơn vị">
-										</div>
-										<div class="col-md-4">
-											<label class="form-label">Số lượng</label>
+							</div>
+							<div class="form-group">
+								<div class="row">
+									<div class="col-md-12">
+										<label class="form-label">Mô tả</label>
+										<textarea
+										  class="form-control"
+										  name="addDescription"
+										  placeholder="Mô tả sản phẩm"
+										  rows="3"
+										></textarea>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="row">
+									<div class="col-md-4">
+										<label class="form-label">Số lượng</label>
 											<input type="number" min="0" name="quan" required="required" class="form-control"
 												placeholder="Số lượng">
-										</div>
-										<div class="col-md-4">
-											<label class="form-label col-6 col-xl-6">Đơn giá</label>
-											<input type="number" min="0" name="price" required="required" class="form-control"
-												placeholder="Đơn giá">
-										</div>
+									</div>
+									<div class="col-md-4">
+										<label class="form-label col-6 col-xl-6">Đơn vị</label>
+											
+										
+													<select name="unit" class="form-control">
+													<option>Kg</option>
+													<option>Cái</option>
+													<option>gram</option>
+													</select>
+									</div>
+									<div class="col-md-4">
+										<label class="form-label">Giá</label>
+											<input type="number" min=0 name="price" required="required" class="form-control"
+												placeholder="Số lượng">
 									</div>
 								</div>
-								<div class="form-group">
-									<label class="form-label">Mô tả</label>
-									<textarea class="form-control" name="description" placeholder="Mô tả sản phẩm" rows="3"></textarea>
+							</div>
+							<div class="form-group">
+								<div class="row">
+									<div class="col-md-12">
+										<label class="form-label w-100">Ảnh loại</label>
+										<input
+										  name="productImg"
+										  id="productImg"
+										  type="file"
+										  onchange="loadImg(event)"
+										  accept="image/png, image/jpeg"
+										/>
+										<small class="form-text text-muted">
+										  <img
+											name="productImgForm"
+											id="productImgForm"
+											src="imgFromServer\product\default.png"
+											height="200px"
+											width="200px"
+											alt="No IMG"
+										  />
+										</small>
+									</div>
+									
 								</div>
-								<div class="form-group">
-									<label class="form-label w-100">Ảnh sản phẩm</label>
-									<input name="inputImg" id="inputImg" type="file" required="required" onchange="loadImg(event)"
-										accept="image/png, image/jpeg">
-									<small class="form-text text-muted">
-										<img name="productImg" id="productImg" src="#" height="200px" width="200px" alt="No IMG">
-									</small>
-								</div>
-								<div class="form-group">
-									<label class="custom-control custom-checkbox">
-									</label>
-								</div>
-								<button type="submit" name="btnCreate" class="btn btn-primary">Thêm loại sản phẩm</button>
-							</form>
-						</div>
-					</div>
-				</div>
-				<!--ListAccount-->
-				<div class="col-12 col-xl-12">
-					<div class="card">
-						<div class="card-header">
-							<h5 class="card-title">Danh sách sản phẩm</h5>
-							<h6 class="card-subtitle text-muted">Sản phẩm</h6>
-						</div>
-						<table class="table">
-							<thead>
-								<tr>
-									<th style="width:15%;">Tên sản phẩm</th>
-									<th style="width:15%">Mô tả</th>
-									<th style="width:15%">Hình ảnh</th>
-									<th style="width:15%;">Số lượng</th>
-									<th style="width:15%">Đơn vị</th>
-									<th style="width:15%">Giá</th>
-									<th>Tuỳ chỉnh</th>
-								</tr>
-							</thead>
-							<tbody>
-								<% for (var i = 0; i < listProduct.length; i++) { %>
-								<tr>
-									<td><%= listProduct[i].productName %></td>
-									<td><%= listProduct[i].description %></td>
-									<td>
-										<img src="<%= listProduct[i].productImg %>" class="avatar img-fluid" alt="No IMG">
-									</td>
-									<td><%= listProduct[i].quan %></td>
-									<td><%= listProduct[i].unit %></td>
-									<td><%= listProduct[i].price %></td>
+								
+							  </div>
+                          </form>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          data-dismiss="modal"
+                          class="btn gray"
+                          type="button"
+                        >
+                          Close
+                        </button>
+                        <button
+                          class="btn blue"
+                          id="btnSubmit"
+                          onclick="addType(event)"
+                          name="btnCreate"
+                          type="button"
+                        >
+                          Thêm sản phẩm
+                        </button>
+                      </div>
+                    </div>
+                    <!-- /.modal-content -->
+                  </div>
+                </div>
+                <!-- /.modal-content -->
+              </div>
+              <a
+                class="btns blue sml-btn"
+                href="#myModalAddProduct"
+				data-toggle="modal"
+                >Thêm sản phẩm</a
+              >
+              <!-- Modal Open Button -->
+            </div>
+		  </div>
+		  <!-- Modal edit -->
+		  <div class="col-md-12">
+            <div class="widget-sec">
+              <div
+                aria-hidden="true"
+                role="dialog"
+                tabindex="-1"
+                class="modal fade"
+                id="myModalEditType"
+                style="display: none;"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button
+                          aria-hidden="true"
+                          data-dismiss="modal"
+                          class="close"
+                          type="button"
+                        >
+                          ×
+                        </button>
+                        <h4 class="modal-title">Chỉnh sửa loại sản phẩm</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="col-md-12">
+                          <form id="editProTypeForm" enctype="multipart/form-data">
+                            <div class="form-group">
+								<input type="hidden" name="editTypeId" class="form-control">
+                              <label class="form-label">Tên loại</label>
+                              <input
+                                type="text"
+                                name="editTypeName"
+                                class="form-control"
+                                placeholder="Tên loại sản phẩm"
+                              />
+                            </div>
+                            <div class="form-group">
+                              <label class="form-label">Mô tả</label>
+                              <textarea
+                                class="form-control"
+                                name="editDescription"
+                                placeholder="Mô tả loại sản phẩm"
+                                rows="3"
+                              ></textarea>
+                            </div>
+                            <div class="form-group">
+                              <label class="form-label w-100">Ảnh loại</label>
+                              <input
+                                name="editTypeImg"
+                                id="editTypeImg"
+                                type="file"
+                                onchange="loadImgEdit(event)"
+                                accept="image/png, image/jpeg"
+                              />
+                              <small class="form-text text-muted">
+                                <img
+                                  name="editTypeImgForm"
+                                  id="editTypeImgForm"
+                                  src="#"
+                                  height="200px"
+                                  width="200px"
+                                  alt="No IMG"
+                                />
+                              </small>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          data-dismiss="modal"
+                          class="btn gray"
+                          type="button"
+                        >
+                          Close
+                        </button>
+                        <button type="button" id="btnSubmit" onclick="editType(event)" name="btnCreate"
+												class="btn blue">Cập nhật</button>
+                      </div>
+                    </div>
+                    <!-- /.modal-content -->
+                  </div>
+                </div>
+                <!-- /.modal-content -->
+              </div>
+            
+            </div>
+		  </div>
+		  <div class="col-md-12">
+            <div class="widget-sec">
+              <div
+                aria-hidden="true"
+                role="dialog"
+                tabindex="-1"
+                class="modal fade"
+                id="myModalDeleteType"
+                style="display: none;"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button
+                          aria-hidden="true"
+                          data-dismiss="modal"
+                          class="close"
+                          type="button"
+                        >
+                          ×
+                        </button>
+                        <h4 class="modal-title">Xóa loại sản phẩm</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="col-md-12">
+                          <form id="editProTypeForm" enctype="multipart/form-data">
+                            <p name="typeIdDel" hidden>
+							</p>
+							<p> Bạn muốn xóa loại sản phẩm này?
+							</p>
+							<p name="typeNameDel">
+							</p>
+                          </form>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          data-dismiss="modal"
+                          class="btn gray"
+                          type="button"
+                        >
+                          Close
+                        </button>
+                        <button type="button" id="btnSubmit" onclick="deleteType(event)" 
+												class="btn blue">Xóa</button>
+                      </div>
+                    </div>
+                    <!-- /.modal-content -->
+                  </div>
+                </div>
+                <!-- /.modal-content -->
+              </div>
+            
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="widget-body">
+              <div class="widget-heading purple">
+                <i class="icon-table pull-left"></i>
+                <h3 class="pull-left">Danh sách loại sản phẩm</h3>
+              </div>
+              <div class="widget-sec">
+                <div class="streaming-table">
+                
+                  </div>
+                  <table
+                    id="stream_table"
+                    class="table table-striped table-bordered"
+                  >
+                    <thead>
+                      <tr>
+                        <th hidden></th>
+                        <th style="width: 25%;">Tên loại sản phẩm</th>
+                        <th>Mô tả</th>
+                        <th style="width: 20%;">Hình ảnh</th>
+                        <th style="width: 20%;">Tuỳ chỉnh</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% for (var i = 0; i < listProductType.length; i++) { %>
+                      <tr>
+                        <td hidden><%= listProductType[i]._id %></td>
+                        <td><%= listProductType[i].typeName %></td>
+                        <td><%= listProductType[i].description %></td>
+                        <td style="height: 10%;">
+                          <img
+                            src="<%= listProductType[i].typeImg %>"
+                            class="avatar img-fluid"
+                            alt="No IMG"
+                            style="width: 100%; height: 20%;"
+                          />
+                        </td>
+                        <td>
+                          <button
+                            class="btns blue m-sml-btn"
+                            type="button"
+                            name="btn_edit"
+                            data-toggle="modal"
+							data-target="#myModalEditType"
+                          >
+							<i class="icon-pencil" data-feather="edit-2"></i>
+							Edit
+                          </button>
+						  <button
+						  class="btns  red  m-sml-btn "
+                            type="button"
+                            name="btn_delete"
+                            data-toggle="modal"
+                            data-target="#myModalDeleteType"
+                          >
+							<i class="icon-remove" data-feather="trash"></i>
+							Remove
+                          </button>
+                        </td>
+                      </tr>
+                      <% } %>
+                    </tbody>
+                  </table>
+                  <div id="summary">
+                    <div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Main Section -->
+    </div>
+    <!-- Wrapper -->
 
-									<td class="table-action">
-										<button type="button" name="btn_edit"><i class="align-middle" data-feather="edit-2"></i></button>
-										<button type="button" name="btn_delete"><i class="align-middle" data-feather="trash"></i></button>
-									</td>
-								</tr>
-								<% } %>
+    <!-- Body -->
 
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</main>
-			<% include ../partials/Footer %>
-		</div>
-	</div>
-	<script type="text/javascript">
-		var loadImg = function (event) {
-			$('#productImg').attr('src', URL.createObjectURL(event.target.files[0]));
-		};
-		$('[name=btn_edit]').click(function () {
-			var name = ($(this).parent().parent().children().eq(0).html());
-			var des = ($(this).parent().parent().children().eq(1).html());
-			var img = ($(this).parent().parent().children().eq(2).children().eq(0).attr("src"));
-			var quan = ($(this).parent().parent().children().eq(3).html());
-			var unit = ($(this).parent().parent().children().eq(4).html());
-			var price = ($(this).parent().parent().children().eq(5).html());
-			$('[name=producName]').val(name);
-			$('[name=description]').val(des);
-			$('[name=productImg]').attr('src', img);
-			$('[name=btnCreate]').html('Cập nhật');
-			$('#productForm').attr('action', '/productType/editType');
-			$('[name=btnCreate]').attr('name', 'btnUpdate');
-		});
-	</script>
-	<script src="js/vendor.js"></script>
-	<script src="js/app.js"></script>
+    <script type="text/javascript">
+      var addType = function (event) {
+        event.preventDefault();
+        var formData = new FormData();
 
-</body>
+        var typeName = $("[name=typeName]").val();
+        var des = $("[name=addDescription]").val();
+        var file = $("[name=typeImg]").get(0).files;
 
+        formData.append("imgType", file[0]);
+        formData.append("typeName", typeName);
+        formData.append("description", des);
+
+        $.ajax({
+          url: "productType/addType",
+          type: "POST",
+          data: formData,
+          cache: false,
+          contentType: false,
+          processData: false,
+        })
+          .done(function (result) {
+            if (result.success) {
+            //   alert(result.mgs);
+              location.reload();
+            } else {
+              alert(result.mgs);
+            }
+          })
+          .fail(() => {
+            alert("Không kết nối được với server");
+          });
+      };
+      var editType = function (event) {
+        event.preventDefault();
+
+        var formData = new FormData();
+        var typeId = $("[name=editTypeId]").val();
+        var typeName = $("[name=editTypeName]").val();
+        var des = $("[name=editDescription]").val();
+        var file = $("[name=editTypeImg]").get(0).files;
+        formData.append("typeId", typeId);
+        formData.append("imgType", file[0]);
+        formData.append("typeName", typeName);
+        formData.append("description", des);
+
+        $.ajax({
+          url: "productType/editType",
+          type: "POST",
+          data: formData,
+          cache: false,
+          contentType: false,
+          processData: false,
+        })
+          .done(function (result) {
+            if (result.success) {
+            //   alert(result.mgs);
+              location.reload();
+            } else {
+              alert(result.mgs);
+            }
+          })
+          .fail(() => {
+            alert("Không kết nối được với server");
+          });
+      };
+      var deleteType = function (event) {
+        event.preventDefault();
+
+        var formData = new FormData();
+        var typeId = $("[name=typeIdDel]").text();
+
+        formData.append("typeId", typeId);
+
+        $.ajax({
+          url: "productType/deleteType",
+          type: "POST",
+          data: formData,
+          cache: false,
+          contentType: false,
+          processData: false,
+        })
+          .done(function (result) {
+            if (result.success) {
+            //   alert(result.mgs);
+              location.reload();
+            } else {
+              alert(result.mgs);
+            }
+          })
+          .fail(() => {
+            alert("Không kết nối được với server");
+          });
+      };
+      var loadImg = function (event) {
+        $("#typeImgForm").attr(
+          "src",
+          URL.createObjectURL(event.target.files[0])
+        );
+      };
+      var loadImgEdit = function (event) {
+        $("#editTypeImgForm").attr(
+          "src",
+          URL.createObjectURL(event.target.files[0])
+        );
+      };
+      $("[name=btn_edit]").click(function () {
+        var typeId = $(this).parent().parent().children().eq(0).html();
+        var name = $(this).parent().parent().children().eq(1).html();
+        var des = $(this).parent().parent().children().eq(2).html();
+        var img = $(this)
+          .parent()
+          .parent()
+          .children()
+          .eq(3)
+          .children()
+          .eq(0)
+          .attr("src");
+        $("#editTypeImgForm").attr("src", img);
+        $("[name=editTypeId]").val(typeId);
+        $("[name=editTypeName]").val(name);
+        $("[name=editDescription]").val(des);
+      });
+      $("[name=btn_delete]").click(function () {
+        var typeIdDel = $(this).parent().parent().children().eq(0).html();
+        var name = $(this).parent().parent().children().eq(1).html();
+        $("[name=typeIdDel]").text(typeIdDel);
+        $("[name=typeNameDel]").text(name);
+      });
+    </script>
+    <script src="js/app.js"></script>
+  </body>
 </html>
