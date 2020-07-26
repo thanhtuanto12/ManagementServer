@@ -1,0 +1,105 @@
+/*
+ * Google Chat Emoticons
+ * 
+ * A jQuery plugin to convert emoticons into 
+ * Google Chat Emoticons without images
+ *
+ * 2012 by Tim Pietrusky
+ * timpietrusky.com
+ * 
+ */
+(function($) {
+  $.fn.googleemoticons = function() {
+    var emoticons = {
+  		1 : { text: ":)", regex: ":\\)", role: 'ex'},
+  		2 : { text: ":D", regex: "\:\D", role: 'ex'},
+  		3 : { text: ";)", regex: ";\\)", role: 'ex'},
+  		4 : { text: ":'(", regex: ":'\\(", role: 'e4'},
+  		5 : { text: ":·o", regex: ":-o", role: 'ex'},
+  		6 : { text: ":-/", regex: ":-/", role: 'ex'}, 
+  		7 : { text: "x-(", regex: "x-\\(", role: 'ex'}, 
+  		8 : { text: ":(", regex: ":\\(", role: 'ex'},
+  		9 : { text: "B-)", regex: "B-\\)", role: 'e9'},
+  		10 : { text: ":P", regex: ":P", role: 'e10'},
+  		11 : { text: "♥", regex: "&lt;3", role: 'e11'},
+  		12 : { text: ":-|", regex: ":-\\|", role: 'ex'}
+      /*13 : { text: ":-⁎", regex: ":-\\*", role: 'ex'}*/
+    };
+    
+    return $.each(this, function(i, v) {
+      
+      var el = $(this);
+      
+      /*
+ 			 * I need to do this because CodePen executes 
+       * my JavaScript twice.
+			 */
+      if (!el.hasClass('done')) {
+        el.addClass('done');
+          
+        // Replace the emoticons
+        $.each(emoticons, function(ii, vv) {
+          var myregexp = new RegExp(vv.regex, "gm");
+          
+          el.html(el.html().replace(
+            myregexp, 
+            '<span role="' + vv.role + '" class="go">' + vv.text + '</span>'
+          ));
+        });
+      
+        // Handle mouseover
+      	$.each(el.find('span'), function(ii, vv) {
+          $(this).mouseover(function() {
+            var gemo = $(this);
+            gemo.removeClass('go');
+              
+            setTimeout(function() {
+              gemo.addClass('go');
+            }, 250); 
+          });
+      	});
+    	}
+      
+    });
+  };
+})(jQuery);
+
+
+// Convert the content of the tables
+setTimeout(function() {
+  $('table').googleemoticons();
+}, 1200);
+
+
+// Manage the chat
+var chat = $('.chat'),
+    input = $('.input textarea'),
+    output = $('.output');
+
+input.keypress(function(e) {
+  // Enter pressed
+  if (e.keyCode == 13) {
+    // Append the content from input to output
+    if (input.val() != '') {
+      output.append($('<p>' + input.val() + '</p>').hide().fadeIn(350));
+      input.val('');
+      
+      // Scroll the latest line of output
+      output.scrollTop(
+        output[0].scrollHeight - output.height()
+      );
+      
+      // Convert the content of the last p
+      output.find('p:last-child').googleemoticons();
+    }
+    
+    // Don't create a newline in input
+    return false;
+  }
+});
+
+// Chat exmaple
+setTimeout(function() {
+  output.append($('<p>Type something and see the plugin in action <3</p>').hide().fadeIn(350));
+  output.find('p:last-child').googleemoticons();
+}, 1500);

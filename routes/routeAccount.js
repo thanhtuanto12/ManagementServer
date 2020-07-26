@@ -1,18 +1,21 @@
-const routeAccount = require('express').Router()
-const accAuth = require('../middleware/accountAuth')
-var bodyParser = require('body-parser');
-var path = require('path');
-var AccountController = require('../controller/AccountController');
+const routeAccount = require("express").Router();
+const accAuth = require("../middleware/accountAuth");
+var bodyParser = require("body-parser");
+var path = require("path");
+var AccountController = require("../controller/AccountController");
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
-var passport = require('passport');
-var localStrategy = require('passport-local').Strategy;
-let multer = require('multer')
+var passport = require("passport");
+var localStrategy = require("passport-local").Strategy;
+let multer = require("multer");
 // Set The Storage Engine
 const storage = multer.diskStorage({
-  destination: './public/img/avatars',
+  destination: "./public/imgFromServer/avatars",
   filename: function (req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-  }
+    cb(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
 });
 
 // Init Upload
@@ -22,7 +25,7 @@ const upload = multer({
   fileFilter: function (req, file, cb) {
     checkFileType(file, cb);
     return cb(null, false);
-  }
+  },
 });
 // Check File Type
 function checkFileType(file, cb) {
@@ -36,11 +39,11 @@ function checkFileType(file, cb) {
   if (mimetype && extname) {
     return cb(null, true);
   } else {
-    cb('Error: Images Only!');
+    cb("Error: Images Only!");
   }
 }
 //Navigation
-routeAccount.get('/', AccountController.getListAccount)
+routeAccount.get("/", AccountController.getListAccount);
 // routeProduct.get('/', ProductController.getListProduct)
 // proType.route('/addType')
 //   .post(upload.single('typeImg'))

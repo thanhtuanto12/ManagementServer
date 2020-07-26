@@ -1,0 +1,112 @@
+header
+{
+background:none repeat scroll 0 0 #524982;
+}
+#vertical_tab_nav article li a{
+	background:none repeat scroll 0 0 #4E457E;
+	border-left:1px solid #5B528B;
+	border-right:1px solid #3C336C;
+}
+.header-tab span{
+	background:none repeat scroll 0 0 #5B528B;
+}
+#vertical_tab_nav li a.selected:before{
+	border-right:8px solid #524982;	
+}
+#vertical_tab_nav li a.selected{
+	background:none repeat scroll 0 0 #524982;
+	border:1px solid #5E558E;
+}
+#vertical_tab_nav li a{
+	background:none repeat scroll 0 0 #423972;
+}
+.navigation, .notification > div, .message > span{
+	background:none repeat scroll 0 0 #5B528B;
+}
+.notification:before, .message:before{
+	border-bottom:9px solid #5B528B;
+}
+.message a > span, .notification > span{
+	background:#5B528B;
+}
+.notification, .message{
+	border:1px solid #504780;
+}
+.search-box input{
+	background:none repeat scroll 0 0 #504780;
+	border:1px solid #473E77;
+}
+.nav-profile li{
+	border-left:1px solid #696099;
+	border-right:1px solid #3C336C;
+}
+.profile-sec{
+	border-left:1px solid #696099;
+}
+.calendar-btn{
+	background:none repeat scroll 0 0 #423972;
+}
+.submit-btn{
+	background:none repeat scroll 0 0 #423972;
+}
+.lines-stats > div{
+	background:none repeat scroll 0 0 #5B528B;
+}
+.lines-stats-area{
+	border-right:1px solid #3C336C;
+}
+.lines-stats-details{
+	border-left:1px solid #696099;
+}
+.main-bg > .col-md-3:before{
+	background:none repeat scroll 0 0 #5B528B;
+}
+.main-bg > .col-md-3{
+	background:none repeat scroll 0 0 #5B528B;
+	border-top:1px solid #4C437C;
+}
+.main-bg{
+	background:none repeat scroll 0 0 #5B528B;
+}
+.stata-detail > span{
+	border-bottom:1px solid #3C336C;
+}
+.stata-detail ul{
+	border-top:1px solid #696099;
+}
+.stata-detail{
+	border-bottom:1px solid #3C336C;
+}
+.sdbar-stats{
+	border-bottom:1px solid #696099;
+}
+.element-sec-in > div{
+	background:none repeat scroll 0 0 #5B528B;
+}
+.element-sec-in .icon-remove-circle{
+	background:none repeat scroll 0 0 #504780;
+	border:none;
+}
+.element-sec-in .icon-remove-circle:hover{
+	background:none repeat scroll 0 0 #3F366F;
+	border:none;
+}
+#vertical_tab_nav ul li ul li a{
+	border-bottom:1px solid #5B528B;
+	border-right:1px solid #3C336C;
+}
+#vertical_tab_nav ul li ul li{
+	border-bottom:1px solid #3C336C;
+}
+#vertical_tab_nav ul li ul li a:hover{
+	background:none repeat scroll 0 0 #574E87;
+}
+.sparkline-row, .new-files, .tags-sec, .progress-sdbr{
+	background:none repeat scroll 0 0 rgba(0, 0, 0, 0.3);
+	border:1px solid #322962;
+}
+
+
+
+
+

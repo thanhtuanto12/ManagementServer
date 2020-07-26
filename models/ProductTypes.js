@@ -1,16 +1,16 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const productSchema = new Schema({
   _id: {
     type: Schema.Types.ObjectId,
     required: true,
-    auto: true
+    auto: true,
     // default: new ObjectId()
   },
   productName: {
     type: String,
-    require: true
+    require: true,
   },
   description: {
     type: String,
@@ -20,7 +20,7 @@ const productSchema = new Schema({
   },
   unit: {
     type: String,
-    require: true
+    require: true,
   },
   quanti: {
     type: Number,
@@ -31,24 +31,24 @@ const productSchema = new Schema({
   },
   created_at: {
     type: Date,
-    timezone: "Asia/Ho_Chi_Minh"
+    timezone: "Asia/Ho_Chi_Minh",
   },
   delete_at: {
     type: Date,
-    timezone: "Asia/Ho_Chi_Minh"
+    timezone: "Asia/Ho_Chi_Minh",
   },
   last_modified: {
     type: Date,
     default: Date.now,
-    timezone: "Asia/Ho_Chi_Minh"
-  }
-})
+    timezone: "Asia/Ho_Chi_Minh",
+  },
+});
 
 const productTypesSchema = new Schema({
   _id: {
     type: Schema.Types.ObjectId,
     required: true,
-    auto: true
+    auto: true,
   },
   typeName: {
     type: String,
@@ -56,14 +56,14 @@ const productTypesSchema = new Schema({
   },
   description: {
     type: String,
-    default: 'Sản phẩm này chưa có mô tả',
+    default: "Sản phẩm này chưa có mô tả",
   },
   typeImg: {
     type: String,
   },
   product: [productSchema],
   created_at: {
-    type: Date
+    type: Date,
   },
   delete_at: {
     type: Date,
@@ -71,9 +71,13 @@ const productTypesSchema = new Schema({
   },
   last_modified: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
-})
-const ProductType = mongoose.model('ProductType', productTypesSchema, 'ProductType')
+});
+const ProductType = mongoose.model(
+  "ProductType",
+  productTypesSchema,
+  "ProductType"
+);
 
-module.exports = ProductType
+module.exports = ProductType;
