@@ -202,7 +202,7 @@ exports.getUserByName = async (req, res) => {
       });
     }
     const Customer = await Customer.findOne({ username: username });
-    if (Customer !== null) {
+    if (user !== null) {
       return res.json({
         status: 1,
         message: "Lấy thông tin thành công",

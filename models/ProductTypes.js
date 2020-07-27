@@ -12,6 +12,11 @@ const productSchema = new Schema({
     type: String,
     require: true,
   },
+
+  productType: {
+    type: String,
+    require: true,
+  },
   description: {
     type: String,
   },
