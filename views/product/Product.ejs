@@ -1,784 +1,625 @@
 <!DOCTYPE html>
 <html lang="en">
-  <% include ../partials/Header %>
-  <body>
-    <div id="container" class="ui-notify"></div>
-    <div class="wrapper">
-      <!-- side-navigation -->
-      <% include ../partials/side-navigation %>
+<% include ../partials/Header %>
 
-      <!-- Header End -->
+<body>
+  <div id="container" class="ui-notify"></div>
+  <div class="wrapper">
+    <!-- side-navigation -->
+    <% include ../partials/side-navigation %>
 
-      <section class="main-section">
-        <div class="responsive-logo">
-          <img src="images/logo.png" alt="" />
+    <!-- Header End -->
+
+    <section class="main-section">
+      <div class="responsive-logo">
+        <img src="images/logo.png" alt="" />
+      </div>
+      <div class="responsive-menu">
+        <div class="responsive-menu-dropdown">
+          <a title="" class="red">MENU <i class="icon-align-justify"></i></a>
         </div>
-        <div class="responsive-menu">
-          <div class="responsive-menu-dropdown">
-            <a title="" class="red">MENU <i class="icon-align-justify"></i></a>
+
+        <ul>
+          <li>
+            <a href="dashboard.html" title=""><i class="icon-laptop"></i>Dashboard</a>
+          </li>
+          <li>
+            <a href="hosting-dashboard.html" title=""><i class="icon-laptop"></i>Hosting Dashboard</a>
+          </li>
+          <li>
+            <a href="sale-purchase-dashboard.html" title=""><i class="icon-laptop"></i>For Sale & Purchase</a>
+          </li>
+          <li>
+            <a title=""><i class="icon-cogs"></i>Components<span>13</span></a>
+            <ul>
+              <li>
+                <a href="charts.html" title=""><i class="icon-angle-right"></i>Charts</a>
+              </li>
+              <li>
+                <a href="notification.html" title=""><i class="icon-angle-right"></i>Notifications</a>
+              </li>
+              <li>
+                <a href="grids.html" title=""><i class="icon-angle-right"></i>Grids</a>
+              </li>
+              <li>
+                <a href="ribbon-grids.html" title=""><i class="icon-angle-right"></i>Ribbon Grids</a>
+              </li>
+              <li>
+                <a href="buttons.html" title=""><i class="icon-angle-right"></i>Buttons</a>
+              </li>
+              <li>
+                <a href="calendars.html" title=""><i class="icon-angle-right"></i>Calendars</a>
+              </li>
+              <li>
+                <a href="progressbar.html" title=""><i class="icon-angle-right"></i>Progress Bar</a>
+              </li>
+              <li>
+                <a href="file-manager.html" title=""><i class="icon-angle-right"></i>File Manager</a>
+              </li>
+              <li>
+                <a href="gallery.html" title=""><i class="icon-angle-right"></i>Gallery</a>
+              </li>
+              <li>
+                <a href="slider.html" title=""><i class="icon-angle-right"></i>Slider</a>
+              </li>
+              <li>
+                <a href="dashboard.html" title=""><i class="icon-angle-right"></i>Page Tour</a>
+              </li>
+              <li>
+                <a href="collapse.html" title=""><i class="icon-angle-right"></i>Collapse</a>
+              </li>
+              <li>
+                <a href="range-slider.html" title=""><i class="icon-angle-right"></i>Range Slider</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="main-bg">
+            <div class="top-stats">
+              <input type="text" placeholder="Your Search Here" /><i class="icon-search"></i>
+              <div class="top-bar-chart">
+                <div class="bar-chart-details">
+                  <p>New User</p>
+                  <h5>17,561</h5>
+                </div>
+                <span id="new-orders" class="sparkline">4,5,6,7,6,5,4,3,2,2,4</span>
+              </div>
+
+              <div class="top-bar-chart">
+                <div class="bar-chart-details">
+                  <p>My Balance</p>
+                  <h5>$21,561.01</h5>
+                </div>
+                <span id="my-balance" class="sparkline">4,5,6,7,6,5,4,3,2,2,4</span>
+              </div>
+              <div class="top-stats-icons">
+                <i class="icon-rocket"></i><i class="icon-user"></i><i class="icon-laptop"></i><i
+                  class="icon-tasks"></i>
+              </div>
+            </div>
+
+            <div class="breadcrumbs-notify">
+              <a href="#" title="">Home / </a>
+              <a href="#" class="current-page" title=""> Product Type </a>
+              <div class="notification-auto">
+                <div class="fade-notification">
+                  <h5><i class="icon-warning-sign"></i> Notification :</h5>
+                </div>
+                <div class="notification-slideshow">
+                  <h6 class="notify-fade">
+                    Server 3 is Over Loader Please Check. <i>3:45pm</i>
+                  </h6>
+                  <h6 class="notify-fade">
+                    Server # 10 is Not Responding<i>1:30 Am</i>
+                  </h6>
+                  <h6 class="notify-fade">
+                    New User Registration Error . <i>Today</i>
+                  </h6>
+                  <h6 class="notify-fade">
+                    Domain Expiration Error <i>Yesterday</i>
+                  </h6>
+                  <h6 class="notify-fade">
+                    Database Over loaded 2% Remaining <i>9:59 pm</i>
+                  </h6>
+                  <h6 class="notify-fade">
+                    Application Erro Delete it Now <i>Last Week</i>
+                  </h6>
+                </div>
+              </div>
+            </div>
+
+            <div class="heading-buttons-sec">
+              <h1>Product Type</h1>
+              <div class="heading-buttons">
+                <ul>
+                  <li class="dropdown heading-dropdown">
+                    <a href="#" data-toggle="dropdown" role="button" id="drop1">Dropdown <b class="caret"></b></a>
+                    <ul aria-labelledby="drop1" role="menu" class="dropdown-menu" id="menu1">
+                      <li role="presentation">
+                        <a href="#" tabindex="-1" role="menuitem">Action</a>
+                      </li>
+                      <li role="presentation">
+                        <a href="#" tabindex="-1" role="menuitem">Another action</a>
+                      </li>
+                      <li role="presentation">
+                        <a href="#" tabindex="-1" role="menuitem">Something else here</a>
+                      </li>
+                      <li class="divider" role="presentation"></li>
+                      <li role="presentation">
+                        <a href="#" tabindex="-1" role="menuitem">Separated link</a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+                <a href="#" title=""><i class="icon-paper-clip"></i></a><a href="#" title=""><i
+                    class="icon-calendar"></i></a><a href="#" title=""><i class="icon-envelope"></i></a><a href="#"
+                  title=""><i class="icon-refresh"></i></a>
+              </div>
+            </div>
           </div>
-
-          <ul>
-            <li>
-              <a href="dashboard.html" title=""
-                ><i class="icon-laptop"></i>Dashboard</a
-              >
-            </li>
-            <li>
-              <a href="hosting-dashboard.html" title=""
-                ><i class="icon-laptop"></i>Hosting Dashboard</a
-              >
-            </li>
-            <li>
-              <a href="sale-purchase-dashboard.html" title=""
-                ><i class="icon-laptop"></i>For Sale & Purchase</a
-              >
-            </li>
-            <li>
-              <a title=""><i class="icon-cogs"></i>Components<span>13</span></a>
-              <ul>
-                <li>
-                  <a href="charts.html" title=""
-                    ><i class="icon-angle-right"></i>Charts</a
-                  >
-                </li>
-                <li>
-                  <a href="notification.html" title=""
-                    ><i class="icon-angle-right"></i>Notifications</a
-                  >
-                </li>
-                <li>
-                  <a href="grids.html" title=""
-                    ><i class="icon-angle-right"></i>Grids</a
-                  >
-                </li>
-                <li>
-                  <a href="ribbon-grids.html" title=""
-                    ><i class="icon-angle-right"></i>Ribbon Grids</a
-                  >
-                </li>
-                <li>
-                  <a href="buttons.html" title=""
-                    ><i class="icon-angle-right"></i>Buttons</a
-                  >
-                </li>
-                <li>
-                  <a href="calendars.html" title=""
-                    ><i class="icon-angle-right"></i>Calendars</a
-                  >
-                </li>
-                <li>
-                  <a href="progressbar.html" title=""
-                    ><i class="icon-angle-right"></i>Progress Bar</a
-                  >
-                </li>
-                <li>
-                  <a href="file-manager.html" title=""
-                    ><i class="icon-angle-right"></i>File Manager</a
-                  >
-                </li>
-                <li>
-                  <a href="gallery.html" title=""
-                    ><i class="icon-angle-right"></i>Gallery</a
-                  >
-                </li>
-                <li>
-                  <a href="slider.html" title=""
-                    ><i class="icon-angle-right"></i>Slider</a
-                  >
-                </li>
-                <li>
-                  <a href="dashboard.html" title=""
-                    ><i class="icon-angle-right"></i>Page Tour</a
-                  >
-                </li>
-                <li>
-                  <a href="collapse.html" title=""
-                    ><i class="icon-angle-right"></i>Collapse</a
-                  >
-                </li>
-                <li>
-                  <a href="range-slider.html" title=""
-                    ><i class="icon-angle-right"></i>Range Slider</a
-                  >
-                </li>
-              </ul>
-            </li>
-          </ul>
+          <!-- main-bg-->
         </div>
-        <div class="container">
-          <div class="row">
-            <div class="main-bg">
-              <div class="top-stats">
-                <input type="text" placeholder="Your Search Here" /><i
-                  class="icon-search"
-                ></i>
-                <div class="top-bar-chart">
-                  <div class="bar-chart-details">
-                    <p>New User</p>
-                    <h5>17,561</h5>
-                  </div>
-                  <span id="new-orders" class="sparkline"
-                    >4,5,6,7,6,5,4,3,2,2,4</span
-                  >
-                </div>
+        <!-- Row -->
+      </div>
+      <!-- Container -->
+      <div class="container">
+        <div class="col-md-12">
+          <div class="widget-sec">
+            <div aria-hidden="true" role="dialog" tabindex="-1" class="modal fade" id="myModalAddProduct"
+              style="display: none;">
+              <div class="modal-dialog">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button aria-hidden="true" data-dismiss="modal" class="close" type="button">
+                        ×
+                      </button>
+                      <h4 class="modal-title">Thêm sản phẩm</h4>
+                    </div>
+                    <div class="modal-body">
+                      <div class="col-md-12">
+                        <form id="productForm" action="/product/addProduct" method="POST" enctype="multipart/form-data">
+                          <div class="form-group">
+                            <div class="row">
+                              <div class="col-md-6">
+                                <label class="form-label col-6 col-xl-6">Tên sản phẩm</label>
+                                <input type="text" name="productName" class="form-control" required="required"
+                                  placeholder="Tên sản phẩm">
+                              </div>
+                              <div class="col-md-6">
+                                <label class="form-label">Loại sản phẩm</label>
+                                <select name="productType" class="form-control">
+                                  <option value="<%= listProductType[0].typeName %>" selected="">
+                                    <%= listProductType[0].typeName %></option>
+                                  <% for (var i = 1; i < listProductType.length; i++) { %>
+                                  <option value="<%= listProductType[i].typeName %>"><%= listProductType[i].typeName %>
+                                  </option>
+                                  <% } %>
+                                </select>
+                              </div>
 
-                <div class="top-bar-chart">
-                  <div class="bar-chart-details">
-                    <p>My Balance</p>
-                    <h5>$21,561.01</h5>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="row">
+                              <div class="col-md-4">
+                                <label class="form-label col-6 col-xl-6">Đơn vị</label>
+                                <input type="text" name="unit" class="form-control" required="required"
+                                  placeholder="Đơn vị">
+                              </div>
+                              <div class="col-md-4">
+                                <label class="form-label">Số lượng</label>
+                                <input type="number" min="0" name="quan" required="required" class="form-control"
+                                  placeholder="Số lượng">
+                              </div>
+                              <div class="col-md-4">
+                                <label class="form-label col-6 col-xl-6">Đơn giá</label>
+                                <input type="number" min="0" name="price" required="required" class="form-control"
+                                  placeholder="Đơn giá">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="form-label">Mô tả</label>
+                            <textarea class="form-control" name="addDescription" placeholder="Mô tả sản phẩm"
+                              rows="3"></textarea>
+                          </div>
+                          <div class="form-group">
+                            <label class="form-label w-100">Ảnh sản phẩm</label>
+                            <input name="inputImg" id="inputImg" type="file" required="required"
+                              onchange="loadImg(event)" accept="image/png, image/jpeg">
+                            <small class="form-text text-muted">
+                              <img name="productImg" id="productImg" src="#" height="200px" width="200px" alt="No IMG">
+                            </small>
+                          </div>
+                          <div class="form-group">
+                            <label class="custom-control custom-checkbox">
+                            </label>
+                          </div>
+                          <!-- <button type="submit" name="btnCreate" class="btn btn-primary">Thêm loại sản phẩm</button> -->
+                        </form>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button data-dismiss="modal" class="btn gray" type="button">
+                        Close
+                      </button>
+                      <button class="btn blue" onclick="addProduct(event)" name="btnCreate" type="button">
+                        Thêm sản phẩm
+                      </button>
+                    </div>
                   </div>
-                  <span id="my-balance" class="sparkline"
-                    >4,5,6,7,6,5,4,3,2,2,4</span
-                  >
-                </div>
-                <div class="top-stats-icons">
-                  <i class="icon-rocket"></i><i class="icon-user"></i
-                  ><i class="icon-laptop"></i><i class="icon-tasks"></i>
+                  <!-- /.modal-content -->
                 </div>
               </div>
-
-              <div class="breadcrumbs-notify">
-                <a href="#" title="">Home / </a>
-                <a href="#" class="current-page" title=""> Product Type </a>
-                <div class="notification-auto">
-                  <div class="fade-notification">
-                    <h5><i class="icon-warning-sign"></i> Notification :</h5>
-                  </div>
-                  <div class="notification-slideshow">
-                    <h6 class="notify-fade">
-                      Server 3 is Over Loader Please Check. <i>3:45pm</i>
-                    </h6>
-                    <h6 class="notify-fade">
-                      Server # 10 is Not Responding<i>1:30 Am</i>
-                    </h6>
-                    <h6 class="notify-fade">
-                      New User Registration Error . <i>Today</i>
-                    </h6>
-                    <h6 class="notify-fade">
-                      Domain Expiration Error <i>Yesterday</i>
-                    </h6>
-                    <h6 class="notify-fade">
-                      Database Over loaded 2% Remaining <i>9:59 pm</i>
-                    </h6>
-                    <h6 class="notify-fade">
-                      Application Erro Delete it Now <i>Last Week</i>
-                    </h6>
-                  </div>
-                </div>
-              </div>
-
-              <div class="heading-buttons-sec">
-                <h1>Product Type</h1>
-                <div class="heading-buttons">
-                  <ul>
-                    <li class="dropdown heading-dropdown">
-                      <a
-                        href="#"
-                        data-toggle="dropdown"
-                        role="button"
-                        id="drop1"
-                        >Dropdown <b class="caret"></b
-                      ></a>
-                      <ul
-                        aria-labelledby="drop1"
-                        role="menu"
-                        class="dropdown-menu"
-                        id="menu1"
-                      >
-                        <li role="presentation">
-                          <a href="#" tabindex="-1" role="menuitem">Action</a>
-                        </li>
-                        <li role="presentation">
-                          <a href="#" tabindex="-1" role="menuitem"
-                            >Another action</a
-                          >
-                        </li>
-                        <li role="presentation">
-                          <a href="#" tabindex="-1" role="menuitem"
-                            >Something else here</a
-                          >
-                        </li>
-                        <li class="divider" role="presentation"></li>
-                        <li role="presentation">
-                          <a href="#" tabindex="-1" role="menuitem"
-                            >Separated link</a
-                          >
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                  <a href="#" title=""><i class="icon-paper-clip"></i></a
-                  ><a href="#" title=""><i class="icon-calendar"></i></a
-                  ><a href="#" title=""><i class="icon-envelope"></i></a
-                  ><a href="#" title=""><i class="icon-refresh"></i></a>
-                </div>
-              </div>
+              <!-- /.modal-content -->
             </div>
-            <!-- main-bg-->
+            <a class="btns blue sml-btn" href="#myModalAddProduct" data-toggle="modal">Thêm sản phẩm</a>
+            <!-- Modal Open Button -->
           </div>
-          <!-- Row -->
         </div>
-        <!-- Container -->
-        <div class="container">
-          <div class="col-md-12">
-            <div class="widget-sec">
-              <div
-                aria-hidden="true"
-                role="dialog"
-                tabindex="-1"
-                class="modal fade"
-                id="myModalAddProduct"
-                style="display: none;"
-              >
+        <!-- Modal edit -->
+        <div class="col-md-12">
+          <div class="widget-sec">
+            <div aria-hidden="true" role="dialog" tabindex="-1" class="modal fade" id="myModalEditProduct"
+              style="display: none;">
+              <div class="modal-dialog">
                 <div class="modal-dialog">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button
-                          aria-hidden="true"
-                          data-dismiss="modal"
-                          class="close"
-                          type="button"
-                        >
-                          ×
-                        </button>
-                        <h4 class="modal-title">Thêm sản phẩm</h4>
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button aria-hidden="true" data-dismiss="modal" class="close" type="button">
+                        ×
+                      </button>
+                      <h4 class="modal-title">Chỉnh sửa sản phẩm</h4>
+                    </div>
+                    <div class="modal-body">
+                      <div class="col-md-12">
+                        <form id="productForm" action="/product/addProduct" method="POST" enctype="multipart/form-data">
+                          <div class="form-group">
+                            <div class="row">
+                              <div class="col-md-6">
+                                <label class="form-label col-6 col-xl-6">Tên sản phẩm</label>
+                                <input type="text" name="productNameEdit" class="form-control" required="required"
+                                  placeholder="Tên sản phẩm">
+                              </div>
+                              <div class="col-md-6">
+                                <label class="form-label">Loại sản phẩm</label>
+                                <select name="productTypeEdit" class="form-control">
+                                  <option value="<%= listProductType[0].typeName %>" selected="">
+                                    <%= listProductType[0].typeName %></option>
+                                  <% for (var i = 1; i < listProductType.length; i++) { %>
+                                  <option value="<%= listProductType[i].typeName %>"><%= listProductType[i].typeName %>
+                                  </option>
+                                  <% } %>
+                                </select>
+                              </div>
+
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="row">
+                              <div class="col-md-4">
+                                <label class="form-label col-6 col-xl-6">Đơn vị</label>
+                                <input type="text" name="unitEdit" class="form-control" required="required"
+                                  placeholder="Đơn vị">
+                              </div>
+                              <div class="col-md-4">
+                                <label class="form-label">Số lượng</label>
+                                <input type="number" min="0" name="quanEdit" required="required" class="form-control"
+                                  placeholder="Số lượng">
+                              </div>
+                              <div class="col-md-4">
+                                <label class="form-label col-6 col-xl-6">Đơn giá</label>
+                                <input type="number" min="0" name="priceEdit" required="required" class="form-control"
+                                  placeholder="Đơn giá">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="form-label">Mô tả</label>
+                            <textarea class="form-control" name="descriptionEdit" placeholder="Mô tả sản phẩm"
+                              rows="3"></textarea>
+                          </div>
+                          <div class="form-group">
+                            <label class="form-label w-100">Ảnh sản phẩm</label>
+                            <input name="inputImgEdit" id="inputImgEdit" type="file" required="required"
+                              onchange="loadImg(event)" accept="image/png, image/jpeg">
+                            <small class="form-text text-muted">
+                              <img name="productImgEdit" id="productImgEdit" src="#" height="200px" width="200px" alt="No IMG">
+                            </small>
+                          </div>
+                          <div class="form-group">
+                            <label class="custom-control custom-checkbox">
+                            </label>
+                          </div>
+                          <!-- <button type="submit" name="btnCreate" class="btn btn-primary">Thêm loại sản phẩm</button> -->
+                        </form>
                       </div>
-                      <div class="modal-body">
-                        <div class="col-md-12">
-                          <form id="productForm" enctype="multipart/form-data">
-							<div class="form-group">
-								<div class="row">
-									<div class="col-md-6">
-										<label class="form-label col-6 col-xl-6">Tên sản phẩm</label>
-										<input type="text" name="productName" class="form-control" required="required"
-											placeholder="Tên sản phẩm">
-									</div>
-									<div class="col-md-6">
-										<label class="form-label">Loại sản phẩm</label>
-										<select name="typeProduct" class="form-control">
-											<option value="<%= listProductType[0].typeName %>" selected="">
-												<%= listProductType[0].typeName %></option>
-											<% for (var i = 1; i < listProductType.length; i++) { %>
-											<option value="<%= listProductType[i].typeName %>"><%= listProductType[i].typeName %>
-											</option>
-											<% } %>
-										</select>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="row">
-									<div class="col-md-12">
-										<label class="form-label">Mô tả</label>
-										<textarea
-										  class="form-control"
-										  name="addDescription"
-										  placeholder="Mô tả sản phẩm"
-										  rows="3"
-										></textarea>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="row">
-									<div class="col-md-4">
-										<label class="form-label">Số lượng</label>
-											<input type="number" min="0" name="quan" required="required" class="form-control"
-												placeholder="Số lượng">
-									</div>
-									<div class="col-md-4">
-										<label class="form-label col-6 col-xl-6">Đơn vị</label>
-											
-										
-													<select name="unit" class="form-control">
-													<option>Kg</option>
-													<option>Cái</option>
-													<option>gram</option>
-													</select>
-									</div>
-									<div class="col-md-4">
-										<label class="form-label">Giá</label>
-											<input type="number" min=0 name="price" required="required" class="form-control"
-												placeholder="Số lượng">
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="row">
-									<div class="col-md-12">
-										<label class="form-label w-100">Ảnh loại</label>
-										<input
-										  name="productImg"
-										  id="productImg"
-										  type="file"
-										  onchange="loadImg(event)"
-										  accept="image/png, image/jpeg"
-										/>
-										<small class="form-text text-muted">
-										  <img
-											name="productImgForm"
-											id="productImgForm"
-											src="imgFromServer\product\default.png"
-											height="200px"
-											width="200px"
-											alt="No IMG"
-										  />
-										</small>
-									</div>
-									
-								</div>
-								
-							  </div>
-                          </form>
-                        </div>
-                      </div>
-                      <div class="modal-footer">
-                        <button
-                          data-dismiss="modal"
-                          class="btn gray"
-                          type="button"
-                        >
-                          Close
-                        </button>
-                        <button
-                          class="btn blue"
-                          id="btnSubmit"
-                          onclick="addProduct(event)"
-                          name="btnCreate"
-                          type="button"
-                        >
-                          Thêm sản phẩm
-                        </button>
+
+                    </div>
+                    <div class="modal-footer">
+                      <button data-dismiss="modal" class="btn gray" type="button">
+                        Close
+                      </button>
+                      <button type="button"  onclick="editProduct(event)" name="btnCreate" 
+                        class="btn blue">Cập nhật</button> 
+                      <!-- <button type="button" name="btnUpdate" class="btn blue">Cập nhật</button> -->
+                    </div>
+                  </div>
+                  <!-- /.modal-content -->
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="widget-sec">
+            <div aria-hidden="true" role="dialog" tabindex="-1" class="modal fade" id="myModalDeleteProduct"
+              style="display: none;">
+              <div class="modal-dialog">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button aria-hidden="true" data-dismiss="modal" class="close" type="button">
+                        ×
+                      </button>
+                      <h4 class="modal-title">Xóa sản phẩm</h4>
+                    </div>
+                    <div class="modal-body">
+                      <div class="col-md-12">
+                        <form id="editProTypeForm" enctype="multipart/form-data">
+                          <p name="typeIdDel" hidden>
+                          </p>
+                          <p> Bạn muốn xóa loại sản phẩm này?
+                          </p>
+                          <p name="typeNameDel">
+                          </p>
+                        </form>
                       </div>
                     </div>
-                    <!-- /.modal-content -->
-                  </div>
-                </div>
-                <!-- /.modal-content -->
-              </div>
-              <a
-                class="btns blue sml-btn"
-                href="#myModalAddProduct"
-				data-toggle="modal"
-                >Thêm sản phẩm</a
-              >
-              <!-- Modal Open Button -->
-            </div>
-		  </div>
-		  <!-- Modal edit -->
-		  <div class="col-md-12">
-            <div class="widget-sec">
-              <div
-                aria-hidden="true"
-                role="dialog"
-                tabindex="-1"
-                class="modal fade"
-                id="myModalEditProduct"
-                style="display: none;"
-              >
-                <div class="modal-dialog">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button
-                          aria-hidden="true"
-                          data-dismiss="modal"
-                          class="close"
-                          type="button"
-                        >
-                          ×
-                        </button>
-                        <h4 class="modal-title">Chỉnh sửa sản phẩm</h4>
-                      </div>
-                      <div class="modal-body">
-                        <div class="col-md-12">
-							<form id="editProductForm" enctype="multipart/form-data">
-							  <div class="form-group">
-								  <div class="row">
-									  <div class="col-md-6">
-										  <label class="form-label col-6 col-xl-6">Tên sản phẩm</label>
-										  <input type="text" name="productNameEdit" class="form-control" required="required"
-											  placeholder="Tên sản phẩm">
-									  </div>
-									  <div class="col-md-6">
-										  <label class="form-label">Loại sản phẩm</label>
-										  <select name="typeProductEdit" class="form-control">
-											  <option value="<%= listProductType[0].typeName %>" selected="">
-												  <%= listProductType[0].typeName %></option>
-											  <% for (var i = 1; i < listProductType.length; i++) { %>
-											  <option value="<%= listProductType[i].typeName %>"><%= listProductType[i].typeName %>
-											  </option>
-											  <% } %>
-										  </select>
-									  </div>
-								  </div>
-							  </div>
-							  <div class="form-group">
-								  <div class="row">
-									  <div class="col-md-12">
-										  <label class="form-label">Mô tả</label>
-										  <textarea
-											class="form-control"
-											name="editDescription"
-											placeholder="Mô tả sản phẩm"
-											rows="3"
-										  ></textarea>
-									  </div>
-								  </div>
-							  </div>
-							  <div class="form-group">
-								  <div class="row">
-									  <div class="col-md-4">
-										  <label class="form-label">Số lượng</label>
-											  <input type="number" min="0" name="quanEdit" required="required" class="form-control"
-												  placeholder="Số lượng">
-									  </div>
-									  <div class="col-md-4">
-										  <label class="form-label col-6 col-xl-6">Đơn vị</label>
-													  <select name="unit" class="form-control">
-													  <option>Kg</option>
-													  <option>Cái</option>
-													  <option>gram</option>
-													  </select>
-									  </div>
-									  <div class="col-md-4">
-										  <label class="form-label">Giá</label>
-											  <input type="number" min=0 name="price" required="required" class="form-control"
-												  placeholder="Giá">
-									  </div>
-								  </div>
-							  </div>
-							  <div class="form-group">
-								  <div class="row">
-									  <div class="col-md-12">
-										  <label class="form-label w-100">Ảnh loại</label>
-										  <input
-											name="EditproductImg"
-											id="EditproductImg"
-											type="file"
-											onchange="loadImg(event)"
-											accept="image/png, image/jpeg"
-										  />
-										  <small class="form-text text-muted">
-											<img
-											  name="EidtProductImgForm"
-											  id="EidtProductImgForm"
-											  src="imgFromServer\product\default.png"
-											  height="200px"
-											  width="200px"
-											  alt="No IMG"
-											/>
-										  </small>
-									  </div>
-									  
-								  </div>
-								  
-								</div>
-							</form>
-						  </div>
-						
-                      </div>
-                      <div class="modal-footer">
-                        <button
-                          data-dismiss="modal"
-                          class="btn gray"
-                          type="button"
-                        >
-                          Close
-                        </button>
-                        <button type="button" id="btnSubmit" onclick="editProduct(event)" name="btnCreate"
-												class="btn blue">Cập nhật</button>
-                      </div>
+                    <div class="modal-footer">
+                      <button data-dismiss="modal" class="btn gray" type="button">
+                        Close
+                      </button>
+                      <button type="button" onclick="deleteType(event)" class="btn blue">Xóa</button>
                     </div>
-                    <!-- /.modal-content -->
                   </div>
+                  <!-- /.modal-content -->
                 </div>
-                <!-- /.modal-content -->
               </div>
-            
+              <!-- /.modal-content -->
             </div>
-		  </div>
-		  <div class="col-md-12">
+
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="widget-body">
+            <div class="widget-heading purple">
+              <i class="icon-table pull-left"></i>
+              <h3 class="pull-left">Danh sách sản phẩm</h3>
+            </div>
             <div class="widget-sec">
-              <div
-                aria-hidden="true"
-                role="dialog"
-                tabindex="-1"
-                class="modal fade"
-                id="myModalDeleteProduct"
-                style="display: none;"
-              >
-                <div class="modal-dialog">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button
-                          aria-hidden="true"
-                          data-dismiss="modal"
-                          class="close"
-                          type="button"
-                        >
-                          ×
-                        </button>
-                        <h4 class="modal-title">Xóa sản phẩm</h4>
-                      </div>
-                      <div class="modal-body">
-                        <div class="col-md-12">
-                          <form id="editProTypeForm" enctype="multipart/form-data">
-                            <p name="typeIdDel" hidden>
-							</p>
-							<p> Bạn muốn xóa loại sản phẩm này?
-							</p>
-							<p name="typeNameDel">
-							</p>
-                          </form>
-                        </div>
-                      </div>
-                      <div class="modal-footer">
-                        <button
-                          data-dismiss="modal"
-                          class="btn gray"
-                          type="button"
-                        >
-                          Close
-                        </button>
-                        <button type="button" id="btnSubmit" onclick="deleteType(event)" 
-												class="btn blue">Xóa</button>
-                      </div>
-                    </div>
-                    <!-- /.modal-content -->
-                  </div>
-                </div>
-                <!-- /.modal-content -->
+              <div class="streaming-table">
               </div>
-            
-            </div>
-		  </div>
-          <div class="col-md-12">
-            <div class="widget-body">
-              <div class="widget-heading purple">
-                <i class="icon-table pull-left"></i>
-                <h3 class="pull-left">Danh sách sản phẩm</h3>
-              </div>
-              <div class="widget-sec">
-                <div class="streaming-table">
-                  </div>
-                  <table
-                    id="stream_table"
-                    class="table table-striped table-bordered"
-                  >
-                    <thead>
-                      <tr>
-                        <th hidden></th>
-						<th>Tên sản phẩm</th>
-						<th>Loại sản phẩm</th>
-						<th>Mô tả</th>
-                        <th>Số lượng</th>
-                        <th>Giá</th>
-                        <th>Đơn vị</th>
-                        <th style="width: 20%;">Hình ảnh</th>
-                        <th style="width: 20%;">Tuỳ chỉnh</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <% for (var i = 0; i < listProduct.length; i++) { %>
-                      <tr>
-                        <td hidden><%= listProduct[i]._id %></td>
-						<td><%= listProduct[i].productName %></td>
-                        <td><%= listProduct[i].productType%></td>
-						<td><%= listProduct[i].description %></td>
-                        <td><%= listProduct[i].quan%></td>
-                        <td><%= listProduct[i].price%></td>
-                        <td><%= listProduct[i].unit%></td>
-						
-                        <td style="height: 10%;">
-                          <img
-                            src="<%= listProduct[i].productImg %>"
-                            class="avatar img-fluid"
-                            alt="No IMG"
-                            style="width: 100%; height: 20%;"
-                          />
-                        </td>
-                        <td>
-                          <button
-                            class="btns blue m-sml-btn"
-                            type="button"
-                            name="btn_edit"
-                            data-toggle="modal"
-							data-target="#myModalEditProduct"
-                          >
-							<i class="icon-pencil" data-feather="edit-2"></i>
-							Edit
-                          </button>
-						  <button
-						  class="btns  red  m-sml-btn "
-                            type="button"
-                            name="btn_delete"
-                            data-toggle="modal"
-                            data-target="#myModalDeleteProduct"
-                          >
-							<i class="icon-remove" data-feather="trash"></i>
-							Remove
-                          </button>
-                        </td>
-                      </tr>
-                      <% } %>
-                    </tbody>
-                  </table>
-                  <div id="summary">
-                    <div></div>
-                  </div>
-                </div>
+              <table id="stream_table" class="table table-striped table-bordered">
+                <thead>
+                  <tr>
+                    <th hidden></th>
+                    <th>Tên sản phẩm</th>
+                    <th>Loại sản phẩm</th>
+                    <th>Mô tả</th>
+                    <th>Số lượng</th>
+                    <th>Giá</th>
+                    <th>Đơn vị</th>
+                    <th style="width: 20%;">Hình ảnh</th>
+                    <th style="width: 20%;">Tuỳ chỉnh</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% for (var i = 0; i < listProduct.length; i++) { %>
+                  <tr>
+                    <td hidden><%= listProduct[i]._id %></td>
+                    <td><%= listProduct[i].productName %></td>
+                    <td><%= listProduct[i].productType%></td>
+                    <td><%= listProduct[i].description %></td>
+                    <td><%= listProduct[i].quan%></td>
+                    <td><%= listProduct[i].price%></td>
+                    <td><%= listProduct[i].unit%></td>
+
+                    <td style="height: 10%;">
+                      <img src="<%= listProduct[i].productImg %>" class="avatar img-fluid" alt="No IMG"
+                        style="width: 100%; height: 20%;" />
+                    </td>
+                    <td>
+                      <button class="btns blue m-sml-btn" type="button" name="btn_edit" data-toggle="modal"
+                        data-target="#myModalEditProduct">
+                        <i class="icon-pencil" data-feather="edit-2"></i>
+                        Edit
+                      </button>
+                      <button class="btns  red  m-sml-btn " type="button" name="btn_delete" data-toggle="modal"
+                        data-target="#myModalDeleteProduct">
+                        <i class="icon-remove" data-feather="trash"></i>
+                        Remove
+                      </button>
+                    </td>
+                  </tr>
+                  <% } %>
+                </tbody>
+              </table>
+              <div id="summary">
+                <div></div>
               </div>
             </div>
           </div>
         </div>
-      </section>
-      <!-- Main Section -->
-    </div>
-    <!-- Wrapper -->
+      </div>
+  </div>
+  </section>
+  <!-- Main Section -->
+  </div>
+  <!-- Wrapper -->
 
-    <!-- Body -->
+  <!-- Body -->
 
-    <script type="text/javascript">
-      var addProduct = function (event) {
-        event.preventDefault();
-        var formData = new FormData();
-	    	var proName = $("[name=productName]").val();
-        var typeName = $("[name=typeProduct]").val();
-		    var des = $("[name=addDescription]").val();
-        var quan = $("[name=quan]").val();
-		    var price = $("[name=price]").val();
-		    var unit = $("[name=unit]").val();
-        var file = $("[name=productImg]").get(0).files;
- 
-		    formData.append("productName", proName);
-	    	formData.append("productType", typeName);
-		    formData.append("description", des);
-		    formData.append("quan", quan);
-        formData.append("unit", unit);
-        formData.append("price", price);
-        formData.append("imgProduct", file[0]);
+  <script type="text/javascript">
+    var addProduct = function (event) {
+      event.preventDefault();
+      var formData = new FormData();
+      var proName = $("[name=productName]").val();
+      var typeName = $("[name=productType]").val();
+      var des = $("[name=addDescription]").val();
+      var quan = $("[name=quan]").val();
+      var price = $("[name=price]").val();
+      var unit = $("[name=unit]").val();
+      var file = $("[name=inputImg]").get(0).files;
 
-        $.ajax({
-          url: "product/addProduct",
-          type: "POST",
-          data: formData,
-          cache: false,
-          contentType: false,
-          processData: false,
+      formData.append("productName", proName);
+      formData.append("productType", typeName);
+      formData.append("description", des);
+      formData.append("quan", quan);
+      formData.append("unit", unit);
+      formData.append("price", price);
+      formData.append("imgProduct", file[0]);
+
+      $.ajax({
+        url: "product/addProduct",
+        type: "POST",
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+      })
+        .done(function (result) {
+          if (result.success) {
+            alert(result.mgs);
+            location.reload();
+          } else {
+            alert(result.mgs);
+          }
         })
-          .done(function (result) {
-            if (result.success) {
-              alert(result.mgs);
-              location.reload();
-            } else {
-              alert(result.mgs);
-            }
-          })
-          .fail(() => {
-            alert("Không kết nối được với server");
-          });
-      };
-      var editType = function (event) {
-        event.preventDefault();
+        .fail(() => {
+          alert("Không kết nối được với server");
+        });
+    };
+    var editProduct = function (event) {
+      event.preventDefault();
 
-        var formData = new FormData();
-        var typeId = $("[name=editTypeId]").val();
-        var typeName = $("[name=editTypeName]").val();
-        var des = $("[name=editDescription]").val();
-        var file = $("[name=editTypeImg]").get(0).files;
-        formData.append("typeId", typeId);
-        formData.append("imgType", file[0]);
-        formData.append("typeName", typeName);
-        formData.append("description", des);
+      var formData = new FormData();
+      var proName = $("[name=productNameEdit]").val();
+      var typeName = $("[name=productTypeEdit]").val();
+      var des = $("[name=descriptionEdit]").val();
+      var quan = $("[name=quanEdit]").val();
+      var price = $("[name=priceEdit]").val();
+      var unit = $("[name=unitEdit]").val();
+      var file = $("[name=inputImgEdit]").get(0).files;
 
-        $.ajax({
-          url: "productType/editProduct",
-          type: "POST",
-          data: formData,
-          cache: false,
-          contentType: false,
-          processData: false,
-        })
-          .done(function (result) {
-            if (result.success) {
+      formData.append("productName", proName);
+      formData.append("productType", typeName);
+      formData.append("description", des);
+      formData.append("quan", quan);
+      formData.append("unit", unit);
+      formData.append("price", price);
+      formData.append("imgProduct", file[0]);
+
+      $.ajax({
+        url: "product/editProduct",
+        type: "POST",
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+      })
+        .done(function (result) {
+          if (result.success) {
             //   alert(result.mgs);
-              location.reload();
-            } else {
-              alert(result.mgs);
-            }
-          })
-          .fail(() => {
-            alert("Không kết nối được với server");
-          });
-      };
-      var deleteType = function (event) {
-        event.preventDefault();
-
-        var formData = new FormData();
-        var typeId = $("[name=typeIdDel]").text();
-
-        formData.append("typeId", typeId);
-
-        $.ajax({
-          url: "productType/deleteProduct",
-          type: "POST",
-          data: formData,
-          cache: false,
-          contentType: false,
-          processData: false,
+            location.reload();
+          } else {
+            alert(result.mgs);
+          }
         })
-          .done(function (result) {
-            if (result.success) {
+        .fail(() => {
+          alert("Không kết nối được với server");
+        });
+    };
+    var deleteType = function (event) {
+      event.preventDefault();
+
+      var formData = new FormData();
+      var typeId = $("[name=typeIdDel]").text();
+
+      formData.append("typeId", typeId);
+
+      $.ajax({
+        url: "productType/deleteProduct",
+        type: "POST",
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+      })
+        .done(function (result) {
+          if (result.success) {
             //   alert(result.mgs);
-              location.reload();
-            } else {
-              alert(result.mgs);
-            }
-          })
-          .fail(() => {
-            alert("Không kết nối được với server");
-          });
-      };
-      var loadImg = function (event) {
-        $("#typeImgForm").attr(
-          "src",
-          URL.createObjectURL(event.target.files[0])
-        );
-      };
-      var loadImgEdit = function (event) {
-        $("#editTypeImgForm").attr(
-          "src",
-          URL.createObjectURL(event.target.files[0])
-        );
-      };
-      $("[name=btn_edit]").click(function () {
-        var typeId = $(this).parent().parent().children().eq(0).html();
-        var name = $(this).parent().parent().children().eq(1).html();
-        var des = $(this).parent().parent().children().eq(2).html();
-        var img = $(this)
+            location.reload();
+          } else {
+            alert(result.mgs);
+          }
+        })
+        .fail(() => {
+          alert("Không kết nối được với server");
+        });
+    };
+    var loadImg = function (event) {
+      $("#typeImgForm").attr(
+        "src",
+        URL.createObjectURL(event.target.files[0])
+      );
+    };
+    var loadImgEdit = function (event) {
+      $("#editTypeImgForm").attr(
+        "src",
+        URL.createObjectURL(event.target.files[0])
+      );
+    };
+    $("[name=btn_edit]").click(function () {
+      var productName = $(this).parent().parent().children().eq(1).html();
+      var productType= $(this).parent().parent().children().eq(2).html();
+      var des = $(this).parent().parent().children().eq(3).html();
+      var quan = $(this).parent().parent().children().eq(4).html();
+      var price = $(this).parent().parent().children().eq(5).html();
+      var unit = $(this).parent().parent().children().eq(6).html();
+      var img = $(this)
           .parent()
           .parent()
           .children()
-          .eq(3)
+          .eq(7)
           .children()
           .eq(0)
           .attr("src");
-        $("#editTypeImgForm").attr("src", img);
-        $("[name=editTypeId]").val(typeId);
-        $("[name=editTypeName]").val(name);
-        $("[name=editDescription]").val(des);
-      });
-      $("[name=btn_delete]").click(function () {
-        var typeIdDel = $(this).parent().parent().children().eq(0).html();
-        var name = $(this).parent().parent().children().eq(1).html();
-        $("[name=typeIdDel]").text(typeIdDel);
-        $("[name=typeNameDel]").text(name);
-      });
-    </script>
-    <script src="js/app.js"></script>
-  </body>
+
+
+      $("#productImgEdit").attr("src", img);
+        
+       $("[name=productNameEdit]").val(productName);
+         $("[name=productTypeEdit]").val(productType);
+$("[name=descriptionEdit]").val(des);
+   $("[name=quanEdit]").val(quan);
+       $("[name=priceEdit]").val(price);
+      $("[name=unitEdit]").val(unit);
+    });
+    $("[name=btn_delete]").click(function () {
+      var typeIdDel = $(this).parent().parent().children().eq(0).html();
+      var name = $(this).parent().parent().children().eq(1).html();
+      $("[name=typeIdDel]").text(typeIdDel);
+      $("[name=typeNameDel]").text(name);
+    });
+  </script>
+  <script src="js/app.js"></script>
+</body>
+
 </html>

@@ -29,6 +29,6 @@ router.route("/login").post(AccountController.login);
 //Product
 router.use("/productType", proType);
 router.use("/account", routeAccount);
-// router.use("/product", routeProduct);
+router.use("/product", routeProduct);
 
 module.exports = router;

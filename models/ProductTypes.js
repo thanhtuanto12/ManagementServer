@@ -27,7 +27,7 @@ const productSchema = new Schema({
     type: String,
     require: true,
   },
-  quanti: {
+  quan: {
     type: Number,
     default: 0,
   },
