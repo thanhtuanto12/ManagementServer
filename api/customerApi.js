@@ -10,6 +10,7 @@ const path = require("path");
 const bcrypt = require("bcrypt");
 let api = require("../config");
 const { getSalt } = require("bcryptjs");
+const { findOneAndUpdate } = require("../models/customer");
 API_URL = api.API_URL;
 
 exports.login = async (req, res) => {
@@ -105,7 +106,7 @@ exports.register = async (req, res) => {
         data: null,
       });
     }
-    const checkAccount = await Customer.findOne({ phone, isActive: true });
+    const checkAccount = await Customer.findOne({ phone });
     // const checkUsername = await Customer.findOne({ username: username });
     if (checkAccount) {
       return res.json({
@@ -118,7 +119,6 @@ exports.register = async (req, res) => {
       name,
       password: bcrypt.hashSync(password, 10),
       phone,
-      status: 1,
     }).save();
 
     return res.json({
