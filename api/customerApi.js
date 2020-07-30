@@ -7,7 +7,9 @@ let mongoose = require("mongoose");
 let handleAccountJwt = require("../handleAccountJwt");
 let fs = require("fs");
 const path = require("path");
+const bcrypt = require("bcrypt");
 let api = require("../config");
+const { getSalt } = require("bcryptjs");
 API_URL = api.API_URL;
 
 exports.login = async (req, res) => {
@@ -81,65 +83,49 @@ exports.logout = async (req, res) => {
 };
 exports.register = async (req, res) => {
   try {
-    let email = req.body.email;
-    let username = req.body.username.toLowerCase();
-    let phone = req.body.phone;
-    let password = req.body.password;
-    let retypePassword = req.body.retypePassword;
-    email = email.toLowerCase();
-    if (phone === undefined || phone === null) {
+    const { name, phone, password } = req.body;
+    if (!phone) {
       return res.json({
         status: -1,
         message: " Số điện thoại không được bỏ trống!",
         data: null,
       });
     }
-    if (
-      password === undefined ||
-      password === null ||
-      password !== retypePassword
-    ) {
+    if (!password) {
       return res.json({
         status: -1,
-        message: "Password is incorrect !",
+        message: "Mật khẩu không được bỏ trống!",
         data: null,
       });
     }
-    const checkAccount = await Customer.findOne({ phone: phone });
+    if (!name) {
+      return res.json({
+        status: -1,
+        message: "Tên không được bỏ trống",
+        data: null,
+      });
+    }
+    const checkAccount = await Customer.findOne({ phone, isActive: true });
     // const checkUsername = await Customer.findOne({ username: username });
-    if (checkAccount !== null) {
+    if (checkAccount) {
       return res.json({
         status: -1,
         message: "Số điện thoại đã được đăng ký!",
         data: null,
       });
     }
-    // else if (checkUsername !== null) {
-    //   return res.json({
-    //     status: -1,
-    //     message: "Tên tài khoản đã tồn tại!",
-    //     data: null,
-    //   });
-    // }
-    else {
-      const newCustomer = new Customer({
-        _id: new mongoose.Types.ObjectId(),
-        email: email,
-        username: username,
-        password: password,
-        phone: phone,
-        status: 1,
-        created_at: new Date(),
-      });
+    await new Customer({
+      name,
+      password: bcrypt.hashSync(password, 10),
+      phone,
+      status: 1,
+    }).save();
 
-      await newCustomer.save();
-
-      return res.json({
-        status: 1,
-        message: "Đăng ký thành công!",
-        data: null,
-      });
-    }
+    return res.json({
+      status: 1,
+      message: "Đăng ký thành công!",
+      data: null,
+    });
   } catch (error) {
     console.log(error);
     return res.json({
