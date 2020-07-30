@@ -16,12 +16,7 @@ API_URL = api.API_URL;
 exports.login = async (req, res) => {
   let phone = req.body.phone;
   let password = req.body.password;
-  if (
-    phone === null ||
-    phone === undefined ||
-    password === null ||
-    password === undefined
-  ) {
+  if (!phone || !password) {
     return res.json({
       status: -1,
       message: "Vui lòng nhập đầy đủ số điện thoại và mật khẩu",
@@ -29,22 +24,21 @@ exports.login = async (req, res) => {
     });
   }
 
-  phone = phone;
-  const check = await Customer.findOne({ phone: phone });
-  if (check !== null) {
-    const token1 = jwt.sign({ id: check.id }, "jwt-secret");
+  const foundAccount = await Customer.findOne({ phone: phone });
+  if (foundAccount && bcrypt.compareSync(password, foundAccount.password)) {
+    const accessTokent = jwt.sign({ id: foundAccount.id }, "jwt-secret");
     return res.json({
       status: 1,
       message: "Thành công",
       data: {
-        token: token1,
-        userId: check.userId,
-        username: check.username,
-        fullName: check.fullName,
-        email: check.email,
-        phone: check.phone,
-        avatarUrl: check.avatarUrl,
-        address: check.address,
+        accessTokent,
+        // userId: check.userId,
+        // username: check.username,
+        // fullName: check.fullName,
+        // email: check.email,
+        // phone: check.phone,
+        // avatarUrl: check.avatarUrl,
+        // address: check.address,
       },
     });
   } else {
@@ -225,8 +219,8 @@ exports.getUserByToken = async (req, res) => {
       req.token = bearerToken;
       let accountId = handleAccountJwt.getAccountId(req);
       if (accountId !== null || accountId !== undefined) {
-        const Customer = await Customer.findOne({ _id: accountId });
-        if (Customer === null || Customer === undefined) {
+        const foundCustomer = await Customer.findOne({ _id: accountId });
+        if (!foundCustomer) {
           return res.json({
             status: -1,
             message: "Không tìm thấy người dùng này !",
@@ -237,12 +231,9 @@ exports.getUserByToken = async (req, res) => {
             status: 1,
             message: "Lấy thông tin thành công",
             data: {
-              userID: Customer._id,
-              username: Customer.username,
-              fullName: Customer.fullName,
-              email: Customer.email,
-              phone: Customer.phone,
-              address: Customer.address,
+              id: foundCustomer._id,
+              name: foundCustomer.name,
+              phone: foundCustomer.phone,
               avatarUrl: Customer.avatarUrl,
             },
           });

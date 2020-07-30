@@ -14,7 +14,7 @@ let upload = multer({ dest: "uploads" });
 router.route("/register").post(customerApi.register);
 router.route("/updateUserData").post(customerApi.updateUserData);
 router.route("/getUserByName").post(customerApi.getUserByName);
-router.route("/getUserLogin").post(customerApi.getUserByToken);
+router.route("/getUserLogin").get(customerApi.getUserByToken);
 router.route("/changeAvatar").post(customerApi.changeAvatar);
 
 router.route("/login").post(customerApi.login);
