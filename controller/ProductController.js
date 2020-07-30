@@ -371,7 +371,7 @@ exports.addProduct1 = async (req, res) => {
         ).then(() => {
           return res.json({
             success: true,
-            mgs: "Thêm loại sản phẩm thành công",
+            mgs: "Thêm sản phẩm thành công",
           });
         });
         // await newProduct.save().then(async () => {
@@ -431,61 +431,13 @@ exports.addProduct1 = async (req, res) => {
     console.log(er);
     return res.json({
       success: false,
-      mgs: "Có sự cố xảy ra. Không thể thêm loại sản phẩm!",
+      mgs: "Có sự cố xảy ra. Không thể thêm sản phẩm!",
     });
   }
 };
-// exports.addProduct = async (req, res) => {
-//   //Type infor
-//   try {
-//     let typeProduct = req.body.typeProduct;
-//     let description = req.body.description;
-//     let productName = req.body.productName;
-//     let unit = req.body.unit;
-//     let quan = req.body.quan;
-//     let price = req.body.price;
-//     let productImg = "imgFromServer/product/" + req.file.filename;
-//     let date = new Date();
-//     let today = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
 
-//     if (productName == null || productName == undefined || productName == "") {
-//       return res.send("Tên sản phẩm không được để trống");
-//     }
-//     let proType = await ProductType.findOne({
-//       typeName: typeProduct,
-//     });
-//     if (proType == null) {
-//       return res.send("Không tìm thấy loại sản phẩm này");
-//     }
-//     //create new Products
-//     const newProducts = {
-//       _id: new mongoose.Types.ObjectId(),
-//       productName: productName,
-//       unit: unit,
-//       quan: quan,
-//       price: price,
-//       typeProduct: typeProduct,
-//       productImg: productImg,
-//       description: description,
-//       created_at: today,
-//       last_modified: today,
-//     };
-//     proType = await ProductType.findOneAndUpdate(
-//       { typeName: typeProduct },
-//       { $push: { product: newProducts } }
-//     ).then(async (data) => {
-//       if (data == null) {
-//         return res.send("Thêm sản phẩm thất bại");
-//       }
-//       return res.redirect(req.get("referer"));
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     console.log(filename);
-//     return res.send("Có lỗi xảy ra! Thêm sản phẩm thất bại");
-//   }
-// };
 exports.editProduct = async (req, res) => {
+  let productId = req.body.productId;
   let productName = req.body.productName;
   let typeName = req.body.productType;
   let description = req.body.description;
@@ -497,58 +449,86 @@ exports.editProduct = async (req, res) => {
   if (productName == null || productName == undefined || productName == "") {
     return res.json({ success: false, mgs: "Tên không được để trống" });
   }
-
   try {
-    //Check ProductType Name exist
-
-    const check = await ProductType.findOne({
-      productName: productName,
+    //find productType have product we need
+    const productType = await ProductType.findOne({
+      "product._id": productId, //get column productId
     });
-    let currenImg = check.typeImg;
-    let currenName = check.productName;
-    if (productName !== currenName) {
-      const checkName = await ProductType.find({
-        productName: productName,
-      });
-      if (checkName.length != 0) {
+    console.log(productType);
+    const product = productType.product.filter(
+      (data) => data.productName.toString() === productName.toString()
+    );
+    // Tìm loại sản phẩm có chứa sản phẩm trùng với tên mfinh cập nhật
+    const checkName = await ProductType.findOne({
+      "product.productName": productName,
+    });
+    // Nếu có loại này thì có 2 khả năng xảy ra
+    // 1 là nó là sản phẩm có id khác
+    // 2 nó là sản phẩm mà mình đang cập nhật nhưng không đổi tên mới
+    if (checkName !== null) {
+      //Lấy sản phẩm có tên trùng ra
+      const productCheck = checkName.product.filter(
+        (data) => data.productName.toString() === productName.toString()
+      );
+      if (productCheck[0]._id != productId) {
+        console.log(productCheck[0]._id != productId);
+        //nếu không trùng thì éo cho cập nhật nữa
         return res.json({
           success: false,
-          mgs: "Tên sản phẩm đã tồn tại!",
+          mgs: "Tên sản phẩm bị trùng!",
         });
       }
     }
 
-    //update ProductType
+    //Get index of product in product type
+    const productIndex = productType.product.findIndex(
+      (data) => data._id.toString() === productId.toString()
+    );
+    //update Product
     let files = req.files;
     if (!objectIsEmpty(files)) {
-      let file = req.files.imgType;
+      //lấy file ảnh
+      // let file = req.files.inputImg;
+      let file = req.files.imgProduct;
+      //đổi tên ảnh bằng ngày tháng
       let imageName = file.fieldName + "-" + Date.now() + ".png";
+      // lấy dường dẫn tới file ảnh trong máy
       let tmp_path = file.path;
+      // tạo đường dẫn tới thư mục mới
       let target_path =
         __dirname.replace("controller", "") +
         "public/imgFromServer/product/" +
         imageName;
+      //đọc file từ đường dẫn cũ
       let src = fs.createReadStream(tmp_path);
+      //tạo file ra đường dẫn mới
       let dest = fs.createWriteStream(target_path);
+      //láy file từ đường dẫn cũ lưu vào đường dẫn mới
+      //đừng hỏi tao, thư viện nó bảo làm thế thì tao làm theo chứ chắc éo gì đã hiểu
       src.pipe(dest);
+      //lưu thành công
       src.on("end", async () => {
-        try {
-          let productImg = "imgFromServer/product/" + imageName;
-          await ProductType.findOneAndUpdate(
-            { productName: productName },
-
-            {
-              productName: productName,
-              unit: unit,
-              quan: quan,
-              price: price,
-              productType: productType,
-              productImg: productImg,
-              description: description,
-              created_at: today,
-              last_modified: today,
-            }
-          ).then(async () => {
+        //tạo biến ghi đường dẫn ảnh
+        let productImg = "imgFromServer/product/" + imageName;
+        //tạo biến lưu những gái trị mới của sản phẩm
+        const newProduct = {
+          productName: productName,
+          unit: unit,
+          quan: quan,
+          price: price,
+          productType: typeName,
+          productImg: productImg,
+          description: description,
+          created_at: today,
+          last_modified: today,
+        };
+        //Tìm tới loại sản phẩm, tìm tới sản phẩm có index bằng cái index mình đã tìm, dùng $set để cập nhật lại
+        console.log(123213);
+        await productType
+          .updateOne({
+            $set: { [`product.${productIndex}`]: newProduct },
+          })
+          .then(async () => {
             if (typeImg != "imgFromServer/product/default.png") {
               fs.unlink(
                 __dirname.replace("controller", "") + "public/" + currenImg,
@@ -562,12 +542,6 @@ exports.editProduct = async (req, res) => {
               });
             }
           });
-        } catch (error) {
-          return res.json({
-            success: false,
-            mgs: "Có sự cố xảy ra. Không thể thêm loại sản phẩm!",
-          });
-        }
       });
       src.on("error", (err) => {
         fs.unlink(tmp_path, (err) => {
@@ -579,28 +553,33 @@ exports.editProduct = async (req, res) => {
         });
       });
     } else {
-      //create new ProductType
-      await ProductType.findOneAndUpdate(
-        { productName: productName },
-        {
-          productName: productName,
-          unit: unit,
-          quan: quan,
-          price: price,
-          productType: productType,
-          productImg: productImg,
-          description: description,
-          created_at: today,
-          last_modified: today,
-        }
-      ).then(async () => {
-        return res.json({
-          success: true,
-          mgs: "Cập nhật loại sản phẩm thành công",
+      //tạo biến ghi đường dẫn ảnh
+      //tạo biến lưu những gái trị mới của sản phẩm
+      const newProduct = {
+        productName: productName,
+        unit: unit,
+        quan: quan,
+        price: price,
+        productType: typeName,
+        productImg: product[0].productImg,
+        description: description,
+        created_at: today,
+        last_modified: today,
+      };
+      //Tìm tới loại sản phẩm, tìm tới sản phẩm có index bằng cái index mình đã tìm, dùng $set để cập nhật lại
+      await productType
+        .updateOne({
+          $set: { [`product.${productIndex}`]: newProduct },
+        })
+        .then(async () => {
+          return res.json({
+            success: true,
+            mgs: "Cập nhật loại sản phẩm thành công",
+          });
         });
-      });
     }
-  } catch {
+  } catch (error) {
+    console.log(error);
     return res.json({
       success: false,
       mgs: "Có sự cố xảy ra. Không thể cập nhật loại sản phẩm!",

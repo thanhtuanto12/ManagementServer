@@ -94,7 +94,6 @@ exports.register = async (req, res) => {
         data: null,
       });
     }
-
     if (
       password === undefined ||
       password === null ||

@@ -277,8 +277,9 @@
                     </div>
                     <div class="modal-body">
                       <div class="col-md-12">
-                        <form id="productForm" action="/product/addProduct" method="POST" enctype="multipart/form-data">
+                        <form id="productForm" action="/product/editProduct" method="POST" enctype="multipart/form-data">
                           <div class="form-group">
+                            <input type="hidden" name="editProductId" class="form-control">
                             <div class="row">
                               <div class="col-md-6">
                                 <label class="form-label col-6 col-xl-6">Tên sản phẩm</label>
@@ -326,7 +327,7 @@
                           <div class="form-group">
                             <label class="form-label w-100">Ảnh sản phẩm</label>
                             <input name="inputImgEdit" id="inputImgEdit" type="file" required="required"
-                              onchange="loadImg(event)" accept="image/png, image/jpeg">
+                              onchange="loadImgEdit(event)" accept="image/png, image/jpeg">
                             <small class="form-text text-muted">
                               <img name="productImgEdit" id="productImgEdit" src="#" height="200px" width="200px" alt="No IMG">
                             </small>
@@ -510,6 +511,7 @@
       event.preventDefault();
 
       var formData = new FormData();
+      var productId= $("[name=editProductId]").val();
       var proName = $("[name=productNameEdit]").val();
       var typeName = $("[name=productTypeEdit]").val();
       var des = $("[name=descriptionEdit]").val();
@@ -518,6 +520,7 @@
       var unit = $("[name=unitEdit]").val();
       var file = $("[name=inputImgEdit]").get(0).files;
 
+      formData.append("productId", productId);
       formData.append("productName", proName);
       formData.append("productType", typeName);
       formData.append("description", des);
@@ -575,18 +578,19 @@
         });
     };
     var loadImg = function (event) {
-      $("#typeImgForm").attr(
+      $("#productImg").attr(
         "src",
         URL.createObjectURL(event.target.files[0])
       );
     };
     var loadImgEdit = function (event) {
-      $("#editTypeImgForm").attr(
+      $("#productImgEdit").attr(
         "src",
         URL.createObjectURL(event.target.files[0])
       );
     };
     $("[name=btn_edit]").click(function () {
+      var productId=$(this).parent().parent().children().eq(0).html();
       var productName = $(this).parent().parent().children().eq(1).html();
       var productType= $(this).parent().parent().children().eq(2).html();
       var des = $(this).parent().parent().children().eq(3).html();
@@ -602,15 +606,14 @@
           .eq(0)
           .attr("src");
 
-
-      $("#productImgEdit").attr("src", img);
-        
-       $("[name=productNameEdit]").val(productName);
+          $("[name=editProductId]").val(productId);
+         $("#productImgEdit").attr("src", img);
+         $("[name=productNameEdit]").val(productName);
          $("[name=productTypeEdit]").val(productType);
-$("[name=descriptionEdit]").val(des);
-   $("[name=quanEdit]").val(quan);
-       $("[name=priceEdit]").val(price);
-      $("[name=unitEdit]").val(unit);
+         $("[name=descriptionEdit]").val(des);
+          $("[name=quanEdit]").val(quan);
+          $("[name=priceEdit]").val(price);
+          $("[name=unitEdit]").val(unit);
     });
     $("[name=btn_delete]").click(function () {
       var typeIdDel = $(this).parent().parent().children().eq(0).html();
