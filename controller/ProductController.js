@@ -22,14 +22,11 @@ exports.getListProductType = async (req, res) => {
     let page = 0; //req.body.page
     let limit = 1; //req.body.limit
     // const listProductType = await ProductType.find().skip(page*limit).limit(limit)
-    console.log(__dirname);
-    const listProductType = await ProductType.find();
-    const listAll = ProductType.find();
-    const countPage = (await listAll).length / limit;
+
+    const listProductType = await ProductType.find({ delete_at: null });
     return res.render("product/ProductType", {
       listProductType,
       mgs: "",
-      countPage: countPage,
     });
   } catch (error) {
     return res.send({ mgs: "Có lỗi xảy ra! Lấy danh sách thất bại" });
@@ -283,12 +280,16 @@ exports.deleteProductType = async (req, res) => {
 
 exports.getListProduct = async (req, res) => {
   try {
-    const listProductType = await ProductType.find();
-    var listProduct = [];
+    const listProductType = await ProductType.find({ delete_at: null });
+    const listProduct = [];
+
+    // var listProduct = [];
     for (let ProType of listProductType) {
       if (ProType.product !== []) {
         for (let Product of ProType.product) {
-          listProduct.push(Product);
+          if (Product.delete_at == null) {
+            listProduct.push(Product);
+          }
         }
       }
     }
@@ -334,7 +335,6 @@ exports.addProduct1 = async (req, res) => {
     let files = req.files;
 
     if (!objectIsEmpty(files)) {
-      console.log("22222", quan);
       let file = files.imgProduct;
       let imageName = file.fieldName + "-" + Date.now() + ".png";
       let tmp_path = file.path;
@@ -399,7 +399,6 @@ exports.addProduct1 = async (req, res) => {
       });
     } else {
       let productImg = "imgFromServer/product/default.png";
-      console.log("11111111");
       //create new ProductType
       const newProduct = {
         _id: new mongoose.Types.ObjectId(),
@@ -437,16 +436,18 @@ exports.addProduct1 = async (req, res) => {
 };
 
 exports.editProduct = async (req, res) => {
-  let productId = req.body.productId;
-  let productName = req.body.productName;
-  let typeName = req.body.productType;
-  let description = req.body.description;
-  let quan = req.body.quan;
-  let price = req.body.price;
-  let unit = req.body.unit;
+  let {
+    productId,
+    productName,
+    typeName,
+    description,
+    quan,
+    price,
+    unit,
+  } = req.body;
   let date = new Date();
   let today = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
-  if (productName == null || productName == undefined || productName == "") {
+  if (!productName) {
     return res.json({ success: false, mgs: "Tên không được để trống" });
   }
   try {
@@ -454,10 +455,10 @@ exports.editProduct = async (req, res) => {
     const productType = await ProductType.findOne({
       "product._id": productId, //get column productId
     });
-    console.log(productType);
     const product = productType.product.filter(
-      (data) => data.productName.toString() === productName.toString()
+      (data) => data._id.toString() === productId.toString()
     );
+    let currenImg = product[0].productImg;
     // Tìm loại sản phẩm có chứa sản phẩm trùng với tên mfinh cập nhật
     const checkName = await ProductType.findOne({
       "product.productName": productName,
@@ -471,8 +472,7 @@ exports.editProduct = async (req, res) => {
         (data) => data.productName.toString() === productName.toString()
       );
       if (productCheck[0]._id != productId) {
-        console.log(productCheck[0]._id != productId);
-        //nếu không trùng thì éo cho cập nhật nữa
+        //In the case: not update product name
         return res.json({
           success: false,
           mgs: "Tên sản phẩm bị trùng!",
@@ -523,13 +523,12 @@ exports.editProduct = async (req, res) => {
           last_modified: today,
         };
         //Tìm tới loại sản phẩm, tìm tới sản phẩm có index bằng cái index mình đã tìm, dùng $set để cập nhật lại
-        console.log(123213);
         await productType
           .updateOne({
             $set: { [`product.${productIndex}`]: newProduct },
           })
           .then(async () => {
-            if (typeImg != "imgFromServer/product/default.png") {
+            if (productImg != "imgFromServer/product/default.png") {
               fs.unlink(
                 __dirname.replace("controller", "") + "public/" + currenImg,
                 (err) => {
@@ -583,6 +582,43 @@ exports.editProduct = async (req, res) => {
     return res.json({
       success: false,
       mgs: "Có sự cố xảy ra. Không thể cập nhật loại sản phẩm!",
+    });
+  }
+};
+
+exports.deleteProduct = async (req, res) => {
+  //Type infor
+  try {
+    let productId = req.body.productId;
+    console.log("aaaaa", productId);
+    let date = new Date();
+    let today = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+    const productTypes = await ProductType.findOne({
+      "product._id": productId, //get column productId
+    });
+    let productIndex = productTypes.product.findIndex(
+      (data) => data._id.toString() === productId.toString()
+    );
+    await ProductType.findOneAndUpdate(
+      {
+        "product._id": productId,
+      },
+      {
+        $set: {
+          [`product.${productIndex}.delete_at`]: today,
+          [`product.${productIndex}.last_modified`]: today,
+        },
+      }
+    );
+    return res.json({
+      success: true,
+      mgs: "Xoá thành công",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({
+      success: false,
+      mgs: "Có lỗi xảy ra! Xoá thất bại",
     });
   }
 };

@@ -6,6 +6,8 @@ const customerApi = require("../api/customerApi");
 const productTypeApi = require("../api/productTypeApi");
 const productApi = require("../api/productApi");
 const accountAuth = require("../middleware/accountAuth");
+const cartApi = require("../api/cartApi");
+const orderApi = require("../api/orderApi");
 
 let multer = require("multer");
 let upload = multer({ dest: "uploads" });
@@ -13,9 +15,9 @@ let upload = multer({ dest: "uploads" });
 //Customers route
 router.route("/register").post(customerApi.register);
 router.route("/updateUserData").post(customerApi.updateUserData);
-router.route("/getUserByName").post(customerApi.getUserByName);
+// router.route("/getUserByName").post(customerApi.getUserByName);
 router.route("/getUserLogin").get(customerApi.getUserByToken);
-router.route("/changeAvatar").post(customerApi.changeAvatar);
+// router.route("/changeAvatar").post(customerApi.changeAvatar);
 
 router.route("/login").post(customerApi.login);
 router.route("/logout").post(customerApi.logout);
@@ -55,5 +57,15 @@ router.route("/Product/GetAll").post(productApi.getAllProduct);
 router.route("/Product/GetByProType").post(productApi.getProductByProType);
 router.route("/Product/GetByName").post(productApi.getProductByName);
 router.route("/Product/GetByID").post(productApi.getProductById);
+
+//Cart
+router.route("/Cart/GetCart").post(cartApi.findCartByUser);
+router.route("/Cart/AddToCart").post(cartApi.addToCart);
+router.route("/Cart/EditQuanTi").post(cartApi.changeQuanti);
+router.route("/Cart/RemoveFromCart").post(cartApi.removeFromCart);
+//Order
+router.route("/Order/NewOrder").post(orderApi.newOrder);
+router.route("/Order/Ordered").post(orderApi.Ordered);
+router.route("/Order/DowloadOrder").post(orderApi.downloadOrder);
 
 module.exports = router;

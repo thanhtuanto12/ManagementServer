@@ -17,6 +17,6 @@ routeProduct.route("/addProduct").post(ProductController.addProduct1);
 
 routeProduct.route("/editProduct").post(ProductController.editProduct);
 
-// routeProduct.route("/deleteType").post(ProductController.deleteProductType);
+routeProduct.route("/deleteProduct").post(ProductController.deleteProduct);
 
 module.exports = routeProduct;

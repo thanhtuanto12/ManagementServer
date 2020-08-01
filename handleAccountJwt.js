@@ -1,20 +1,18 @@
-const jwt = require('jsonwebtoken')
+const jwt = require("jsonwebtoken");
 
 exports.getAccountId = (req, res) => {
-  if (req.token === 'admin') {
-    return 0
+  const bearerHeader = req.headers["authorization"];
+  if (typeof bearerHeader !== "undefined") {
+    const bearer = bearerHeader.split(" ");
+    const bearerToken = bearer[1];
+    let token = bearerToken;
+    return jwt.verify(token, "jwt-secret", (err, data) => {
+      if (err) {
+        return null;
+      } else {
+        return data.id;
+      }
+    });
   }
-  return jwt.verify(req.token, 'jwt-secret', (err, data) => {
-    if (err) {
-      //   console.log(err)
-      // res.json({
-      //   resultCode: -1,
-      //   message: 'Không tìm thấy người dùng này',
-      //   data: null,
-      // })
-      return null
-    } else {
-      return data.id
-    }
-  })
-}
+  return null;
+};

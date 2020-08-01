@@ -438,7 +438,7 @@
                       </div>
                       <div class="modal-body">
                         <div class="col-md-12">
-                          <form id="editProTypeForm" enctype="multipart/form-data">
+                          <form id="deleteProTypeForm" enctype="multipart/form-data">
                             <p name="typeIdDel" hidden>
 							</p>
 							<p> Bạn muốn xóa loại sản phẩm này?
@@ -630,7 +630,7 @@
         })
           .done(function (result) {
             if (result.success) {
-            //   alert(result.mgs);
+              alert(result.mgs);
               location.reload();
             } else {
               alert(result.mgs);

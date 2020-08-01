@@ -32,13 +32,6 @@ exports.login = async (req, res) => {
       message: "Thành công",
       data: {
         accessTokent,
-        // userId: check.userId,
-        // username: check.username,
-        // fullName: check.fullName,
-        // email: check.email,
-        // phone: check.phone,
-        // avatarUrl: check.avatarUrl,
-        // address: check.address,
       },
     });
   } else {
@@ -130,86 +123,6 @@ exports.register = async (req, res) => {
   }
 };
 
-exports.getUserByPhone = async (req, res) => {
-  try {
-    let phone = req.body.phone;
-    if (phone === null || phone === undefined) {
-      return res.json({
-        status: -1,
-        message: "Vui lòng nhập số điện thoại",
-        data: null,
-      });
-    }
-    const Customer = await Customer.findOne({ phone: phone });
-    if (user !== null) {
-      return res.json({
-        status: 1,
-        message: "Lấy thông tin thành công",
-        data: {
-          userID: Customer._id,
-          username: Customer.username,
-          fullName: Customer.fullName,
-          email: Customer.email,
-          phone: Customer.phone,
-          address: Customer.address,
-          avatarUrl: Customer.avatarUrl,
-        },
-      });
-    } else {
-      return res.json({
-        status: -1,
-        message: "Không tìm thấy người dùng này",
-        data: null,
-      });
-    }
-  } catch {
-    return res.json({
-      status: -1,
-      message: "Có lỗi xảy ra! Không lấy được thông tin",
-      data: null,
-    });
-  }
-};
-exports.getUserByName = async (req, res) => {
-  try {
-    let username = req.body.username;
-    if (username === null || username === undefined) {
-      return res.json({
-        status: -1,
-        message: "Vui lòng nhập username",
-        data: null,
-      });
-    }
-    const Customer = await Customer.findOne({ username: username });
-    if (user !== null) {
-      return res.json({
-        status: 1,
-        message: "Lấy thông tin thành công",
-        data: {
-          userID: Customer._id,
-          username: Customer.username,
-          fullName: Customer.fullName,
-          email: Customer.email,
-          phone: Customer.phone,
-          address: Customer.address,
-          avatarUrl: Customer.avatarUrl,
-        },
-      });
-    } else {
-      return res.json({
-        status: -1,
-        message: "Không tìm thấy người dùng này",
-        data: null,
-      });
-    }
-  } catch {
-    return res.json({
-      status: -1,
-      message: "Có lỗi xảy ra! Không lấy được thông tin",
-      data: null,
-    });
-  }
-};
 exports.getUserByToken = async (req, res) => {
   try {
     const bearerHeader = req.headers["authorization"];
