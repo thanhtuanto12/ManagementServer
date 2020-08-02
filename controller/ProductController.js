@@ -459,6 +459,7 @@ exports.editProduct = async (req, res) => {
       (data) => data._id.toString() === productId.toString()
     );
     let currenImg = product[0].productImg;
+    console.log("product product", product);
     // Tìm loại sản phẩm có chứa sản phẩm trùng với tên mfinh cập nhật
     const checkName = await ProductType.findOne({
       "product.productName": productName,
@@ -516,7 +517,7 @@ exports.editProduct = async (req, res) => {
           unit: unit,
           quan: quan,
           price: price,
-          productType: typeName,
+          productType: product[0].productType,
           productImg: productImg,
           description: description,
           created_at: today,
@@ -559,7 +560,7 @@ exports.editProduct = async (req, res) => {
         unit: unit,
         quan: quan,
         price: price,
-        productType: typeName,
+        productType: product[0].productType,
         productImg: product[0].productImg,
         description: description,
         created_at: today,

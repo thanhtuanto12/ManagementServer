@@ -167,7 +167,6 @@
       <!-- Container -->
       <div class="container">
         <div class="col-md-12">
-          <div class="widget-sec">
             <div aria-hidden="true" role="dialog" tabindex="-1" class="modal fade" id="myModalAddProduct"
               style="display: none;">
               <div class="modal-dialog">
@@ -191,7 +190,7 @@
                               </div>
                               <div class="col-md-6">
                                 <label class="form-label">Loại sản phẩm</label>
-                                <select name="productType" class="form-control">
+                                <select name="productType"  class="form-control">
                                   <option value="<%= listProductType[0].typeName %>" selected="">
                                     <%= listProductType[0].typeName %></option>
                                   <% for (var i = 0; i < listProductType.length; i++) { %>
@@ -256,14 +255,12 @@
                 </div>
               </div>
               <!-- /.modal-content -->
-            </div>
-            <a class="btns blue sml-btn" href="#myModalAddProduct" data-toggle="modal">Thêm sản phẩm</a>
+           
             <!-- Modal Open Button -->
           </div>
         </div>
         <!-- Modal edit -->
         <div class="col-md-12">
-          <div class="widget-sec">
             <div aria-hidden="true" role="dialog" tabindex="-1" class="modal fade" id="myModalEditProduct"
               style="display: none;">
               <div class="modal-dialog">
@@ -288,8 +285,8 @@
                               </div>
                               <div class="col-md-6">
                                 <label class="form-label">Loại sản phẩm</label>
-                                <select name="productTypeEdit" class="form-control">
-                                  <option value="<%= listProductType[0].typeName %>" selected="">
+                                <select id="productTypeEdit" name="productTypeEdit" class="form-control">
+                                  <option  value="<%= listProductType[0].typeName %>" selected="">
                                     <%= listProductType[0].typeName %></option>
                                   <% for (var i = 1; i < listProductType.length; i++) { %>
                                   <option value="<%= listProductType[i].typeName %>"><%= listProductType[i].typeName %>
@@ -355,11 +352,15 @@
               </div>
               <!-- /.modal-content -->
             </div>
-
-          </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-6">
+                  <a class="btns blue sml-btn" href="#myModalAddProduct" data-toggle="modal">Thêm sản phẩm</a>
+                </div>
+              </div>
+                </div>
         </div>
         <div class="col-md-12">
-          <div class="widget-sec">
             <div aria-hidden="true" role="dialog" tabindex="-1" class="modal fade" id="myModalDeleteProduct"
               style="display: none;">
               <div class="modal-dialog">
@@ -376,7 +377,7 @@
                         <form id="editProductForm" enctype="multipart/form-data">
                           <p name="productIdDel" hidden>
                           </p>
-                          <p> Bạn muốn xóa loại sản phẩm này?
+                          <p> Bạn muốn xóa sản phẩm này?
                           </p>
                           <p name="productNameDel">
                           </p>
@@ -396,15 +397,18 @@
               <!-- /.modal-content -->
             </div>
 
-          </div>
         </div>
+
+        
+  
+
+
         <div class="col-md-12">
           <div class="widget-body">
             <div class="widget-heading purple">
               <i class="icon-table pull-left"></i>
               <h3 class="pull-left">Danh sách sản phẩm</h3>
             </div>
-            <div class="widget-sec">
               <div class="streaming-table">
               </div>
               <table id="stream_table" class="table table-striped table-bordered">
@@ -417,7 +421,7 @@
                     <th>Số lượng</th>
                     <th>Giá</th>
                     <th>Đơn vị</th>
-                    <th style="width: 20%;">Hình ảnh</th>
+                    <th style="width: 10%;">Hình ảnh</th>
                     <th style="width: 20%;">Tuỳ chỉnh</th>
                   </tr>
                 </thead>
@@ -455,7 +459,6 @@
               <div id="summary">
                 <div></div>
               </div>
-            </div>
           </div>
         </div>
       </div>
@@ -513,7 +516,8 @@
       var formData = new FormData();
       var productId= $("[name=editProductId]").val();
       var proName = $("[name=productNameEdit]").val();
-      var typeName = $("[name=productTypeEdit]").val();
+      // var typeName = $("[name=productTypeEdit]").val();
+      var typeName = $("#productTypeEdit option:selected").text();
       var des = $("[name=descriptionEdit]").val();
       var quan = $("[name=quanEdit]").val();
       var price = $("[name=priceEdit]").val();

@@ -29,9 +29,9 @@ exports.login = async (req, res) => {
     username = username.toLowerCase();
     const check = await Account.findOne({
       username: username,
-      password: password,
+      delete_at: null,
     });
-    if (check !== null) {
+    if (check && bcrypt.compareSync(password, check.password)) {
       req.session.isLogin = true;
       req.session.user = username;
       return res.json({ success: true, mgs: "" });
@@ -101,7 +101,7 @@ exports.addAccount = async (req, res) => {
   let fullName = req.body.fullname;
   let username = req.body.username;
   let password = req.body.password;
-  let phone = req.body.phone;
+  let email = req.body.email;
   let date = new Date();
   let today = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
   if (!username) {
@@ -111,15 +111,18 @@ exports.addAccount = async (req, res) => {
     const check = await Account.findOne({
       username: username,
     });
+
     if (check == null) {
       const newAccount = new Account({
         _id: new mongoose.Types.ObjectId(),
         fullName: fullName,
         username: username,
-        password: bcrypt.hashSync(password),
+        password: bcrypt.hashSync(password, 10),
+        email: email,
         created_at: today,
         last_modified: today,
       });
+      console.log(username);
       await newAccount.save().then(async () => {
         return res.json({
           success: true,
@@ -129,10 +132,11 @@ exports.addAccount = async (req, res) => {
     } else {
       return res.json({
         success: false,
-        mgs: "Tên  đã tồn tại!",
+        mgs: "Tên đã tồn tại!",
       });
     }
-  } catch {
+  } catch (err) {
+    console.log(err);
     return res.json({
       success: false,
       mgs: "Có sự cố xảy ra. Không thể thêm !",
@@ -140,10 +144,10 @@ exports.addAccount = async (req, res) => {
   }
 };
 exports.editAccount = async (req, res) => {
-  let fullName = req.body.fullName;
+  let fullName = req.body.fullname;
   let username = req.body.username;
   let password = req.body.password;
-  let phone = req.body.phone;
+  let email = req.body.email;
   let date = new Date();
   let today = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
   if (!username) {
@@ -159,25 +163,24 @@ exports.editAccount = async (req, res) => {
     });
 
     let currenName = check.username;
-    if (typeName !== currenName) {
+    if (username !== currenName) {
       const checkName = await Account.find({
         username: username,
       });
       if (checkName.length != 0) {
         return res.json({
           success: false,
-          mgs: "Tên loại sản phẩm đã tồn tại!",
+          mgs: "Tên đã tồn tại!",
         });
       }
     }
 
     //update Account
-    await ProductType.findOneAndUpdate(
-      { _id: typeId },
+    await Account.findOneAndUpdate(
+      { username: username },
       {
-        typeName: typeName,
-        typeImg: typeImg,
-        description: description,
+        fullName: fullName,
+        email: email,
         last_modified: today,
       }
     );
@@ -185,35 +188,36 @@ exports.editAccount = async (req, res) => {
       success: true,
       mgs: "Cập nhật loại sản phẩm thành công",
     });
-  } catch {
+  } catch (err) {
+    console.log(err);
     return res.json({
       success: false,
       mgs: "Có sự cố xảy ra. Không thể cập nhật loại sản phẩm!",
     });
   }
-  exports.deleteAcount = async (req, res) => {
-    //Type infor
-    try {
-      let accountId = req.body.accountId;
-      let date = new Date();
-      let today = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
-      await Account.findOneAndUpdate(
-        { _id: accountId },
-        {
-          delete_at: today,
-          last_modified: today,
-        }
-      );
-      return res.json({
-        success: true,
-        mgs: "Xoá thành công",
-      });
-    } catch (error) {
-      console.log(error);
-      return res.json({
-        success: false,
-        mgs: "Có lỗi xảy ra! Xoá thất bại",
-      });
-    }
-  };
+};
+exports.deleteAccount = async (req, res) => {
+  //Type infor
+  try {
+    let accountId = req.body.accountId;
+    let date = new Date();
+    let today = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+    await Account.findOneAndUpdate(
+      { _id: accountId },
+      {
+        delete_at: today,
+        last_modified: today,
+      }
+    );
+    return res.json({
+      success: true,
+      mgs: "Xoá thành công",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({
+      success: false,
+      mgs: "Có lỗi xảy ra! Xoá thất bại",
+    });
+  }
 };

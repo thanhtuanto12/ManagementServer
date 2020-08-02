@@ -222,7 +222,6 @@
         <!-- Container -->
         <div class="container">
           <div class="col-md-12">
-            <div class="widget-sec">
               <div
                 aria-hidden="true"
                 role="dialog"
@@ -249,40 +248,51 @@
                         <div class="col-md-12">
                           <form id="accountForm" enctype="multipart/form-data">
 									<div class="form-group">
-									<label class="form-label">Tên đầy đủ</label>
+                    <div class="row">
+                      <label class="form-label">Tên đầy đủ</label>
 									<input
 									  type="text"
 									  name="fullname"
 									  class="form-control"
 									  placeholder="Tên đầy đủ"
 									/>
-							</div>
+                    </div>
+              </div>
+              
 							<div class="form-group">
+                <div class="row">
 								<label class="form-label">Tên tài khoản</label>
 								<input
 								  type="text"
 								  name="username"
 								  class="form-control"
 								  placeholder="Tên tài khoản"
-								/>
-							  </div>
+                />
+                </div>
+                </div>
+                
 							  <div class="form-group">
-								<label class="form-label">Mật khẩu</label>
-								<input
-								  type="password"
-								  name="password"
-								  class="form-control"
-								  placeholder="Mật khẩu"
-								/>
-							  </div>
+                  <div class="row">
+                    <label class="form-label">Mật khẩu</label>
+                    <input
+                      type="password"
+                      name="password"
+                      class="form-control"
+                      placeholder="Mật khẩu"
+                    />
+                  </div>
+                </div>
+                
 							  <div class="form-group">
-								<label class="form-label">Email</label>
-								<input
-								  type="email"
-								  name="email"
-								  class="form-control"
-								  placeholder="Địa chỉ email"
-								/>
+                  <div class="row">
+                    <label class="form-label">Email</label>
+                    <input
+                      type="email"
+                      name="email"
+                      class="form-control"
+                      placeholder="Địa chỉ email"
+                    />
+                  </div>
 							  </div>
                           </form>
                         </div>
@@ -311,18 +321,22 @@
                 </div>
                 <!-- /.modal-content -->
               </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-6">
               <a
                 class="btns blue sml-btn"
                 href="#myModalAddAccount"
 				data-toggle="modal"
                 >Thêm Tài khoản</a
               >
+                  </div>
+                </div>
+              </div>
               <!-- Modal Open Button -->
-            </div>
 		  </div>
 		  <!-- Modal edit -->
 		  <div class="col-md-12">
-            <div class="widget-sec">
               <div
                 aria-hidden="true"
                 role="dialog"
@@ -343,7 +357,7 @@
                         >
                           ×
                         </button>
-                        <h4 class="modal-title">Chỉnh sửa loại sản phẩm</h4>
+                        <h4 class="modal-title">Chỉnh sửa tài khoản</h4>
                       </div>
                       <div class="modal-body">
                         <div class="col-md-12">
@@ -361,13 +375,14 @@
 							<div class="form-group">
 								<label class="form-label">Tên tài khoản</label>
 								<input
-								  type="text"
+                  type="text"
+                  disabled="true"
 								  name="usernameEdit"
 								  class="form-control"
 								  placeholder="Tên tài khoản"
 								/>
 							  </div>
-							  <div class="form-group">
+							  <div class="form-group" hidden>
 								<label class="form-label">Mật khẩu</label>
 								<input
 								  type="password"
@@ -406,10 +421,8 @@
                 <!-- /.modal-content -->
               </div>
             
-            </div>
 		  </div>
 		  <div class="col-md-12">
-            <div class="widget-sec">
               <div
                 aria-hidden="true"
                 role="dialog"
@@ -462,7 +475,6 @@
                 <!-- /.modal-content -->
               </div>
             
-            </div>
           </div>
           <div class="col-md-12">
             <div class="widget-body">
@@ -481,8 +493,9 @@
                     <thead>
                       <tr>
                         <th hidden></th>
-                        <th style="width: 25%;">Tên tài khoản</th>
+                        <th style="width: 25%;">Tên đầy đủ</th>
                         <th>Tên người dùng</th>
+                        <th hidden></th>
                         <th style="width: 20%;">Địa chỉ email</th>
                         <th style="width: 20%;">Tuỳ chỉnh</th>
                       </tr>
@@ -491,8 +504,9 @@
                       <% for (var i = 0; i < listAccount.length; i++) { %>
                       <tr>
                         <td hidden><%= listAccount[i]._id %></td>
-                        <td><%= listAccount[i].fullname %></td>
+                        <td><%= listAccount[i].fullName %></td>
                         <td><%= listAccount[i].username %></td>
+                        <td hidden><%= listAccount[i].password %></td>
                         <td>
 							<%= listAccount[i].email %>
                         </td>
@@ -543,7 +557,7 @@
         var formData = new FormData();
 
         var username = $("[name=username]").val();
-		var fullname = $("[name=fullname]").val();
+	    	var fullname = $("[name=fullname]").val();
         var email = $("[name=email]").val();
         var password = $("[name=password]").val();
 		
@@ -573,21 +587,22 @@
             alert("Không kết nối được với server");
           });
       };
-      var editType = function (event) {
-        event.preventDefault();
 
+      var editAccount = function (event) {
+        event.preventDefault();
         var formData = new FormData();
-        var typeId = $("[name=editTypeId]").val();
-        var typeName = $("[name=editTypeName]").val();
-        var des = $("[name=editDescription]").val();
-        var file = $("[name=editTypeImg]").get(0).files;
-        formData.append("typeId", typeId);
-        formData.append("imgType", file[0]);
-        formData.append("typeName", typeName);
-        formData.append("description", des);
+        var fullname = $("[name=fullnameEdit]").val();
+        var username = $("[name=usernameEdit]").val();
+        var password = $("[name=passwordEdit]").val();
+        var email = $("[name=emailEdit]").val();
+
+        formData.append("fullname", fullname);
+        formData.append("username", username);
+        formData.append("password", password);
+        formData.append("email", email);
 
         $.ajax({
-          url: "productType/editType",
+          url: "account/editAccount",
           type: "POST",
           data: formData,
           cache: false,
@@ -606,16 +621,16 @@
             alert("Không kết nối được với server");
           });
       };
-      var deleteType = function (event) {
+      var deleteAccount = function (event) {
         event.preventDefault();
 
         var formData = new FormData();
-        var typeId = $("[name=typeIdDel]").text();
+        var accountId = $("[name=accountIdDel]").text();
 
-        formData.append("typeId", typeId);
+        formData.append("accountId", accountId);
 
         $.ajax({
-          url: "productType/deleteType",
+          url: "account/deleteAccount",
           type: "POST",
           data: formData,
           cache: false,
@@ -634,40 +649,24 @@
             alert("Không kết nối được với server");
           });
       };
-      var loadImg = function (event) {
-        $("#typeImgForm").attr(
-          "src",
-          URL.createObjectURL(event.target.files[0])
-        );
-      };
-      var loadImgEdit = function (event) {
-        $("#editTypeImgForm").attr(
-          "src",
-          URL.createObjectURL(event.target.files[0])
-        );
-      };
+      
       $("[name=btn_edit]").click(function () {
-        var typeId = $(this).parent().parent().children().eq(0).html();
-        var name = $(this).parent().parent().children().eq(1).html();
-        var des = $(this).parent().parent().children().eq(2).html();
-        var img = $(this)
-          .parent()
-          .parent()
-          .children()
-          .eq(3)
-          .children()
-          .eq(0)
-          .attr("src");
-        $("#editTypeImgForm").attr("src", img);
-        $("[name=editTypeId]").val(typeId);
-        $("[name=editTypeName]").val(name);
-        $("[name=editDescription]").val(des);
+        var accountId = $(this).parent().parent().children().eq(0).html();
+        var fullname = $(this).parent().parent().children().eq(1).html();
+        var username = $(this).parent().parent().children().eq(2).html();
+        var password= $(this).parent().parent().children().eq(3).html();
+        var email= $(this).parent().parent().children().eq(4).html();
+
+        $("[name=fullnameEdit]").val(fullname);
+        $("[name=usernameEdit]").val(username);
+        $("[name=passwordEdit]").val(password);
+        $("[name=emailEdit]").val(email);
       });
       $("[name=btn_delete]").click(function () {
-        var typeIdDel = $(this).parent().parent().children().eq(0).html();
-        var name = $(this).parent().parent().children().eq(1).html();
-        $("[name=typeIdDel]").text(typeIdDel);
-        $("[name=typeNameDel]").text(name);
+        var accountId = $(this).parent().parent().children().eq(0).html();
+        var username = $(this).parent().parent().children().eq(1).html();
+        $("[name=accountIdDel]").text(accountId);
+        $("[name=usernameDel]").text(username);
       });
     </script>
     <script src="js/app.js"></script>

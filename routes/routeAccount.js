@@ -15,8 +15,8 @@ routeAccount.get("/", AccountController.getListAccount);
 
 routeAccount.route("/addAccount").post(AccountController.addAccount);
 
-// routeAccount.route("/editAccount").post(AccountController.editAccount);
+routeAccount.route("/editAccount").post(AccountController.editAccount);
 
-// routeAccount.route("/deleteAccount").post(AccountController.deleteAccount);
+routeAccount.route("/deleteAccount").post(AccountController.deleteAccount);
 
 module.exports = routeAccount;
