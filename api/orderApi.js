@@ -1,6 +1,6 @@
 var Cart = require("../models/Cart");
 var Order = require("../models/Order");
-const Account = require("../models/account");
+const customer = require("../models/customer");
 const API_URL = require("../config");
 var jwt = require("jsonwebtoken");
 let request = require("request-promise");
@@ -11,6 +11,7 @@ const fs = require("fs");
 const path = require("path");
 let api = require("../config");
 const PdfPrinter = require("pdfmake");
+const Customer = require("../models/customer");
 
 exports.newOrder = async (req, res) => {
   try {
@@ -27,7 +28,7 @@ exports.newOrder = async (req, res) => {
       });
     } else {
       let userCart = await Cart.findOne({ userId: accountId });
-      let customer = await Account.findOne({ _id: accountId });
+      let customer = await Customer.findOne({ _id: accountId });
       if (userCart !== null) {
         const cartDetail = userCart.cartDetail;
         const newOrder = new Order({

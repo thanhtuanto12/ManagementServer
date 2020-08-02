@@ -193,7 +193,7 @@
                                 <select name="productType"  class="form-control">
                                   <option value="<%= listProductType[0].typeName %>" selected="">
                                     <%= listProductType[0].typeName %></option>
-                                  <% for (var i = 0; i < listProductType.length; i++) { %>
+                                  <% for (var i = 1; i < listProductType.length; i++) { %>
                                   <option value="<%= listProductType[i].typeName %>"><%= listProductType[i].typeName %>
                                   </option>
                                   <% } %>
@@ -285,7 +285,7 @@
                               </div>
                               <div class="col-md-6">
                                 <label class="form-label">Loại sản phẩm</label>
-                                <select id="productTypeEdit" name="productTypeEdit" class="form-control">
+                                <select id="productTypeEdit" disabled="true" name="productTypeEdit" class="form-control">
                                   <option  value="<%= listProductType[0].typeName %>" selected="">
                                     <%= listProductType[0].typeName %></option>
                                   <% for (var i = 1; i < listProductType.length; i++) { %>

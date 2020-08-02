@@ -163,6 +163,7 @@ exports.addToCart = async (req, res) => {
       });
     }
   } catch (error) {
+    console.log(error);
     return res.json({
       status: -1,
       message: "Có sự cố xảy ra. Không thêm được vào giỏ hàng!",

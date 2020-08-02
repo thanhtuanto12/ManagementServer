@@ -1,5 +1,6 @@
 var passport = require("passport");
 var Customer = require("../models/customer");
+var Cart = require("../models/Cart");
 var jwt = require("jsonwebtoken");
 let request = require("request-promise");
 let base64 = require("base-64");
@@ -72,6 +73,7 @@ exports.logout = async (req, res) => {
 exports.register = async (req, res) => {
   try {
     const { name, phone, password } = req.body;
+    let date = new Date();
     if (!phone) {
       return res.json({
         status: -1,
@@ -102,17 +104,41 @@ exports.register = async (req, res) => {
         data: null,
       });
     }
-    await new Customer({
-      name,
+    let newCustomer = new Customer({
+      _id: new mongoose.Types.ObjectId(),
+      name: name,
       password: bcrypt.hashSync(password, 10),
-      phone,
-    }).save();
-
-    return res.json({
-      status: 1,
-      message: "Đăng ký thành công!",
-      data: null,
+      phone: phone,
     });
+    const newCart = new Cart({
+      _id: new mongoose.Types.ObjectId(),
+      userId: newCustomer._id,
+      delete_at: null,
+      total: null,
+      last_modified: date,
+      created_at: date,
+    });
+    await newCustomer.save().then(async () => {
+      await newCart.save().then((data) => {
+        if (data !== null) {
+          return res.json({
+            status: 1,
+            message: "Đăng ký thành công!",
+            data: null,
+          });
+        }
+        return res.json({
+          status: -1,
+          message: "Đăng ký thất bại!",
+          data: null,
+        });
+      });
+    });
+    // await new Customer({
+    //   name,
+    //   password: bcrypt.hashSync(password, 10),
+    //   phone,
+    // }).save();
   } catch (error) {
     console.log(error);
     return res.json({
