@@ -1,39 +1,39 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const orderDetail = new Schema({
   _id: {
     type: Schema.Types.ObjectId,
     required: true,
-    auto: true
+    auto: true,
   },
   productId: {
     type: Schema.Types.ObjectId,
-    require: true
+    require: true,
   },
   productName: {
     type: String,
-    require: true
+    require: true,
   },
   typeProduct: {
     type: String,
-    require: true
+    require: true,
   },
   unit: {
     type: String,
-    require: true
+    require: true,
   },
   quan: {
     type: String,
-    require: true
+    require: true,
   },
   price: {
     type: String,
-    require: true
+    require: true,
   },
   created_at: {
     type: Date,
-    require: true
+    require: true,
   },
   delete_at: {
     type: Date,
@@ -42,9 +42,9 @@ const orderDetail = new Schema({
   },
   last_modified: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
-})
+});
 
 const orderSchema = new Schema({
   _id: {
@@ -60,22 +60,39 @@ const orderSchema = new Schema({
     type: Schema.Types.ObjectId,
     required: true,
   },
+  cusName: {
+    type: String,
+    required: true,
+  },
+  address: {
+    type: String,
+    required: true,
+  },
+  phone: {
+    type: String,
+    required: true,
+  },
+  status: {
+    type: Number,
+    enum: [0, 1, 2],
+    default: 0,
+  },
   created_at: {
     type: Date,
-    timezone: "Asia/Ho_Chi_Minh"
+    timezone: "Asia/Ho_Chi_Minh",
   },
   delete_at: {
     type: Date,
     default: null,
-    timezone: "Asia/Ho_Chi_Minh"
+    timezone: "Asia/Ho_Chi_Minh",
   },
   last_modified: {
     type: Date,
     default: Date.now,
-    timezone: "Asia/Ho_Chi_Minh"
-  }
-})
+    timezone: "Asia/Ho_Chi_Minh",
+  },
+});
 
-const Order = mongoose.model('Order', orderSchema, 'Order')
+const Order = mongoose.model("Order", orderSchema, "Order");
 
-module.exports = Order
+module.exports = Order;

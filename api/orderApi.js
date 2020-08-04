@@ -1,6 +1,5 @@
 var Cart = require("../models/Cart");
 var Order = require("../models/Order");
-const customer = require("../models/customer");
 const API_URL = require("../config");
 var jwt = require("jsonwebtoken");
 let request = require("request-promise");
@@ -31,6 +30,13 @@ exports.newOrder = async (req, res) => {
       let customer = await Customer.findOne({ _id: accountId });
       if (userCart !== null) {
         const cartDetail = userCart.cartDetail;
+        if (cartDetail == null) {
+          return res.json({
+            status: -1,
+            message: "Không có sản phẩm nào trong giỏ hàng",
+            data: null,
+          });
+        }
         const newOrder = new Order({
           _id: new mongoose.Types.ObjectId(),
           orderDetail: cartDetail,
@@ -38,9 +44,9 @@ exports.newOrder = async (req, res) => {
           address: address,
           phone: phone,
           cusName:
-            customer.fullName == "" || customer.fullName === null
-              ? customer.username
-              : customer.fullName,
+            customer.name == "" || customer.name === null
+              ? customer.phone
+              : customer.name,
           total: userCart.total,
           status: 0,
           created_at: today,
@@ -135,6 +141,7 @@ exports.downloadOrder = async (req, res) => {
     const orderDownload = await Order.findOne({
       _id: orderID,
     });
+    console.log(orderDownload);
     let result = [];
     let index = 1;
     let total = 0;
@@ -169,7 +176,7 @@ exports.downloadOrder = async (req, res) => {
     var docDefinition = {
       content: [
         {
-          image: "public/img/logo_Shop.png",
+          image: "public/img/logo/Donchicken.jpg",
           width: 150,
           style: "logo",
         },
@@ -329,10 +336,10 @@ exports.downloadOrder = async (req, res) => {
     }
 
     var pdfDoc = printer.createPdfKitDocument(docDefinition);
-
+    console.log(__dirname);
     pdfDoc.pipe(
       fs.createWriteStream(
-        __dirname.replace("/api", "") + `/public/pdfFile/${fileName}`
+        __dirname.replace("api", "") + `public/pdfFile/${fileName}`
       )
     );
     pdfDoc.end();

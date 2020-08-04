@@ -46,7 +46,8 @@ router.route("/clearNotification").post(customerApi.clearNotification);
 router
   .route("/ProductType/AddProductType")
   .post(adminAuth, productTypeApi.addProductType);
-router.route("/ProductType/GetAll").post(productTypeApi.getAllProductType);
+// router.route("/ProductType/GetAll").post(productTypeApi.getAllProductType);
+router.route("/ProductType/GetAll").get(productTypeApi.getAllProductType);
 router
   .route("/ProductType/GetByName")
   .post(productTypeApi.getProductTypeByName);

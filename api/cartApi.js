@@ -266,9 +266,10 @@ exports.changeQuanti = async (req, res) => {
   }
 };
 exports.removeFromCart = async (req, res) => {
+  let productID = req.body.productID;
+
   try {
     //get data when addproduct to cart
-    let productID = req.body.productID;
     let accountId = handleAccountJwt.getAccountId(req);
     let date = new Date();
     let today = new Date(date.getTime() - date.getTimezoneOffset() * 60000);

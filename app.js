@@ -16,6 +16,7 @@ const fs = require("fs");
 const formData = require("express-form-data");
 
 app.use(formData.parse());
+
 app.use("/css", express.static("public/css"));
 app.use("/js", express.static("public/js"));
 app.use("/img", express.static("public/img"));

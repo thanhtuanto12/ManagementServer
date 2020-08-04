@@ -9,6 +9,8 @@ let multer = require("multer");
 var proType = require("./routeProductType");
 var routeAccount = require("./routeAccount");
 var routeProduct = require("./routeProduct");
+var routeCustomer = require("./routeCustomer");
+var routeDeletedType = require("./routeDeletedType");
 var FormData = require("form-data");
 var fs = require("fs");
 
@@ -27,9 +29,14 @@ router.get("/home", function (req, res) {
 });
 
 router.route("/login").post(AccountController.login);
-//Product
+//Product Type
 router.use("/productType", proType);
+router.use("/DeletedType", routeDeletedType);
+//Account
 router.use("/account", routeAccount);
+//Product
 router.use("/product", routeProduct);
+//Customer
+router.use("/customer", routeCustomer);
 
 module.exports = router;

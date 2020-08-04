@@ -27,6 +27,7 @@ server.use("/images", express.static("public/images"));
 server.use("/imgFromServer", express.static("public/imgFromServer"));
 server.use("/php", express.static("public/php"));
 server.use("/skins", express.static("public/skins"));
+server.use("/pdf", express.static(__dirname + "/public/pdfFile"));
 server.use(cors());
 
 // set the view engine to ejs
@@ -44,6 +45,7 @@ server.use(
 server.use(express.json()); // for parsing application/json
 // server.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 server.use(bodyParser.urlencoded({ extended: true }));
+server.use(bodyParser.json({ strict: false }));
 server.use(flash());
 server.use(passport.initialize());
 server.use(passport.session());
