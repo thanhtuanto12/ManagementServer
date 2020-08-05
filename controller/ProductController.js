@@ -10,6 +10,7 @@ const path = require("path");
 let api = require("../config");
 API_URL = api.API_URL;
 const formidable = require("formidable");
+const { isDate, isNull } = require("util");
 
 function objectIsEmpty(object) {
   if (Object.keys(object).length == 0) {
@@ -32,6 +33,24 @@ exports.getListProductType = async (req, res) => {
     return res.send({ mgs: "Có lỗi xảy ra! Lấy danh sách thất bại" });
   }
 };
+exports.getListDeletedProductType = async (req, res) => {
+  try {
+    let page = 0; //req.body.page
+    let limit = 1; //req.body.limit
+    // const listProductType = await ProductType.find().skip(page*limit).limit(limit)
+    // let delete_at = isNaN(1 + null);
+    const listDeletedProductType = await ProductType.find({
+      delete_at: { $ne: null },
+    });
+    return res.render("product/deletedType", {
+      listDeletedProductType,
+      mgs: "",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.send({ mgs: "Có lỗi xảy ra! Lấy danh sách thất bại" });
+  }
+};
 
 exports.getListPageType = async (req, res) => {
   try {
@@ -45,7 +64,7 @@ exports.getListPageType = async (req, res) => {
     return res.json({
       success: true,
       listProductType,
-      mgs: "shihi ",
+      mgs: " ",
       countPage: countPage,
     });
   } catch (error) {

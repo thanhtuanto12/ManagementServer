@@ -29,6 +29,7 @@ router.get("/home", function (req, res) {
 });
 
 router.route("/login").post(AccountController.login);
+
 //Product Type
 router.use("/productType", proType);
 //Account
@@ -37,5 +38,7 @@ router.use("/account", routeAccount);
 router.use("/product", routeProduct);
 //Customer
 router.use("/customer", routeCustomer);
+
+router.use("/deletedType", routeDeletedType);
 
 module.exports = router;

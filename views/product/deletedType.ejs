@@ -490,14 +490,14 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <% for (var i = 0; i < listProductType.length; i++) { %>
+                      <% for (var i = 0; i < listDeletedProductType.length; i++) { %>
                       <tr>
-                        <td hidden><%= listProductType[i]._id %></td>
-                        <td><%= listProductType[i].typeName %></td>
-                        <td><%= listProductType[i].description %></td>
+                        <td hidden><%= listDeletedProductType[i]._id %></td>
+                        <td><%= listDeletedProductType[i].typeName %></td>
+                        <td><%= listDeletedProductType[i].description %></td>
                         <td style="height: 10%;">
                           <img
-                            src="<%= listProductType[i].typeImg %>"
+                            src="<%= listDeletedProductType[i].typeImg %>"
                             class="avatar img-fluid"
                             alt="No IMG"
                             style="width: 100%; height: 10%;"

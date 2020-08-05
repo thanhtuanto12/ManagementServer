@@ -11,61 +11,9 @@ const path = require("path");
 let api = require("../config");
 API_URL = api.API_URL;
 
-exports.addProduct = async (req, res) => {
-  let accountId = handleAccountJwt.getAccountId(req);
-  let courseName = req.body.courseName;
-  let trainer = req.body.trainer;
-  let date = new Date();
-  let today = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
-
-  try {
-    let createdBy = await Account.findOne({
-      _id: accountId,
-    });
-
-    const newCourse = new Course({
-      _id: new mongoose.Types.ObjectId(),
-      name: courseName,
-      trainer: trainer,
-      startedDate: startedDate,
-      endedDate: endedDate,
-      building_id: buildingId,
-      room_id: roomId,
-      created_by: createdBy.username,
-      created_at: today,
-      last_modified: today,
-    });
-
-    await newCourse.save();
-
-    return res.json({
-      resultCode: 1,
-      message: "Tạo sản phẩm mới thành công !",
-      data: {
-        course_id: newCourse._id,
-        courseName: newCourse.name,
-        trainer: newCourse.trainer,
-        startedDate: newCourse.startedDate,
-        endedDate: newCourse.endedDate,
-        buildingName: await getBuildingName(buildingId),
-        roomName: await getRoomName(roomId),
-        created_by: newCourse.created_by,
-      },
-    });
-  } catch (error) {
-    console.log(error);
-    return res.json({
-      resultCode: -1,
-      message: "Có sự cố xảy ra. Tạo sản phẩm không thành công !",
-      data: null,
-      error: error,
-    });
-  }
-};
-
 exports.getAllProduct = async (req, res) => {
   try {
-    const listProductType = await ProductType.find();
+    const listProductType = await ProductType.find({ delete_at: null });
     var listProduct = [];
     if (
       listProductType !== null ||
@@ -112,7 +60,10 @@ exports.getProductByProType = async (req, res) => {
         data: null,
       });
     }
-    const productTypes = await ProductType.findOne({ typeName: typeName });
+    const productTypes = await ProductType.findOne({
+      typeName: typeName,
+      delete_at: null,
+    });
     if (productTypes !== null) {
       return res.json({
         status: 1,

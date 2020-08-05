@@ -2,8 +2,6 @@
 <html lang="en">
   <% include ../partials/Header %>
   <body>
-    <!-- end live-chat -->
-
     <div id="container" class="ui-notify"></div>
     <div class="wrapper">
       <!-- side-navigation -->
@@ -19,6 +17,7 @@
           <div class="responsive-menu-dropdown">
             <a title="" class="red">MENU <i class="icon-align-justify"></i></a>
           </div>
+
           <ul>
             <li>
               <a href="dashboard.html" title=""
@@ -105,87 +104,6 @@
                 </li>
               </ul>
             </li>
-            <li>
-              <a href="form.html" title=""
-                ><i class="icon-pencil"></i>Form Elements</a
-              >
-            </li>
-          </ul>
-          <ul>
-            <li>
-              <a href="icon.html" title=""><i class="icon-tint"></i>Icons</a>
-            </li>
-            <li>
-              <a href="tables.html" title=""
-                ><i class="icon-list-alt"></i>Tables</a
-              >
-            </li>
-            <li>
-              <a href="typography.html" title=""
-                ><i class="icon-font"></i>Typography</a
-              >
-            </li>
-            <li>
-              <a title=""
-                ><i class="icon-rocket"></i>Sample Pages<span>4</span></a
-              >
-              <ul>
-                <li>
-                  <a href="invoice.html" title=""
-                    ><i class="icon-angle-right"></i>Invoice</a
-                  >
-                </li>
-                <li>
-                  <a href="index.html" title=""
-                    ><i class="icon-angle-right"></i>Log in</a
-                  >
-                </li>
-                <li>
-                  <a href="404.html" title=""
-                    ><i class="icon-angle-right"></i>404 Error Page</a
-                  >
-                </li>
-                <li>
-                  <a href="blank-page.html" title=""
-                    ><i class="icon-angle-right"></i>Blank Page</a
-                  >
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a title=""
-                ><i class="icon-ellipsis-horizontal"></i>Bonus Free<span
-                  >5</span
-                ></a
-              >
-              <ul>
-                <li>
-                  <a href="price-table.html" title=""
-                    ><i class="icon-angle-right"></i>Pricing Table</a
-                  >
-                </li>
-                <li>
-                  <a href="search.html" title=""
-                    ><i class="icon-angle-right"></i>Search Result</a
-                  >
-                </li>
-                <li>
-                  <a href="inbox.html" title=""
-                    ><i class="icon-angle-right"></i>Message</a
-                  >
-                </li>
-                <li>
-                  <a href="profile.html" title=""
-                    ><i class="icon-angle-right"></i>Profile</a
-                  >
-                </li>
-                <li>
-                  <a href="faq.html" title=""
-                    ><i class="icon-angle-right"></i>FAQ</a
-                  >
-                </li>
-              </ul>
-            </li>
           </ul>
         </div>
         <div class="container">
@@ -221,7 +139,8 @@
               </div>
 
               <div class="breadcrumbs-notify">
-                <a href="#" title="">Dashboard</a>
+                <a href="#" title="">Home / </a>
+                <a href="#" class="current-page" title=""> Account </a>
                 <div class="notification-auto">
                   <div class="fade-notification">
                     <h5><i class="icon-warning-sign"></i> Notification :</h5>
@@ -250,7 +169,7 @@
               </div>
 
               <div class="heading-buttons-sec">
-                <h1>Dashboard</h1>
+                <h1>Product Type</h1>
                 <div class="heading-buttons">
                   <ul>
                     <li class="dropdown heading-dropdown">
@@ -295,56 +214,89 @@
                   ><a href="#" title=""><i class="icon-refresh"></i></a>
                 </div>
               </div>
-
-              <!-- Body Sec -->
             </div>
             <!-- main-bg-->
           </div>
           <!-- Row -->
         </div>
         <!-- Container -->
+        <div class="container">
+		  <!-- Modal edit -->
+		 
+          <div class="col-md-12">
+            <div class="widget-body">
+              <div class="widget-heading purple">
+                <i class="icon-table pull-left"></i>
+                <h3 class="pull-left">Danh sách tài khoản</h3>
+              </div>
+              <div class="widget-sec">
+                <div class="streaming-table">
+                
+                  </div>
+                  <table
+                    id="stream_table"
+                    class="table table-striped table-bordered"
+                  >
+                    <thead>
+                      <tr>
+                        <th hidden></th>
+                        <th style="width: 25%;">Tên đầy đủ</th>
+                        <th>Tên người dùng</th>
+                        <th hidden></th>
+                        <th style="width: 20%;">Địa chỉ email</th>
+                        <th style="width: 20%;">Tuỳ chỉnh</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% for (var i = 0; i < listAccount.length; i++) { %>
+                      <tr>
+                        <td hidden><%= listAccount[i]._id %></td>
+                        <td><%= listAccount[i].fullName %></td>
+                        <td><%= listAccount[i].username %></td>
+                        <td hidden><%= listAccount[i].password %></td>
+                        <td>
+							<%= listAccount[i].email %>
+                        </td>
+                        <td>
+                          <button
+                            class="btns blue m-sml-btn"
+                            type="button"
+                            name="btn_edit"
+                            data-toggle="modal"
+							data-target="#myModalEditAccount"
+                          >
+							<i class="icon-pencil" data-feather="edit-2"></i>
+							Edit
+                          </button>
+						  <button
+						  class="btns  red  m-sml-btn "
+                            type="button"
+                            name="btn_delete"
+                            data-toggle="modal"
+                            data-target="#myModalDeleteAccount"
+                          >
+							<i class="icon-remove" data-feather="trash"></i>
+							Remove
+                          </button>
+                        </td>
+                      </tr>
+                      <% } %>
+                    </tbody>
+                  </table>
+                  <div id="summary">
+                    <div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
       <!-- Main Section -->
     </div>
     <!-- Wrapper -->
-    <script type="text/javascript">
-      $(function () {
-        var introguide = introJs();
-        // var startbtn   = $('#startdemotour');
 
-        introguide.setOptions({
-          steps: [
-            {
-              element: ".top-stats",
-              intro: "Click Here",
-              position: "bottom",
-            },
-            {
-              element: "#intro2",
-              intro: "With 3D transforms, we can make simple.",
-              position: "bottom",
-            },
-            {
-              element: "#intro3",
-              intro: "Hover over each title to display a longer description.",
-              position: "bottom",
-            },
-            {
-              element: "#intro4",
-              intro: "Click the With 3D transforms, we can make simple.",
-              position: "right",
-            },
-            {
-              element: "header",
-              intro: "Each demo will link to the previous & next entries.",
-              position: "bottom",
-            },
-          ],
-        });
-
-        introguide.start();
-      });
-    </script>
+    <!-- Body -->
+    <script src="js/app.js"></script>
   </body>
-  <!-- Body -->
 </html>
