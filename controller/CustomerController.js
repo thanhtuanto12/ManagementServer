@@ -47,6 +47,22 @@ exports.getListPageCustomer = async (req, res) => {
     });
   }
 };
+exports.getListDeletedCustomer = async (req, res) => {
+  try {
+    let page = 0; //req.body.page
+    let limit = 1; //req.body.limit
+    const listDeletedCustomer = await Customer.find({
+      delete_at: { $ne: null },
+    });
+    return res.render("customers/deletedCustomer", {
+      listDeletedCustomer,
+      mgs: "",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.send({ mgs: "Có lỗi xảy ra! Lấy danh sách thất bại" });
+  }
+};
 exports.addCustomer = async (req, res) => {
   let name = req.body.name;
   let phone = req.body.phone;
@@ -181,6 +197,30 @@ exports.deleteCustomer = async (req, res) => {
     return res.json({
       success: false,
       mgs: "Có lỗi xảy ra! Xoá thất bại",
+    });
+  }
+};
+exports.restoreCustomer = async (req, res) => {
+  try {
+    let customerId = req.body.id;
+    let date = new Date();
+    let today = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+    await Customer.findOneAndUpdate(
+      { _id: customerId },
+      {
+        delete_at: null,
+        last_modified: today,
+      }
+    );
+    return res.json({
+      success: true,
+      mgs: "Khôi phục thành công",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({
+      success: false,
+      mgs: "Có lỗi xảy ra! Khôi phục thất bại",
     });
   }
 };

@@ -11,6 +11,9 @@ var routeAccount = require("./routeAccount");
 var routeProduct = require("./routeProduct");
 var routeCustomer = require("./routeCustomer");
 var routeDeletedType = require("./routeDeletedType");
+var routeDeletedAccount = require("./routeDeletedAccount");
+var routeDeletedCustomer = require("./routeDeletedCustomer");
+
 var FormData = require("form-data");
 var fs = require("fs");
 
@@ -31,6 +34,7 @@ router.get("/home", function (req, res) {
 router.route("/login").post(AccountController.login);
 
 //Product Type
+
 router.use("/productType", proType);
 //Account
 router.use("/account", routeAccount);
@@ -38,7 +42,11 @@ router.use("/account", routeAccount);
 router.use("/product", routeProduct);
 //Customer
 router.use("/customer", routeCustomer);
-
+//Deleted Type page
 router.use("/deletedType", routeDeletedType);
+//Deleted account page
+router.use("/deletedAccount", routeDeletedAccount);
+//Deleted customer page
+router.use("/deletedCustomer", routeDeletedCustomer);
 
 module.exports = router;

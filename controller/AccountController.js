@@ -97,6 +97,23 @@ exports.getListPageAccount = async (req, res) => {
     });
   }
 };
+exports.getListDeletedAccount = async (req, res) => {
+  try {
+    let page = 0; //req.body.page
+    let limit = 1; //req.body.limit
+    const listDeletedAccount = await Account.find({
+      delete_at: { $ne: null },
+    });
+    return res.render("account/deletedAccount", {
+      listDeletedAccount,
+      mgs: "",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.send({ mgs: "Có lỗi xảy ra! Lấy danh sách thất bại" });
+  }
+};
+
 exports.addAccount = async (req, res) => {
   let fullName = req.body.fullname;
   let username = req.body.username;
@@ -218,6 +235,32 @@ exports.deleteAccount = async (req, res) => {
     return res.json({
       success: false,
       mgs: "Có lỗi xảy ra! Xoá thất bại",
+    });
+  }
+};
+
+exports.restoreAccount = async (req, res) => {
+  //Type infor
+  try {
+    let accountId = req.body.accountId;
+    let date = new Date();
+    let today = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+    await Account.findOneAndUpdate(
+      { _id: accountId },
+      {
+        delete_at: null,
+        last_modified: today,
+      }
+    );
+    return res.json({
+      success: true,
+      mgs: "khôi phục thành công",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({
+      success: false,
+      mgs: "Có lỗi xảy ra! Khôi phục thất bại",
     });
   }
 };
