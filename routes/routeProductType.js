@@ -11,8 +11,8 @@ var localStrategy = require("passport-local").Strategy;
 let multer = require("multer");
 
 //Navigation
-proType.get("/", ProductController.getListProductType);
 
+proType.get("/", ProductController.getListProductType);
 proType.route("/addType").post(ProductController.addProductType1);
 
 proType.route("/editType").post(ProductController.editProductType);

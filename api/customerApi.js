@@ -25,7 +25,10 @@ exports.login = async (req, res) => {
     });
   }
 
-  const foundAccount = await Customer.findOne({ phone: phone });
+  const foundAccount = await Customer.findOne({
+    phone: phone,
+    delete_at: null,
+  });
   if (foundAccount && bcrypt.compareSync(password, foundAccount.password)) {
     const accessTokent = jwt.sign({ id: foundAccount.id }, "jwt-secret");
     return res.json({

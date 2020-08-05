@@ -32,6 +32,7 @@ exports.getListProductType = async (req, res) => {
     return res.send({ mgs: "Có lỗi xảy ra! Lấy danh sách thất bại" });
   }
 };
+
 exports.getListPageType = async (req, res) => {
   try {
     let page = req.body.page;

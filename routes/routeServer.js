@@ -31,7 +31,6 @@ router.get("/home", function (req, res) {
 router.route("/login").post(AccountController.login);
 //Product Type
 router.use("/productType", proType);
-router.use("/DeletedType", routeDeletedType);
 //Account
 router.use("/account", routeAccount);
 //Product
