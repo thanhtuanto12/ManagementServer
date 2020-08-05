@@ -14,6 +14,6 @@ let multer = require("multer");
 
 routeDeletedType.get("/", ProductController.getListDeletedProductType);
 
-// proType.route("/deletedType", ProductController.getListDeletedProductType);
+routeDeletedType.route("/returnType").post(ProductController.returnProductType);
 
 module.exports = routeDeletedType;

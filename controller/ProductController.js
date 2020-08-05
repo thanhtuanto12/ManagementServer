@@ -296,6 +296,34 @@ exports.deleteProductType = async (req, res) => {
     });
   }
 };
+
+//Return produc type
+exports.returnProductType = async (req, res) => {
+  //Type infor
+  try {
+    let typeId = req.body.typeId;
+    let date = new Date();
+    let today = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+    await ProductType.findOneAndUpdate(
+      { _id: typeId },
+      {
+        delete_at: null,
+        last_modified: today,
+      }
+    );
+    return res.json({
+      success: true,
+      mgs: "khôi phục thành công",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({
+      success: false,
+      mgs: "Có lỗi xảy ra! Xoá thất bại",
+    });
+  }
+};
+
 //product
 
 exports.getListProduct = async (req, res) => {
@@ -611,7 +639,6 @@ exports.deleteProduct = async (req, res) => {
   //Type infor
   try {
     let productId = req.body.productId;
-    console.log("aaaaa", productId);
     let date = new Date();
     let today = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
     const productTypes = await ProductType.findOne({

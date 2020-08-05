@@ -221,195 +221,8 @@
         </div>
         <!-- Container -->
         <div class="container">
-          <div class="col-md-12">
-            <div class="widget-sec">
-              <div
-                aria-hidden="true"
-                role="dialog"
-                tabindex="-1"
-                class="modal fade"
-                id="myModalAddType"
-                style="display: none;"
-              >
-                <div class="modal-dialog">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button
-                          aria-hidden="true"
-                          data-dismiss="modal"
-                          class="close"
-                          type="button"
-                        >
-                          ×
-                        </button>
-                        <h4 class="modal-title">Thêm loại sản phẩm</h4>
-                      </div>
-                      <div class="modal-body">
-                        <div class="col-md-12">
-                          <form id="proTypeForm" enctype="multipart/form-data">
-                            <div class="form-group">
-                              <label class="form-label">Tên loại</label>
-                              <input
-                                type="text"
-                                name="typeName"
-                                class="form-control"
-                                placeholder="Tên loại sản phẩm"
-                              />
-                            </div>
-                            <div class="form-group">
-                              <label class="form-label">Mô tả</label>
-                              <textarea
-                                class="form-control"
-                                name="addDescription"
-                                placeholder="Mô tả loại sản phẩm"
-                                rows="3"
-                              ></textarea>
-                            </div>
-                            <div class="form-group">
-                              <label class="form-label w-100">Ảnh loại</label>
-                              <input
-                                name="typeImg"
-                                id="typeImg"
-                                type="file"
-                                onchange="loadImg(event)"
-                                accept="image/png, image/jpeg"
-                              />
-                              <small class="form-text text-muted">
-                                <img
-                                  name="typeImgForm"
-                                  id="typeImgForm"
-                                  src="imgFromServer\proType\default.png"
-                                  height="200px"
-                                  width="200px"
-                                  alt="No IMG"
-                                />
-                              </small>
-                            </div>
-                          </form>
-                        </div>
-                      </div>
-                      <div class="modal-footer">
-                        <button
-                          data-dismiss="modal"
-                          class="btn gray"
-                          type="button"
-                        >
-                          Close
-                        </button>
-                        <button
-                          class="btn blue"
-                          id="btnSubmit"
-                          onclick="addType(event)"
-                          name="btnCreate"
-                          type="button"
-                        >
-                          Thêm loại sản phẩm
-                        </button>
-                      </div>
-                    </div>
-                    <!-- /.modal-content -->
-                  </div>
-                </div>
-                <!-- /.modal-content -->
-              </div>
-              <a
-                class="btns blue sml-btn"
-                href="#myModalAddType"
-				data-toggle="modal"
-                >Thêm Loại sản phẩm</a
-              >
-              <!-- Modal Open Button -->
-            </div>
-		  </div>
-		  <!-- Modal edit -->
-		  <div class="col-md-12">
-              <div
-                aria-hidden="true"
-                role="dialog"
-                tabindex="-1"
-                class="modal fade"
-                id="myModalEditType"
-                style="display: none;"
-              >
-                <div class="modal-dialog">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button
-                          aria-hidden="true"
-                          data-dismiss="modal"
-                          class="close"
-                          type="button"
-                        >
-                          ×
-                        </button>
-                        <h4 class="modal-title">Chỉnh sửa loại sản phẩm</h4>
-                      </div>
-                      <div class="modal-body">
-                        <div class="col-md-12">
-                          <form id="editProTypeForm" enctype="multipart/form-data">
-                            <div class="form-group">
-								<input type="hidden" name="editTypeId" class="form-control">
-                              <label class="form-label">Tên loại</label>
-                              <input
-                                type="text"
-                                name="editTypeName"
-                                class="form-control"
-                                placeholder="Tên loại sản phẩm"
-                              />
-                            </div>
-                            <div class="form-group">
-                              <label class="form-label">Mô tả</label>
-                              <textarea
-                                class="form-control"
-                                name="editDescription"
-                                placeholder="Mô tả loại sản phẩm"
-                                rows="3"
-                              ></textarea>
-                            </div>
-                            <div class="form-group">
-                              <label class="form-label w-100">Ảnh loại</label>
-                              <input
-                                name="editTypeImg"
-                                id="editTypeImg"
-                                type="file"
-                                onchange="loadImgEdit(event)"
-                                accept="image/png, image/jpeg"
-                              />
-                              <small class="form-text text-muted">
-                                <img
-                                  name="editTypeImgForm"
-                                  id="editTypeImgForm"
-                                  src="#"
-                                  height="200px"
-                                  width="200px"
-                                  alt="No IMG"
-                                />
-                              </small>
-                            </div>
-                          </form>
-                        </div>
-                      </div>
-                      <div class="modal-footer">
-                        <button
-                          data-dismiss="modal"
-                          class="btn gray"
-                          type="button"
-                        >
-                          Close
-                        </button>
-                        <button type="button" id="btnSubmit" onclick="editType(event)" name="btnCreate"
-												class="btn blue">Cập nhật</button>
-                      </div>
-                    </div>
-                    <!-- /.modal-content -->
-                  </div>
-                </div>
-                <!-- /.modal-content -->
-              </div>
-            
-		  </div>
+         
+		  
 		  <div class="col-md-12">
             <div class="widget-sec">
               <div
@@ -417,7 +230,7 @@
                 role="dialog"
                 tabindex="-1"
                 class="modal fade"
-                id="myModalDeleteType"
+                id="myModalReturnType"
                 style="display: none;"
               >
                 <div class="modal-dialog">
@@ -432,16 +245,17 @@
                         >
                           ×
                         </button>
-                        <h4 class="modal-title">Xóa loại sản phẩm</h4>
+                        <h4 class="modal-title">Khôi phục loại sản phẩm</h4>
                       </div>
                       <div class="modal-body">
                         <div class="col-md-12">
                           <form id="deleteProTypeForm" enctype="multipart/form-data">
-                            <p name="typeIdDel" hidden>
+                            <p name="typeId" hidden> 
+                            </p>
+                            
+							<p> Bạn muốn khôi phục loại sản phẩm này?
 							</p>
-							<p> Bạn muốn xóa loại sản phẩm này?
-							</p>
-							<p name="typeNameDel">
+							<p name="typeName">
 							</p>
                           </form>
                         </div>
@@ -454,8 +268,8 @@
                         >
                           Close
                         </button>
-                        <button type="button" id="btnSubmit" onclick="deleteType(event)" 
-												class="btn blue">Xóa</button>
+                        <button type="button" id="btnSubmit" onclick="returnType(event)" 
+												class="btn blue">Khôi phục</button>
                       </div>
                     </div>
                     <!-- /.modal-content -->
@@ -470,7 +284,7 @@
             <div class="widget-body">
               <div class="widget-heading purple">
                 <i class="icon-table pull-left"></i>
-                <h3 class="pull-left">Danh sách loại sản phẩm</h3>
+                <h3 class="pull-left">Danh sách loại sản phẩm đã xóa</h3>
               </div>
               <div class="widget-sec">
                 <div class="streaming-table">
@@ -482,7 +296,7 @@
                   >
                     <thead>
                       <tr>
-                        <th hidden></th>
+                        <th hidden ></th>
                         <th style="width: 25%;">Tên loại sản phẩm</th>
                         <th>Mô tả</th>
                         <th style="width: 10%;">Hình ảnh</th>
@@ -504,34 +318,22 @@
                           />
                         </td>
                         <td>
-                          <button
-                            class="btns blue m-sml-btn"
-                            type="button"
-                            name="btn_edit"
-                            data-toggle="modal"
-							data-target="#myModalEditType"
-                          >
-							<i class="icon-pencil" data-feather="edit-2"></i>
-							Edit
-                          </button>
+                          
 						  <button
 						  class="btns  red  m-sml-btn "
                             type="button"
-                            name="btn_delete"
+                            name="btn_return"
                             data-toggle="modal"
-                            data-target="#myModalDeleteType"
+                            data-target="#myModalReturnType"
                           >
 							<i class="icon-remove" data-feather="trash"></i>
-							Remove
+							khôi phục
                           </button>
                         </td>
                       </tr>
                       <% } %>
                     </tbody>
                   </table>
-                  <div id="summary">
-                    <div></div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -545,81 +347,15 @@
     <!-- Body -->
 
     <script type="text/javascript">
-      var addType = function (event) {
-        event.preventDefault();
-        var formData = new FormData();
-
-        var typeName = $("[name=typeName]").val();
-        var des = $("[name=addDescription]").val();
-        var file = $("[name=typeImg]").get(0).files;
-
-        formData.append("imgType", file[0]);
-        formData.append("typeName", typeName);
-        formData.append("description", des);
-
-        $.ajax({
-          url: "productType/addType",
-          type: "POST",
-          data: formData,
-          cache: false,
-          contentType: false,
-          processData: false,
-        })
-          .done(function (result) {
-            if (result.success) {
-            //   alert(result.mgs);
-              location.reload();
-            } else {
-              alert(result.mgs);
-            }
-          })
-          .fail(() => {
-            alert("Không kết nối được với server");
-          });
-      };
-      var editType = function (event) {
+      var returnType = function (event) {
         event.preventDefault();
 
         var formData = new FormData();
-        var typeId = $("[name=editTypeId]").val();
-        var typeName = $("[name=editTypeName]").val();
-        var des = $("[name=editDescription]").val();
-        var file = $("[name=editTypeImg]").get(0).files;
-        formData.append("typeId", typeId);
-        formData.append("imgType", file[0]);
-        formData.append("typeName", typeName);
-        formData.append("description", des);
-
-        $.ajax({
-          url: "productType/editType",
-          type: "POST",
-          data: formData,
-          cache: false,
-          contentType: false,
-          processData: false,
-        })
-          .done(function (result) {
-            if (result.success) {
-            //   alert(result.mgs);
-              location.reload();
-            } else {
-              alert(result.mgs);
-            }
-          })
-          .fail(() => {
-            alert("Không kết nối được với server");
-          });
-      };
-      var deleteType = function (event) {
-        event.preventDefault();
-
-        var formData = new FormData();
-        var typeId = $("[name=typeIdDel]").text();
+        var typeId = $("[name=typeId]").text();
 
         formData.append("typeId", typeId);
-
         $.ajax({
-          url: "productType/deleteType",
+          url: "deletedType/returnType",
           type: "POST",
           data: formData,
           cache: false,
@@ -638,40 +374,11 @@
             alert("Không kết nối được với server");
           });
       };
-      var loadImg = function (event) {
-        $("#typeImgForm").attr(
-          "src",
-          URL.createObjectURL(event.target.files[0])
-        );
-      };
-      var loadImgEdit = function (event) {
-        $("#editTypeImgForm").attr(
-          "src",
-          URL.createObjectURL(event.target.files[0])
-        );
-      };
-      $("[name=btn_edit]").click(function () {
+      
+      $("[name=btn_return]").click(function () {
         var typeId = $(this).parent().parent().children().eq(0).html();
-        var name = $(this).parent().parent().children().eq(1).html();
-        var des = $(this).parent().parent().children().eq(2).html();
-        var img = $(this)
-          .parent()
-          .parent()
-          .children()
-          .eq(3)
-          .children()
-          .eq(0)
-          .attr("src");
-        $("#editTypeImgForm").attr("src", img);
-        $("[name=editTypeId]").val(typeId);
-        $("[name=editTypeName]").val(name);
-        $("[name=editDescription]").val(des);
-      });
-      $("[name=btn_delete]").click(function () {
-        var typeIdDel = $(this).parent().parent().children().eq(0).html();
-        var name = $(this).parent().parent().children().eq(1).html();
-        $("[name=typeIdDel]").text(typeIdDel);
-        $("[name=typeNameDel]").text(name);
+      
+        $("[name=typeId]").text(typeId);
       });
     </script>
     <script src="js/app.js"></script>
