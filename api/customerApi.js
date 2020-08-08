@@ -354,26 +354,40 @@ exports.getListNotification = async (req, res) => {
 };
 
 exports.updateUserData = async (req, res) => {
-  const newAccount = new Customer({
-    _id: new mongoose.Types.ObjectId(),
-    userId: id,
-    username: username,
-    fullName:
-      userData1.data === undefined || userData1.data === null
-        ? null
-        : userData1.data.fullName,
-    email:
-      userData1.data === undefined || userData1.data === null
-        ? null
-        : userData1.data.email,
-    phone:
-      userData1.data === undefined || userData1.data === null
-        ? null
-        : userData1.data.phone,
-    status: 1,
-    created_at: new Date(),
-  });
-  result = await newAccount.save();
+  try {
+    let phone = req.body.phone;
+    let name = req.body.name;
+    let password = req.body.password;
+    // let typeImg
+    let date = new Date();
+    let today = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+
+    await Customer.findOneAndUpdate(
+      { phone },
+      {
+        name: name,
+        phone: phone,
+        password: password,
+        last_modified: today,
+      }
+    ).then(() => {
+      return res.json({
+        status: 1,
+        message: "Cập nhật thành công !",
+        data: {
+          name: name,
+        },
+      });
+    });
+  } catch (error) {
+    console.log(error);
+
+    return res.json({
+      status: -1,
+      message: "Có sự cố xảy ra. Cập nhật không thành công !",
+      data: null,
+    });
+  }
 };
 
 exports.changeAvatar = async (req, res) => {

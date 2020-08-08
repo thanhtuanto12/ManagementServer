@@ -8,6 +8,7 @@ const productApi = require("../api/productApi");
 const accountAuth = require("../middleware/accountAuth");
 const cartApi = require("../api/cartApi");
 const orderApi = require("../api/orderApi");
+var bcrypt = require("bcrypt");
 
 let multer = require("multer");
 let upload = multer({ dest: "uploads" });

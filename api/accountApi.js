@@ -393,7 +393,6 @@ exports.getListNotification = async (req, res) => {
 exports.updateUserData = async (req, res) => {
   const newAccount = new Account({
     _id: new mongoose.Types.ObjectId(),
-    userId: id,
     username: username,
     fullName:
       userData1.data === undefined || userData1.data === null
