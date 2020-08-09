@@ -355,33 +355,80 @@ exports.getListNotification = async (req, res) => {
 
 exports.updateUserData = async (req, res) => {
   try {
-    let phone = req.body.phone;
-    let name = req.body.name;
-    let password = req.body.password;
-    // let typeImg
-    let date = new Date();
-    let today = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+    const bearerHeader = req.headers["authorization"];
+    const { name, phone, address } = req.body;
+    // let date = new Date();
+    // let today = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
 
-    await Customer.findOneAndUpdate(
-      { phone },
-      {
-        name: name,
-        phone: phone,
-        password: password,
-        last_modified: today,
+    if (typeof bearerHeader !== "undefined") {
+      const bearer = bearerHeader.split(" ");
+      const bearerToken = bearer[1];
+      req.token = bearerToken;
+      const accountId = handleAccountJwt.getAccountId(req);
+      if (accountId !== null || accountId !== undefined) {
+        const foundCustomer = await Customer.findOne({ _id: accountId });
+        if (foundCustomer == null || foundCustomer == undefined) {
+          return res.json({
+            status: -1,
+            message: "Không tìm thấy người dùng này !",
+            data: null,
+          });
+        }
+        if (!phone) {
+          return res.json({
+            status: -1,
+            message: " Số điện thoại không được bỏ trống!",
+            data: null,
+          });
+        }
+        if (!address) {
+          return res.json({
+            status: -1,
+            message: "Địa chỉ không được bỏ trống!",
+            data: null,
+          });
+        }
+        if (!name) {
+          return res.json({
+            status: -1,
+            message: " Tên không được bỏ trống!",
+            data: null,
+          });
+        }
+
+        await Customer.findOneAndUpdate(
+          { _id: accountId },
+          {
+            phone: phone,
+            name: name,
+            address: address,
+            // last_modified: today,
+          }
+        ).then(() => {
+          return res.json({
+            status: 1,
+            message: "Cập nhật thành công !",
+            data: {
+              name: name,
+            },
+          });
+        });
+      } else {
+        return res.json({
+          status: -1,
+          message: "Không tìm thấy người dùng này !",
+          data: null,
+        });
       }
-    ).then(() => {
+    } else {
       return res.json({
-        status: 1,
-        message: "Cập nhật thành công !",
-        data: {
-          name: name,
-        },
+        status: -1,
+        message: "Không tìm thấy người dùng này !",
+        data: null,
       });
-    });
+    }
   } catch (error) {
     console.log(error);
-
     return res.json({
       status: -1,
       message: "Có sự cố xảy ra. Cập nhật không thành công !",
