@@ -357,8 +357,6 @@ exports.updateUserData = async (req, res) => {
   try {
     const bearerHeader = req.headers["authorization"];
     const { name, phone, address } = req.body;
-    // let date = new Date();
-    // let today = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
 
     if (typeof bearerHeader !== "undefined") {
       const bearer = bearerHeader.split(" ");
@@ -402,14 +400,15 @@ exports.updateUserData = async (req, res) => {
             phone: phone,
             name: name,
             address: address,
-            // last_modified: today,
           }
         ).then(() => {
           return res.json({
             status: 1,
             message: "Cập nhật thành công !",
             data: {
+              phone: phone,
               name: name,
+              address: address,
             },
           });
         });

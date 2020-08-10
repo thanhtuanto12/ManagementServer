@@ -350,6 +350,30 @@ exports.getListProduct = async (req, res) => {
     return res.send("Có lỗi xảy ra! Lấy danh sách sản phẩm thất bại");
   }
 };
+exports.getListDeletedProduct = async (req, res) => {
+  try {
+    const listProductType = await ProductType.find({});
+    const listDeletedProduct = [];
+
+    // var listProduct = [];
+    for (let ProType of listProductType) {
+      if (ProType.product !== []) {
+        for (let Product of ProType.product) {
+          if (Product.delete_at !== null) {
+            listDeletedProduct.push(Product);
+          }
+        }
+      }
+    }
+    return res.render("product/deletedProduct", {
+      listDeletedProduct,
+      listProductType,
+      mgs: "",
+    });
+  } catch (error) {
+    return res.send("Có lỗi xảy ra! Lấy danh sách sản phẩm thất bại");
+  }
+};
 exports.addProduct1 = async (req, res) => {
   let productType = req.body.productType;
   let description = req.body.description;
@@ -667,6 +691,42 @@ exports.deleteProduct = async (req, res) => {
     return res.json({
       success: false,
       mgs: "Có lỗi xảy ra! Xoá thất bại",
+    });
+  }
+};
+exports.restoreProduct = async (req, res) => {
+  //Type infor
+  try {
+    let productId = req.body.productId;
+    let date = new Date();
+    let today = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+    const productTypes = await ProductType.findOne({
+      delete_at: null,
+      "product._id": productId, //get column productId
+    });
+    let productIndex = productTypes.product.findIndex(
+      (data) => data._id.toString() === productId.toString()
+    );
+    await ProductType.findOneAndUpdate(
+      {
+        "product._id": productId,
+      },
+      {
+        $set: {
+          [`product.${productIndex}.delete_at`]: null,
+          [`product.${productIndex}.last_modified`]: today,
+        },
+      }
+    );
+    return res.json({
+      success: true,
+      mgs: "khôi phục thành công",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({
+      success: false,
+      mgs: "Có lỗi xảy ra! Khôi phục thất bại",
     });
   }
 };

@@ -59,6 +59,7 @@ router.route("/Product/GetAll").post(productApi.getAllProduct);
 router.route("/Product/GetByProType").post(productApi.getProductByProType);
 router.route("/Product/GetByName").post(productApi.getProductByName);
 router.route("/Product/GetByID").post(productApi.getProductById);
+router.route("/Product/SeachProduct").post(productApi.searchProduct);
 
 //Cart
 router.route("/Cart/GetCart").post(cartApi.findCartByUser);

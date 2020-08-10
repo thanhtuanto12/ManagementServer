@@ -11,6 +11,37 @@ const path = require("path");
 let api = require("../config");
 API_URL = api.API_URL;
 
+exports.searchProduct = async (req, res) => {
+  try {
+    let searchKey = req.body.productName;
+
+    const findProducts = await ProductType.find({
+      "product.productName": { $regex: `${searchKey}` },
+    });
+    let products = [];
+    for (let ProType of findProducts) {
+      if (ProType.product !== []) {
+        for (let product of ProType.product) {
+          if (product.productName.search(`${searchKey}`) !== -1) {
+            products.push(product);
+          }
+        }
+      }
+    }
+    return res.json({
+      status: 1,
+      message: "Lấy danh sách sản phẩm thành công",
+      data: products,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({
+      status: -1,
+      message: "Có lỗi xảy ra. Không lấy được sản phẩm",
+      data: null,
+    });
+  }
+};
 exports.getAllProduct = async (req, res) => {
   try {
     const listProductType = await ProductType.find({ delete_at: null });

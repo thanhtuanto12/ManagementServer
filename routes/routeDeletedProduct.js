@@ -1,9 +1,8 @@
-const routeDeletedCustomer = require("express").Router();
+const routeDeletedProduct = require("express").Router();
 const accAuth = require("../middleware/accountAuth");
 var bodyParser = require("body-parser");
 var path = require("path");
 var AccountController = require("../controller/AccountController");
-var CustomerController = require("../controller/CustomerController");
 var ProductController = require("../controller/ProductController");
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var passport = require("passport");
@@ -13,10 +12,10 @@ let multer = require("multer");
 
 //Navigation
 
-routeDeletedCustomer.get("/", CustomerController.getListDeletedCustomer);
+routeDeletedProduct.get("/", ProductController.getListDeletedProduct);
 
-routeDeletedCustomer
-  .route("/restoreCustomer")
-  .post(CustomerController.restoreCustomer);
+routeDeletedProduct
+  .route("/restoreProduct")
+  .post(ProductController.restoreProduct);
 
-module.exports = routeDeletedCustomer;
+module.exports = routeDeletedProduct;
