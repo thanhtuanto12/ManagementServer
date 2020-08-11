@@ -176,6 +176,7 @@ exports.getUserByToken = async (req, res) => {
               id: foundCustomer._id,
               name: foundCustomer.name,
               phone: foundCustomer.phone,
+              address: foundCustomer.address,
               avatarUrl: Customer.avatarUrl,
             },
           });

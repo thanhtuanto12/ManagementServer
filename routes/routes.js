@@ -72,9 +72,8 @@ router.route("/Cart/RemoveFromCart").post(cartApi.removeFromCart);
 router.route("/Order/NewOrder").post(orderApi.newOrder);
 router.route("/Order/Ordered").post(orderApi.ChangeStatus);
 router.route("/Order/ListOrder").post(orderApi.listOrder);
-
 router.route("/Order/DowloadOrder").post(orderApi.downloadOrder);
-
+router.route("/Order/OrderDetail").post(orderApi.orderDetails);
 //promotions
 router.route("/getAllPromotions").get(promotionApi.getAllPromotion);
 
