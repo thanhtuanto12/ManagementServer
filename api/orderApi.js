@@ -1,5 +1,6 @@
 var Cart = require("../models/Cart");
 var Order = require("../models/Order");
+const Customer = require("../models/customer");
 const API_URL = require("../config");
 var jwt = require("jsonwebtoken");
 let request = require("request-promise");
@@ -10,14 +11,13 @@ const fs = require("fs");
 const path = require("path");
 let api = require("../config");
 const PdfPrinter = require("pdfmake");
-const Customer = require("../models/customer");
 
 exports.newOrder = async (req, res) => {
   try {
     //get data when create new order
     let accountId = handleAccountJwt.getAccountId(req);
     let date = new Date();
-    let { address, phone } = req.body;
+    let { address, phone, cusName } = req.body;
     let today = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
     if (accountId == null) {
       return res.json({
@@ -30,30 +30,34 @@ exports.newOrder = async (req, res) => {
       let customer = await Customer.findOne({ _id: accountId });
       if (userCart !== null) {
         const cartDetail = userCart.cartDetail;
-        if (cartDetail == null) {
-          return res.json({
-            status: -1,
-            message: "Không có sản phẩm nào trong giỏ hàng",
-            data: null,
-          });
-        }
         const newOrder = new Order({
           _id: new mongoose.Types.ObjectId(),
           orderDetail: cartDetail,
           cusID: accountId,
           address: address,
           phone: phone,
-          cusName:
-            customer.name == "" || customer.name === null
-              ? customer.phone
-              : customer.name,
+          cusName: cusName,
           total: userCart.total,
           status: 0,
           created_at: today,
           last_modified: today,
         });
 
-        await newOrder.save().then(async () => {
+        await newOrder.save().then(async (data) => {
+          if (data !== null) {
+            userCart
+              .updateOne({ $unset: { [`cartDetail`]: 1 }, total: 0 })
+              .then(async (data) => {
+                userCart.update({ $pull: { cartDetail: null } });
+              });
+            return res.json({
+              status: 1,
+              message: "Tạo hoá đơn thành công!",
+              data: {
+                orderId: newOrder._id,
+              },
+            });
+          }
           return res.json({
             status: 1,
             message: "Tạo hoá đơn thành công!",
@@ -79,15 +83,113 @@ exports.newOrder = async (req, res) => {
     });
   }
 };
-//Xác nhận đã nhận được hàng
-exports.Ordered = async (req, res) => {
+exports.listOrder = async (req, res) => {
   try {
     //get data when create new order
+    // let status = req.body.status;
+    let accountId = handleAccountJwt.getAccountId(req);
+    if (accountId == null) {
+      return res.json({
+        status: -1,
+        message: "Không tìm thấy người dùng này!",
+        data: null,
+      });
+    } else {
+      let userOrder = await Order.find({
+        cusID: accountId,
+        // status: status,
+      });
+      if (userOrder.length > 0) {
+        return res.json({
+          status: 1,
+          message: "Lấy danh sách đơn hàng thành công!",
+          data: userOrder,
+        });
+      } else {
+        return res.json({
+          status: -1,
+          message: "Bạn không có đơn hàng nào!",
+          data: null,
+        });
+      }
+    }
+  } catch (error) {
+    return res.json({
+      status: -1,
+      message: "Có sự cố xảy ra. Không lấy được hoá đơn!",
+      data: null,
+    });
+  }
+};
+exports.orderDetails = async (req, res) => {
+  try {
+    //get data when create new order
+    let { status, orderID } = req.body;
+    let accountId = handleAccountJwt.getAccountId(req);
+    if (orderID == null) {
+      return res.json({
+        status: -1,
+        message: "Không tìm thấy đơn hàng này!",
+        data: null,
+      });
+    }
+    if (accountId == null) {
+      return res.json({
+        status: -1,
+        message: "Không tìm thấy người dùng này!",
+        data: null,
+      });
+    } else {
+      let userOrder = await Order.find({
+        cusID: accountId,
+        _id: orderID,
+        status: status,
+      });
+      if (userOrder.length > 0) {
+        return res.json({
+          status: 1,
+          message: "Lấy đơn hàng thành công!",
+          data: userOrder[0],
+        });
+      } else {
+        return res.json({
+          status: -1,
+          message: "Bạn không có đơn hàng nào!",
+          data: null,
+        });
+      }
+    }
+  } catch (error) {
+    return res.json({
+      status: -1,
+      message: "Có sự cố xảy ra. Không lấy được đơn hàng!",
+      data: null,
+    });
+  }
+};
+//Xác nhận đã nhận được hàng
+exports.ChangeStatus = async (req, res) => {
+  try {
     let accountId = handleAccountJwt.getAccountId(req);
     let orderID = req.body.orderID;
+    let status = parseInt(req.body.status);
     let date = new Date();
     let today = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
-
+    let message = "Cập nhật đơn hàng thành công";
+    switch (status) {
+      case 0:
+        message = "Đã đặt lại đơn hàng";
+        break;
+      case 2:
+        message = "Đã xác nhận đơn hàng thành công";
+        break;
+      case -2:
+        message = "Đã huỷ đơn hàng";
+        break;
+      default:
+        message = "Cập nhật đơn hàng thành công";
+        break;
+    }
     if (orderID == null) {
       return res.json({
         status: -1,
@@ -107,12 +209,15 @@ exports.Ordered = async (req, res) => {
         cusID: accountId,
         _id: orderID,
       },
-      { $set: { status: 3 } }
+      {
+        $set: { status: status },
+        last_modified: today,
+      }
     ).then(async (data) => {
       if (data !== null) {
         return res.json({
           status: 1,
-          message: "Đã xác nhận thành công",
+          message: message,
           data: {
             orderID: orderID,
           },
@@ -141,7 +246,6 @@ exports.downloadOrder = async (req, res) => {
     const orderDownload = await Order.findOne({
       _id: orderID,
     });
-    console.log(orderDownload);
     let result = [];
     let index = 1;
     let total = 0;
@@ -252,35 +356,14 @@ exports.downloadOrder = async (req, res) => {
           ],
           style: "infor",
         },
-        // {
-        //   columns: [
-        //     {
-        //       text: 'Tổng cộng: '
-        //     },
-        //     {
-        //       text: '9999999'
-        //     }
-        //   ],
-        //   style: 'infor'
-        // },
-        // {
-        //   columns: [
-        //     {
-        //       text: 'Chiết khấu: '
-        //     },
-        //     {
-        //       text: '10'
-        //     }
-        //   ],
-        //   style: 'infor'
-        // },
+
         {
           columns: [
             {
               text: "Tổng tiền phải trả: ",
             },
             {
-              text: `${total} $`,
+              text: `${total} VND`,
             },
           ],
           style: "infor",
@@ -291,10 +374,10 @@ exports.downloadOrder = async (req, res) => {
           stack: [
             "Xin Chân Thành Cảm Ơn",
             " ",
-            "Ahihi Shop",
+            "Don Chicken",
             "65 Huỳnh Thúc Kháng - P.Bến Nghé - Q.1",
             {
-              text: "Tel: +84378314546 Email: AhihiShop@gmail.com",
+              text: "Tel: +84378314546 Email: project@donchicken.com",
               style: "subheader",
             },
           ],
@@ -336,7 +419,7 @@ exports.downloadOrder = async (req, res) => {
     }
 
     var pdfDoc = printer.createPdfKitDocument(docDefinition);
-    console.log(__dirname);
+
     pdfDoc.pipe(
       fs.createWriteStream(
         __dirname.replace("api", "") + `public/pdfFile/${fileName}`

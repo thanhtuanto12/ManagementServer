@@ -70,7 +70,9 @@ router.route("/Cart/EditQuanTi").post(cartApi.changeQuanti);
 router.route("/Cart/RemoveFromCart").post(cartApi.removeFromCart);
 //Order
 router.route("/Order/NewOrder").post(orderApi.newOrder);
-router.route("/Order/Ordered").post(orderApi.Ordered);
+router.route("/Order/Ordered").post(orderApi.ChangeStatus);
+router.route("/Order/ListOrder").post(orderApi.listOrder);
+
 router.route("/Order/DowloadOrder").post(orderApi.downloadOrder);
 
 //promotions
