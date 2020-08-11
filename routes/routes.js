@@ -8,6 +8,7 @@ const productApi = require("../api/productApi");
 const accountAuth = require("../middleware/accountAuth");
 const cartApi = require("../api/cartApi");
 const orderApi = require("../api/orderApi");
+const promotionApi = require("../api/promotionApi");
 var bcrypt = require("bcrypt");
 
 let multer = require("multer");
@@ -65,11 +66,14 @@ router.route("/Product/SeachProduct").post(productApi.searchProduct);
 router.route("/Cart/GetCart").post(cartApi.findCartByUser);
 router.route("/Cart/AddToCart").post(cartApi.addToCart);
 router.route("/Cart/EditQuanTi").post(cartApi.changeQuanti);
-router.route("/Cart/PlusOneToCart").post(cartApi.PlusOneToCart);
+// router.route("/Cart/PlusOneToCart").post(cartApi.PlusOneToCart);
 router.route("/Cart/RemoveFromCart").post(cartApi.removeFromCart);
 //Order
 router.route("/Order/NewOrder").post(orderApi.newOrder);
 router.route("/Order/Ordered").post(orderApi.Ordered);
 router.route("/Order/DowloadOrder").post(orderApi.downloadOrder);
+
+//promotions
+router.route("/getAllPromotions").get(promotionApi.getAllPromotion);
 
 module.exports = router;

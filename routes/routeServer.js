@@ -14,6 +14,7 @@ var routeDeletedType = require("./routeDeletedType");
 var routeDeletedAccount = require("./routeDeletedAccount");
 var routeDeletedCustomer = require("./routeDeletedCustomer");
 var routeDeletedProduct = require("./routeDeletedProduct");
+var routePromotions = require("./routePromotions");
 var FormData = require("form-data");
 var fs = require("fs");
 
@@ -40,6 +41,8 @@ router.use("/productType", proType);
 router.use("/account", routeAccount);
 //Product
 router.use("/product", routeProduct);
+//Promotions
+router.use("/promotions", routePromotions);
 //Customer
 router.use("/customer", routeCustomer);
 //Deleted Type page

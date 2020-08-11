@@ -243,17 +243,17 @@
                             <div class="form-group">
                               <label class="form-label w-100">Ảnh loại</label>
                               <input
-                                name="typeImg"
-                                id="typeImg"
+                                name="promotionsImg"
+                                id="promotionsImg"
                                 type="file"
                                 onchange="loadImg(event)"
                                 accept="image/png, image/jpeg"
                               />
                               <small class="form-text text-muted">
                                 <img
-                                  name="typeImgForm"
-                                  id="typeImgForm"
-                                  src="imgFromServer\proType\default.png"
+                                  name="promotionsImgForm"
+                                  id="promotionsImgForm"
+                                  src="imgFromServer\promotions\default.png"
                                   height="200px"
                                   width="200px"
                                   alt="No IMG"
@@ -274,11 +274,11 @@
                         <button
                           class="btn blue"
                           id="btnSubmit"
-                          onclick="addType(event)"
+                          onclick="addPromotions(event)"
                           name="btnCreate"
                           type="button"
                         >
-                          Thêm loại sản phẩm
+                          Thêm chương trình khuyến mãi
                         </button>
                       </div>
                     </div>
@@ -289,9 +289,9 @@
               </div>
               <a
                 class="btns blue sml-btn"
-                href="#myModalAddType"
+                href="#myModalAddPromotions"
 				data-toggle="modal"
-                >Thêm Loại sản phẩm</a
+                >Thêm chương trình khuyến mãi</a
               >
               <!-- Modal Open Button -->
             </div>
@@ -444,7 +444,7 @@
             <div class="widget-body">
               <div class="widget-heading purple">
                 <i class="icon-table pull-left"></i>
-                <h3 class="pull-left">Danh sách loại sản phẩm</h3>
+                <h3 class="pull-left">Danh sách chương trình khuyến mãi</h3>
               </div>
               <div class="widget-sec">
                 <div class="streaming-table">
@@ -457,21 +457,21 @@
                     <thead>
                       <tr>
                         <th hidden></th>
-                        <th style="width: 25%;">Tên loại sản phẩm</th>
+                        <th style="width: 25%;">Tên chương trình</th>
                         <th>Mô tả</th>
                         <th style="width: 10%;">Hình ảnh</th>
                         <th style="width: 20%;">Tuỳ chỉnh</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <% for (var i = 0; i < listProductType.length; i++) { %>
+                      <% for (var i = 0; i < listPromotions.length; i++) { %>
                       <tr>
-                        <td hidden><%= listProductType[i]._id %></td>
-                        <td><%= listProductType[i].typeName %></td>
-                        <td><%= listProductType[i].description %></td>
+                        <td hidden><%= listPromotions[i]._id %></td>
+                        <td><%= listPromotions[i].promotionsName %></td>
+                        <td><%= listPromotions[i].description %></td>
                         <td style="height: 10%;">
                           <img
-                            src="<%= listProductType[i].typeImg %>"
+                            src="<%= listPromotions[i].promotionsImg %>"
                             class="avatar img-fluid"
                             alt="No IMG"
                             style="width: 100%; height: 10%;"
@@ -519,20 +519,20 @@
     <!-- Body -->
 
     <script type="text/javascript">
-      var addType = function (event) {
+      var addPromotions = function (event) {
         event.preventDefault();
         var formData = new FormData();
 
-        var typeName = $("[name=typeName]").val();
-        var des = $("[name=addDescription]").val();
-        var file = $("[name=typeImg]").get(0).files;
+        var promotionsName = $("[name=promotionsName]").val();
+        var promotionsDescription = $("[name=promotionsDescription]").val();
+        var file = $("[name=promotionsImg]").get(0).files;
 
-        formData.append("imgType", file[0]);
-        formData.append("typeName", typeName);
-        formData.append("description", des);
+        formData.append("promotionsImg", file[0]);
+        formData.append("promotionsName", promotionsName);
+        formData.append("promotionsDescription", promotionsDescription);
 
         $.ajax({
-          url: "productType/addType",
+          url: "promotions/addPromotions",
           type: "POST",
           data: formData,
           cache: false,
@@ -613,7 +613,7 @@
           });
       };
       var loadImg = function (event) {
-        $("#typeImgForm").attr(
+        $("#promotionsImgForm").attr(
           "src",
           URL.createObjectURL(event.target.files[0])
         );

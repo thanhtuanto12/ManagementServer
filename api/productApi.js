@@ -16,6 +16,7 @@ exports.searchProduct = async (req, res) => {
     let searchKey = req.body.productName;
 
     const findProducts = await ProductType.find({
+      delete_at: null,
       "product.productName": { $regex: `${searchKey}` },
     });
     let products = [];

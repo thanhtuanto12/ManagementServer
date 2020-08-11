@@ -22,13 +22,14 @@ const cartDetail = new Schema(
     },
     productImg: {
       type: String,
+      required: false,
     },
     unit: {
       type: String,
       require: true,
     },
     quan: {
-      type: String,
+      type: Number,
       require: true,
     },
     price: {
