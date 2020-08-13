@@ -43,6 +43,35 @@ exports.searchProduct = async (req, res) => {
     });
   }
 };
+exports.getTopProduct = async (req, res) => {
+  try {
+    const findProducts = await ProductType.find().sort({
+      "product.created_at": -1,
+    });
+    let products = [];
+    for (let ProType of findProducts) {
+      if (ProType.product !== []) {
+        for (let product of ProType.product) {
+          if (product.productName) {
+            products.push(product);
+          }
+        }
+      }
+    }
+    return res.json({
+      status: 1,
+      message: "Lấy danh sách sản phẩm thành công",
+      data: products,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({
+      status: -1,
+      message: "Có lỗi xảy ra. Không lấy được sản phẩm",
+      data: null,
+    });
+  }
+};
 exports.getAllProduct = async (req, res) => {
   try {
     const listProductType = await ProductType.find({ delete_at: null });
