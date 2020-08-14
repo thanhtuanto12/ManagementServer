@@ -21,6 +21,8 @@ routePromotions
   .route("/editPromotions")
   .post(PromotionController.editPromotions);
 
-// proType.route("/deleteType").post(ProductController.deleteProductType);
+routePromotions
+  .route("/deletePromotions")
+  .post(PromotionController.deletePromotions);
 
 module.exports = routePromotions;

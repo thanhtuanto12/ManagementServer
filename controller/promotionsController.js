@@ -150,31 +150,32 @@ exports.addPromotions = async (req, res) => {
   }
 };
 exports.editPromotions = async (req, res) => {
-  let typeId = req.body.typeId;
-  let typeName = req.body.typeName;
-  let description = req.body.description;
+  let promotionsId = req.body.promotionsId;
+  let promotionsName = req.body.promotionsName;
+  let promotionsDescription = req.body.promotionsDescription;
   let date = new Date();
   let today = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
-  if (typeName == null || typeName == undefined || typeName == "") {
-    return res.json({ success: false, mgs: "Tên loại không được để trống" });
+  if (!promotionsName) {
+    return res.json({
+      success: false,
+      mgs: "Tên chương trình không được để trống",
+    });
   }
 
   try {
-    //Check ProductType Name exist
-
-    const check = await ProductType.findOne({
-      _id: typeId,
+    const check = await Promotion.findOne({
+      _id: promotionsId,
     });
-    let currenImg = check.typeImg;
-    let currenName = check.typeName;
-    if (typeName !== currenName) {
-      const checkName = await ProductType.find({
-        typeName: typeName,
+    let currenImg = check.promotionsImg;
+    let currenName = check.promotionsName;
+    if (promotionsName !== currenName) {
+      const checkName = await Promotion.find({
+        promotionsName: promotionsName,
       });
       if (checkName.length != 0) {
         return res.json({
           success: false,
-          mgs: "Tên loại sản phẩm đã tồn tại!",
+          mgs: "Tên đã tồn tại!",
         });
       }
     }
@@ -182,30 +183,30 @@ exports.editPromotions = async (req, res) => {
     //update ProductType
     let files = req.files;
     if (!objectIsEmpty(files)) {
-      let file = req.files.imgType;
+      let file = req.files.promotionsImg;
       let imageName = file.fieldName + "-" + Date.now() + ".png";
       let tmp_path = file.path;
       let target_path =
         __dirname.replace("controller", "") +
-        "public/imgFromServer/proType/" +
+        "public/imgFromServer/promotions/" +
         imageName;
       let src = fs.createReadStream(tmp_path);
       let dest = fs.createWriteStream(target_path);
       src.pipe(dest);
       src.on("end", async () => {
         try {
-          let typeImg = "imgFromServer/proType/" + imageName;
-          await ProductType.findOneAndUpdate(
-            { _id: typeId },
+          let promotionsImg = "imgFromServer/promotions/" + imageName;
+          await Promotion.findOneAndUpdate(
+            { _id: promotionsId },
 
             {
-              typeName: typeName,
-              typeImg: typeImg,
-              description: description,
+              promotionsName: promotionsName,
+              promotionsImg: promotionsImg,
+              description: promotionsDescription,
               last_modified: today,
             }
           ).then(async () => {
-            if (typeImg != "imgFromServer/proType/default.png") {
+            if (promotionsImg != "imgFromServer/promotions/default.png") {
               fs.unlink(
                 __dirname.replace("controller", "") + "public/" + currenImg,
                 (err) => {
@@ -214,14 +215,15 @@ exports.editPromotions = async (req, res) => {
               );
               return res.json({
                 success: true,
-                mgs: "Cập nhật loại sản phẩm thành công",
+                mgs: "Cập nhật thành công",
               });
             }
           });
         } catch (error) {
+          console.log(error);
           return res.json({
             success: false,
-            mgs: "Có sự cố xảy ra. Không thể thêm loại sản phẩm!",
+            mgs: "Có sự cố xảy ra. Không thể cập nhật!",
           });
         }
       });
@@ -236,24 +238,51 @@ exports.editPromotions = async (req, res) => {
       });
     } else {
       //create new ProductType
-      await ProductType.findOneAndUpdate(
-        { _id: typeId },
+      await Promotion.findOneAndUpdate(
+        { _id: promotionsId },
+
         {
-          typeName: typeName,
-          description: description,
+          promotionsName: promotionsName,
+          description: promotionsDescription,
           last_modified: today,
         }
       ).then(async () => {
         return res.json({
           success: true,
-          mgs: "Cập nhật loại sản phẩm thành công",
+          mgs: "Cập nhật thành công",
         });
       });
     }
-  } catch {
+  } catch (error) {
+    console.log(error);
     return res.json({
       success: false,
-      mgs: "Có sự cố xảy ra. Không thể cập nhật loại sản phẩm!",
+      mgs: "Có sự cố xảy ra. Không thể cập nhật !",
+    });
+  }
+};
+exports.deletePromotions = async (req, res) => {
+  //Type infor
+  try {
+    let promotionId = req.body.promotionsId;
+    let date = new Date();
+    let today = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+    await ProductType.findOneAndUpdate(
+      { _id: promotionId },
+      {
+        delete_at: today,
+        last_modified: today,
+      }
+    );
+    return res.json({
+      success: true,
+      mgs: "Xoá thành công",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({
+      success: false,
+      mgs: "Có lỗi xảy ra! Xoá thất bại",
     });
   }
 };

@@ -246,6 +246,7 @@
                           <form id="promotionsForm" enctype="multipart/form-data">
                             <div class="form-group">
                               <label class="form-label">Tên chương trình khuyến mãi</label>
+                              <input hidden name="promotionsIdEdit"/>
                               <input
                                 type="text"
                                 name="promotionsNameEdit"
@@ -311,7 +312,7 @@
                 role="dialog"
                 tabindex="-1"
                 class="modal fade"
-                id="myModalDeleteType"
+                id="myModalDeletePromotions"
                 style="display: none;"
               >
                 <div class="modal-dialog">
@@ -326,16 +327,16 @@
                         >
                           ×
                         </button>
-                        <h4 class="modal-title">Xóa loại sản phẩm</h4>
+                        <h4 class="modal-title">Xóa chương trình khuyến mãi</h4>
                       </div>
                       <div class="modal-body">
                         <div class="col-md-12">
                           <form id="deleteProTypeForm" enctype="multipart/form-data">
-                            <p name="typeIdDel" hidden>
+                            <p name="promotionsIdDel" hidden>
 							</p>
-							<p> Bạn muốn xóa loại sản phẩm này?
+							<p> Bạn muốn xóa chương trình khuyến mãi này?
 							</p>
-							<p name="typeNameDel">
+							<p name="promotionsNameDel">
 							</p>
                           </form>
                         </div>
@@ -413,7 +414,7 @@
                             type="button"
                             name="btn_delete"
                             data-toggle="modal"
-                            data-target="#myModalDeleteType"
+                            data-target="#myModalDeletePromotions"
                           >
 							<i class="icon-remove" data-feather="trash"></i>
 							Remove
@@ -475,12 +476,12 @@
         event.preventDefault();
 
         var formData = new FormData();
-        var promotionsId = $("[name=promotionsNameEdit]").val();
+        var promotionsId = $("[name=promotionsIdEdit]").val();
         var promotionsName = $("[name=promotionsNameEdit]").val();
         var promotionsDescription = $("[name=promotionsDescriptionEdit]").val();
         var file = $("[name=promotionsImgEdit]").get(0).files;
         formData.append("promotionsId", promotionsId);
-        formData.append("promotionsImgEdit", file[0]);
+        formData.append("promotionsImg", file[0]);
         formData.append("promotionsName", promotionsName);
         formData.append("promotionsDescription", promotionsDescription);
 
@@ -504,16 +505,16 @@
             alert("Không kết nối được với server");
           });
       };
-      var deleteType = function (event) {
+      var deletePromotions = function (event) {
         event.preventDefault();
 
         var formData = new FormData();
-        var typeId = $("[name=typeIdDel]").text();
+        var promotionId = $("[name=promotionsIdDel]").text();
 
-        formData.append("typeId", typeId);
+        formData.append("promotionsId", promotionId);
 
         $.ajax({
-          url: "productType/deleteType",
+          url: "promotions/deletePromotions",
           type: "POST",
           data: formData,
           cache: false,
@@ -545,9 +546,9 @@
         );
       };
       $("[name=btn_edit]").click(function () {
-        var typeId = $(this).parent().parent().children().eq(0).html();
-        var name = $(this).parent().parent().children().eq(1).html();
-        var des = $(this).parent().parent().children().eq(2).html();
+        var promotionsId = $(this).parent().parent().children().eq(0).html();
+        var promotionsName = $(this).parent().parent().children().eq(1).html();
+        var promotionsDescription = $(this).parent().parent().children().eq(2).html();
         var img = $(this)
           .parent()
           .parent()
@@ -556,16 +557,16 @@
           .children()
           .eq(0)
           .attr("src");
-        $("#editTypeImgForm").attr("src", img);
-        $("[name=editTypeId]").val(typeId);
-        $("[name=editTypeName]").val(name);
-        $("[name=editDescription]").val(des);
+        $("#promotionsImgFormEdit").attr("src", img);
+        $("[name=promotionsIdEdit]").val(promotionsId);
+        $("[name=promotionsNameEdit]").val(promotionsName);
+        $("[name=promotionsDescriptionEdit]").val(promotionsDescription);
       });
       $("[name=btn_delete]").click(function () {
-        var typeIdDel = $(this).parent().parent().children().eq(0).html();
-        var name = $(this).parent().parent().children().eq(1).html();
-        $("[name=typeIdDel]").text(typeIdDel);
-        $("[name=typeNameDel]").text(name);
+        var promotionsIdDel = $(this).parent().parent().children().eq(0).html();
+        var promotionsNameDel = $(this).parent().parent().children().eq(1).html();
+        $("[name=promotionsIdDel]").text(promotionsIdDel);
+        $("[name=promotionsNameDel]").text(promotionsNameDel);
       });
     </script>
     <script src="js/app.js"></script>

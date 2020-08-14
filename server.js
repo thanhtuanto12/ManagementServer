@@ -59,8 +59,8 @@ server.listen(8080);
 console.log("server run in port 8080");
 
 mongoose.connect(
-  " mongodb://localhost:2x7017/Foodshopdb",
-  // "mongodb://thanhtuanto12:Tuan2905@cluster0-shard-00-00.cipbb.gcp.mongodb.net:27017,cluster0-shard-00-01.cipbb.gcp.mongodb.net:27017,cluster0-shard-00-02.cipbb.gcp.mongodb.net:27017/Foodshopdb?replicaSet=atlas-oymy52-shard-0&ssl=true&authSource=admin",
+  // " mongodb://localhost:2x7017/Foodshopdb",
+  "mongodb://thanhtuanto12:Tuan2905@cluster0-shard-00-00.cipbb.gcp.mongodb.net:27017,cluster0-shard-00-01.cipbb.gcp.mongodb.net:27017,cluster0-shard-00-02.cipbb.gcp.mongodb.net:27017/Foodshopdb?replicaSet=atlas-oymy52-shard-0&ssl=true&authSource=admin",
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
