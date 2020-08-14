@@ -23,12 +23,15 @@ exports.getListProductType = async (req, res) => {
     let page = 0; //req.body.page
     let limit = 1; //req.body.limit
     // const listProductType = await ProductType.find().skip(page*limit).limit(limit)
-
-    const listProductType = await ProductType.find({ delete_at: null });
-    return res.render("product/ProductType", {
-      listProductType,
-      mgs: "",
-    });
+    if (req.session.isLogin) {
+      const listProductType = await ProductType.find({ delete_at: null });
+      return res.render("product/ProductType", {
+        listProductType,
+        mgs: "",
+      });
+    } else {
+      return res.render("login/login");
+    }
   } catch (error) {
     return res.send({ mgs: "Có lỗi xảy ra! Lấy danh sách thất bại" });
   }
@@ -42,10 +45,14 @@ exports.getListDeletedProductType = async (req, res) => {
     const listDeletedProductType = await ProductType.find({
       delete_at: { $ne: null },
     });
-    return res.render("product/deletedType", {
-      listDeletedProductType,
-      mgs: "",
-    });
+    if (req.session.isLogin) {
+      return res.render("product/deletedType", {
+        listDeletedProductType,
+        mgs: "",
+      });
+    } else {
+      return res.render("login/login");
+    }
   } catch (error) {
     console.log(error);
     return res.send({ mgs: "Có lỗi xảy ra! Lấy danh sách thất bại" });
@@ -330,22 +337,25 @@ exports.getListProduct = async (req, res) => {
   try {
     const listProductType = await ProductType.find({ delete_at: null });
     const listProduct = [];
-
     // var listProduct = [];
     for (let ProType of listProductType) {
       if (ProType.product !== []) {
         for (let Product of ProType.product) {
-          if (Product.delete_at == null) {
+          if (!Product.delete_at) {
             listProduct.push(Product);
           }
         }
       }
     }
-    return res.render("product/Product", {
-      listProduct,
-      listProductType,
-      mgs: "",
-    });
+    if (req.session.isLogin) {
+      return res.render("product/Product", {
+        listProduct,
+        listProductType,
+        mgs: "",
+      });
+    } else {
+      return res.render("login/login");
+    }
   } catch (error) {
     return res.send("Có lỗi xảy ra! Lấy danh sách sản phẩm thất bại");
   }
@@ -365,11 +375,15 @@ exports.getListDeletedProduct = async (req, res) => {
         }
       }
     }
-    return res.render("product/deletedProduct", {
-      listDeletedProduct,
-      listProductType,
-      mgs: "",
-    });
+    if (req.session.isLogin) {
+      return res.render("product/deletedProduct", {
+        listDeletedProduct,
+        listProductType,
+        mgs: "",
+      });
+    } else {
+      return res.render("login/login");
+    }
   } catch (error) {
     return res.send("Có lỗi xảy ra! Lấy danh sách sản phẩm thất bại");
   }
@@ -694,6 +708,7 @@ exports.deleteProduct = async (req, res) => {
     });
   }
 };
+
 exports.restoreProduct = async (req, res) => {
   //Type infor
   try {
@@ -701,7 +716,6 @@ exports.restoreProduct = async (req, res) => {
     let date = new Date();
     let today = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
     const productTypes = await ProductType.findOne({
-      delete_at: null,
       "product._id": productId, //get column productId
     });
     let productIndex = productTypes.product.findIndex(
@@ -720,13 +734,13 @@ exports.restoreProduct = async (req, res) => {
     );
     return res.json({
       success: true,
-      mgs: "khôi phục thành công",
+      mgs: "Khôi phục thành công",
     });
   } catch (error) {
     console.log(error);
     return res.json({
       success: false,
-      mgs: "Có lỗi xảy ra! Khôi phục thất bại",
+      mgs: "Có lỗi xảy ra! Xoá thất bại",
     });
   }
 };

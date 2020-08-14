@@ -17,7 +17,9 @@ routePromotions.get("/", PromotionController.getListPromotions);
 
 routePromotions.route("/addPromotions").post(PromotionController.addPromotions);
 
-// proType.route("/editType").post(ProductController.editProductType);
+routePromotions
+  .route("/editPromotions")
+  .post(PromotionController.editPromotions);
 
 // proType.route("/deleteType").post(ProductController.deleteProductType);
 

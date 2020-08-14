@@ -48,18 +48,24 @@ exports.login = async (req, res) => {
     });
   }
 };
-// exports.getListAccount = async (req, res) => {
+// exports.logout = async (req, res) => {
 //   try {
-//     const listAccount = await Account.find();
-//     return res.render("account/ListAccount", { listAccount });
+//     req.session.isLogin = false;
+//     return res.render("login/login");
+//     res.json({
+//       status: 1,
+//       message: "Đăng xuất thành công",
+//       data: null,
+//     });
 //   } catch (error) {
-//     return res.send("Có lỗi xảy ra! Lấy danh sách thất bại");
+//     res.json({
+//       status: -1,
+//       message: "Thất bại",
+//       data: null,
+//       error: error,
+//     });
 //   }
 // };
-// exports.logout = async (req, res) => {
-
-// }
-
 exports.getListAccount = async (req, res) => {
   try {
     let page = 0; //req.body.page
@@ -67,10 +73,14 @@ exports.getListAccount = async (req, res) => {
     // const listProductType = await ProductType.find().skip(page*limit).limit(limit)
 
     const listAccount = await Account.find({ delete_at: null });
-    return res.render("account/ListAccount", {
-      listAccount,
-      mgs: "",
-    });
+    if (req.session.isLogin) {
+      return res.render("account/ListAccount", {
+        listAccount,
+        mgs: "",
+      });
+    } else {
+      return res.render("login/login");
+    }
   } catch (error) {
     return res.send({ mgs: "Có lỗi xảy ra! Lấy danh sách thất bại" });
   }
@@ -104,10 +114,14 @@ exports.getListDeletedAccount = async (req, res) => {
     const listDeletedAccount = await Account.find({
       delete_at: { $ne: null },
     });
-    return res.render("account/deletedAccount", {
-      listDeletedAccount,
-      mgs: "",
-    });
+    if (req.session.isLogin) {
+      return res.render("account/deletedAccount", {
+        listDeletedAccount,
+        mgs: "",
+      });
+    } else {
+      return res.render("login/login");
+    }
   } catch (error) {
     console.log(error);
     return res.send({ mgs: "Có lỗi xảy ra! Lấy danh sách thất bại" });

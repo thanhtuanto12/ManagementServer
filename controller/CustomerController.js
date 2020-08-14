@@ -17,10 +17,14 @@ exports.getListCustomer = async (req, res) => {
     let limit = 1; //req.body.limit
 
     const listCustomer = await Customer.find({ delete_at: null });
-    return res.render("Customers/customer", {
-      listCustomer,
-      mgs: "",
-    });
+    if (req.session.isLogin) {
+      return res.render("Customers/customer", {
+        listCustomer,
+        mgs: "",
+      });
+    } else {
+      return res.render("login/login");
+    }
   } catch (error) {
     return res.send({ mgs: "Có lỗi xảy ra! Lấy danh sách thất bại" });
   }
@@ -54,10 +58,14 @@ exports.getListDeletedCustomer = async (req, res) => {
     const listDeletedCustomer = await Customer.find({
       delete_at: { $ne: null },
     });
-    return res.render("customers/deletedCustomer", {
-      listDeletedCustomer,
-      mgs: "",
-    });
+    if (req.session.isLogin) {
+      return res.render("Customers/deletedCustomer", {
+        listDeletedCustomer,
+        mgs: "",
+      });
+    } else {
+      return res.render("login/login");
+    }
   } catch (error) {
     console.log(error);
     return res.send({ mgs: "Có lỗi xảy ra! Lấy danh sách thất bại" });

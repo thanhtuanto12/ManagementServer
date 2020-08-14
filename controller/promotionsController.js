@@ -149,3 +149,111 @@ exports.addPromotions = async (req, res) => {
     });
   }
 };
+exports.editPromotions = async (req, res) => {
+  let typeId = req.body.typeId;
+  let typeName = req.body.typeName;
+  let description = req.body.description;
+  let date = new Date();
+  let today = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+  if (typeName == null || typeName == undefined || typeName == "") {
+    return res.json({ success: false, mgs: "Tên loại không được để trống" });
+  }
+
+  try {
+    //Check ProductType Name exist
+
+    const check = await ProductType.findOne({
+      _id: typeId,
+    });
+    let currenImg = check.typeImg;
+    let currenName = check.typeName;
+    if (typeName !== currenName) {
+      const checkName = await ProductType.find({
+        typeName: typeName,
+      });
+      if (checkName.length != 0) {
+        return res.json({
+          success: false,
+          mgs: "Tên loại sản phẩm đã tồn tại!",
+        });
+      }
+    }
+
+    //update ProductType
+    let files = req.files;
+    if (!objectIsEmpty(files)) {
+      let file = req.files.imgType;
+      let imageName = file.fieldName + "-" + Date.now() + ".png";
+      let tmp_path = file.path;
+      let target_path =
+        __dirname.replace("controller", "") +
+        "public/imgFromServer/proType/" +
+        imageName;
+      let src = fs.createReadStream(tmp_path);
+      let dest = fs.createWriteStream(target_path);
+      src.pipe(dest);
+      src.on("end", async () => {
+        try {
+          let typeImg = "imgFromServer/proType/" + imageName;
+          await ProductType.findOneAndUpdate(
+            { _id: typeId },
+
+            {
+              typeName: typeName,
+              typeImg: typeImg,
+              description: description,
+              last_modified: today,
+            }
+          ).then(async () => {
+            if (typeImg != "imgFromServer/proType/default.png") {
+              fs.unlink(
+                __dirname.replace("controller", "") + "public/" + currenImg,
+                (err) => {
+                  console.log(err);
+                }
+              );
+              return res.json({
+                success: true,
+                mgs: "Cập nhật loại sản phẩm thành công",
+              });
+            }
+          });
+        } catch (error) {
+          return res.json({
+            success: false,
+            mgs: "Có sự cố xảy ra. Không thể thêm loại sản phẩm!",
+          });
+        }
+      });
+      src.on("error", (err) => {
+        fs.unlink(tmp_path, (err) => {
+          console.log(err);
+        });
+        return res.json({
+          status: -1,
+          message: "Thất bại",
+        });
+      });
+    } else {
+      //create new ProductType
+      await ProductType.findOneAndUpdate(
+        { _id: typeId },
+        {
+          typeName: typeName,
+          description: description,
+          last_modified: today,
+        }
+      ).then(async () => {
+        return res.json({
+          success: true,
+          mgs: "Cập nhật loại sản phẩm thành công",
+        });
+      });
+    }
+  } catch {
+    return res.json({
+      success: false,
+      mgs: "Có sự cố xảy ra. Không thể cập nhật loại sản phẩm!",
+    });
+  }
+};

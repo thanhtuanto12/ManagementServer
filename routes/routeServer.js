@@ -34,6 +34,10 @@ router.get("/home", function (req, res) {
 
 router.route("/login").post(AccountController.login);
 
+router.get("/logout", function (req, res, next) {
+  req.session.isLogin = false;
+  return res.render("login/login", { mgs: "" });
+});
 //Product Type
 
 router.use("/productType", proType);

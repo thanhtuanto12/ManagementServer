@@ -45,14 +45,15 @@ exports.searchProduct = async (req, res) => {
 };
 exports.getTopProduct = async (req, res) => {
   try {
-    const findProducts = await ProductType.find().sort({
-      "product.created_at": -1,
+    const findProducts = await ProductType.find({
+      // "product.created_at": -1,
+      $sort: { "product.created_at": -1 },
     });
     let products = [];
     for (let ProType of findProducts) {
       if (ProType.product !== []) {
         for (let product of ProType.product) {
-          if (product.productName) {
+          if (!product.delete_at) {
             products.push(product);
           }
         }
@@ -84,7 +85,9 @@ exports.getAllProduct = async (req, res) => {
       for (let ProType of listProductType) {
         if (ProType.product !== []) {
           for (let product of ProType.product) {
-            listProduct.push(product);
+            if (product.delete_at == null) {
+              listProduct.push(product);
+            }
           }
         }
       }

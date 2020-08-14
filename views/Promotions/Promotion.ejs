@@ -108,87 +108,8 @@
         </div>
         <div class="container">
           <div class="row">
-            <div class="main-bg">
-                  <!-- top-stats -->
+                        <!-- top-stats -->
            <% include ../partials/top-stats %>
-
-              <div class="breadcrumbs-notify">
-                <a href="#" title="">Trang chủ / </a>
-                <a href="#" class="current-page" title=""> Chương trình khuyến mãi </a>
-                <div class="notification-auto">
-                  <div class="fade-notification">
-                    <h5><i class="icon-warning-sign"></i> Notification :</h5>
-                  </div>
-                  <div class="notification-slideshow">
-                    <h6 class="notify-fade">
-                      Server 3 is Over Loader Please Check. <i>3:45pm</i>
-                    </h6>
-                    <h6 class="notify-fade">
-                      Server # 10 is Not Responding<i>1:30 Am</i>
-                    </h6>
-                    <h6 class="notify-fade">
-                      New User Registration Error . <i>Today</i>
-                    </h6>
-                    <h6 class="notify-fade">
-                      Domain Expiration Error <i>Yesterday</i>
-                    </h6>
-                    <h6 class="notify-fade">
-                      Database Over loaded 2% Remaining <i>9:59 pm</i>
-                    </h6>
-                    <h6 class="notify-fade">
-                      Application Erro Delete it Now <i>Last Week</i>
-                    </h6>
-                  </div>
-                </div>
-              </div>
-
-              <div class="heading-buttons-sec">
-                <h1>Chương trình khuyến mãi</h1>
-                <div class="heading-buttons">
-                  <ul>
-                    <li class="dropdown heading-dropdown">
-                      <a
-                        href="#"
-                        data-toggle="dropdown"
-                        role="button"
-                        id="drop1"
-                        >Dropdown <b class="caret"></b
-                      ></a>
-                      <ul
-                        aria-labelledby="drop1"
-                        role="menu"
-                        class="dropdown-menu"
-                        id="menu1"
-                      >
-                        <li role="presentation">
-                          <a href="#" tabindex="-1" role="menuitem">Action</a>
-                        </li>
-                        <li role="presentation">
-                          <a href="#" tabindex="-1" role="menuitem"
-                            >Another action</a
-                          >
-                        </li>
-                        <li role="presentation">
-                          <a href="#" tabindex="-1" role="menuitem"
-                            >Something else here</a
-                          >
-                        </li>
-                        <li class="divider" role="presentation"></li>
-                        <li role="presentation">
-                          <a href="#" tabindex="-1" role="menuitem"
-                            >Separated link</a
-                          >
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                  <a href="#" title=""><i class="icon-paper-clip"></i></a
-                  ><a href="#" title=""><i class="icon-calendar"></i></a
-                  ><a href="#" title=""><i class="icon-envelope"></i></a
-                  ><a href="#" title=""><i class="icon-refresh"></i></a>
-                </div>
-              </div>
-            </div>
             <!-- main-bg-->
           </div>
           <!-- Row -->
@@ -241,7 +162,7 @@
                               ></textarea>
                             </div>
                             <div class="form-group">
-                              <label class="form-label w-100">Ảnh loại</label>
+                              <label class="form-label w-100">Ảnh minh họa</label>
                               <input
                                 name="promotionsImg"
                                 id="promotionsImg"
@@ -318,44 +239,43 @@
                         >
                           ×
                         </button>
-                        <h4 class="modal-title">Chỉnh sửa loại sản phẩm</h4>
+                        <h4 class="modal-title">Chỉnh sửa chương trình khuyến mãi</h4>
                       </div>
                       <div class="modal-body">
                         <div class="col-md-12">
-                          <form id="editProTypeForm" enctype="multipart/form-data">
+                          <form id="promotionsForm" enctype="multipart/form-data">
                             <div class="form-group">
-								<input type="hidden" name="editTypeId" class="form-control">
-                              <label class="form-label">Tên loại</label>
+                              <label class="form-label">Tên chương trình khuyến mãi</label>
                               <input
                                 type="text"
-                                name="editTypeName"
+                                name="promotionsNameEdit"
                                 class="form-control"
-                                placeholder="Tên loại sản phẩm"
+                                placeholder="Tên chương trình khuyến mãi"
                               />
                             </div>
                             <div class="form-group">
                               <label class="form-label">Mô tả</label>
                               <textarea
                                 class="form-control"
-                                name="editDescription"
-                                placeholder="Mô tả loại sản phẩm"
+                                name="promotionsDescriptionEdit"
+                                placeholder="Mô tả chương trình"
                                 rows="3"
                               ></textarea>
                             </div>
                             <div class="form-group">
-                              <label class="form-label w-100">Ảnh loại</label>
+                              <label class="form-label w-100">Ảnh minh họa</label>
                               <input
-                                name="editTypeImg"
-                                id="editTypeImg"
+                                name="promotionsImgEdit"
+                                id="promotionsImgEdit"
                                 type="file"
                                 onchange="loadImgEdit(event)"
                                 accept="image/png, image/jpeg"
                               />
                               <small class="form-text text-muted">
                                 <img
-                                  name="editTypeImgForm"
-                                  id="editTypeImgForm"
-                                  src="#"
+                                  name="promotionsImgFormEdit"
+                                  id="promotionsImgFormEdit"
+                                  src="imgFromServer\promotions\default.png"
                                   height="200px"
                                   width="200px"
                                   alt="No IMG"
@@ -373,7 +293,7 @@
                         >
                           Close
                         </button>
-                        <button type="button" id="btnSubmit" onclick="editType(event)" name="btnCreate"
+                        <button type="button" id="btnSubmit" onclick="editPromotions(event)" name="btnCreate"
 												class="btn blue">Cập nhật</button>
                       </div>
                     </div>
@@ -551,21 +471,21 @@
             alert("Không kết nối được với server");
           });
       };
-      var editType = function (event) {
+      var editPromotions = function (event) {
         event.preventDefault();
 
         var formData = new FormData();
-        var typeId = $("[name=editTypeId]").val();
-        var typeName = $("[name=editTypeName]").val();
-        var des = $("[name=editDescription]").val();
-        var file = $("[name=editTypeImg]").get(0).files;
-        formData.append("typeId", typeId);
-        formData.append("imgType", file[0]);
-        formData.append("typeName", typeName);
-        formData.append("description", des);
+        var promotionsId = $("[name=promotionsNameEdit]").val();
+        var promotionsName = $("[name=promotionsNameEdit]").val();
+        var promotionsDescription = $("[name=promotionsDescriptionEdit]").val();
+        var file = $("[name=promotionsImgEdit]").get(0).files;
+        formData.append("promotionsId", promotionsId);
+        formData.append("promotionsImgEdit", file[0]);
+        formData.append("promotionsName", promotionsName);
+        formData.append("promotionsDescription", promotionsDescription);
 
         $.ajax({
-          url: "productType/editType",
+          url: "promotions/editPromotions",
           type: "POST",
           data: formData,
           cache: false,
@@ -619,7 +539,7 @@
         );
       };
       var loadImgEdit = function (event) {
-        $("#editTypeImgForm").attr(
+        $("#promotionsImgFormEdit").attr(
           "src",
           URL.createObjectURL(event.target.files[0])
         );
