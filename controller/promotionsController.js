@@ -267,7 +267,7 @@ exports.deletePromotions = async (req, res) => {
     let promotionId = req.body.promotionsId;
     let date = new Date();
     let today = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
-    await ProductType.findOneAndUpdate(
+    await Promotion.findOneAndUpdate(
       { _id: promotionId },
       {
         delete_at: today,

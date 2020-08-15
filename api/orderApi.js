@@ -86,7 +86,7 @@ exports.newOrder = async (req, res) => {
 exports.listOrder = async (req, res) => {
   try {
     //get data when create new order
-    // let status = req.body.status;
+    let status = req.body.status;
     let accountId = handleAccountJwt.getAccountId(req);
     if (accountId == null) {
       return res.json({
@@ -97,7 +97,7 @@ exports.listOrder = async (req, res) => {
     } else {
       let userOrder = await Order.find({
         cusID: accountId,
-        // status: status,
+        status: status,
       });
       if (userOrder.length > 0) {
         return res.json({
