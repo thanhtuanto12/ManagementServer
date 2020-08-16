@@ -63,7 +63,7 @@ exports.getTopProduct = async (req, res) => {
     products.sort(function (a, b) {
       return new Date(b.created_at) - new Date(a.created_at);
     });
-    products = products.slice(0, 5);
+    products = products.slice(0, 6);
     return res.json({
       status: 1,
       message: "Lấy danh sách sản phẩm thành công",
