@@ -341,7 +341,7 @@ exports.getListProduct = async (req, res) => {
     for (let ProType of listProductType) {
       if (ProType.product !== []) {
         for (let Product of ProType.product) {
-          if (!Product.delete_at) {
+          if (Product.delete_at == null) {
             listProduct.push(Product);
           }
         }
@@ -369,12 +369,13 @@ exports.getListDeletedProduct = async (req, res) => {
     for (let ProType of listProductType) {
       if (ProType.product !== []) {
         for (let Product of ProType.product) {
-          if (Product.delete_at !== null) {
+          if (Product.delete_at) {
             listDeletedProduct.push(Product);
           }
         }
       }
     }
+
     if (req.session.isLogin) {
       return res.render("product/deletedProduct", {
         listDeletedProduct,

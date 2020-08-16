@@ -45,24 +45,29 @@ exports.searchProduct = async (req, res) => {
 };
 exports.getTopProduct = async (req, res) => {
   try {
-    const findProducts = await ProductType.find().sort({
-      "product.created_at": -1,
+    const findProducts = await ProductType.find({
+      delete_at: null,
     });
     let products = [];
     for (let ProType of findProducts) {
       if (ProType.product !== []) {
         for (let product of ProType.product) {
           if (product.delete_at == null) {
-            if (product.productName) {
+            if (product.created_at) {
               products.push(product);
             }
           }
         }
       }
     }
+    products.sort(function (a, b) {
+      return new Date(b.created_at) - new Date(a.created_at);
+    });
+    products = products.slice(0, 5);
     return res.json({
       status: 1,
       message: "Lấy danh sách sản phẩm thành công",
+      // data: products,
       data: products,
     });
   } catch (error) {

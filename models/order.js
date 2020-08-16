@@ -72,6 +72,10 @@ const orderSchema = new Schema({
     type: String,
     required: true,
   },
+  reasonCancel: {
+    type: String,
+    default: null,
+  },
   status: {
     type: Number,
     enum: [0, 1, 2],

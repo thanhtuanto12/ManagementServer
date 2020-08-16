@@ -15,6 +15,7 @@ var routeDeletedAccount = require("./routeDeletedAccount");
 var routeDeletedCustomer = require("./routeDeletedCustomer");
 var routeDeletedProduct = require("./routeDeletedProduct");
 var routePromotions = require("./routePromotions");
+var routeOrder = require("./routeOrder");
 var FormData = require("form-data");
 var fs = require("fs");
 
@@ -57,5 +58,6 @@ router.use("/deletedAccount", routeDeletedAccount);
 router.use("/deletedCustomer", routeDeletedCustomer);
 //Deleted product page
 router.use("/deletedProduct", routeDeletedProduct);
+router.use("/order", routeOrder);
 
 module.exports = router;

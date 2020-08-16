@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html lang="en">
   <% include ../partials/Header %>
   <body>
@@ -142,7 +142,7 @@
                       </div>
                       <div class="modal-body">
                         <div class="col-md-12">
-                          <form id="accountForm"  enctype="multipart/form-data">
+                          <form id="accountFormAdd"  enctype="multipart/form-data">
 									<div class="form-group" style="width: 500px">
                     <div class="row">
                       <label class="form-label">Tên đầy đủ</label>
@@ -184,7 +184,7 @@
                   <div class="row">
                     <label class="form-label">Email</label>
                     <input
-                      type="email"
+                    pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"
                       name="email"
                       class="form-control"
                       placeholder="Địa chỉ email"
@@ -566,6 +566,7 @@
         $("[name=usernameDel]").text(username);
       });
     </script>
+    
     <script src="js/app.js"></script>
   </body>
 </html>

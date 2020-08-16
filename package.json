@@ -40,7 +40,8 @@
     "pdfmake": "^0.1.63",
     "pug": "^3.0.0",
     "request": "^2.88.0",
-    "request-promise": "^4.2.5"
+    "request-promise": "^4.2.5",
+    "validate-phone-number-node-js": "0.0.1"
   },
   "devDependencies": {
     "nodemon": "^1.19.4"
