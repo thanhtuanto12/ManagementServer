@@ -72,6 +72,10 @@ const orderSchema = new Schema({
     type: String,
     required: true,
   },
+  total: {
+    type: String,
+    required: true,
+  },
   reasonCancel: {
     type: String,
     default: null,

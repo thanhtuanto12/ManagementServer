@@ -34,6 +34,23 @@ exports.getListPromotions = async (req, res) => {
     return res.send({ mgs: "Có lỗi xảy ra! Lấy danh sách thất bại" });
   }
 };
+exports.getListDeletedPromotions = async (req, res) => {
+  try {
+    let page = 0; //req.body.page
+    let limit = 1; //req.body.limit
+    // const listProductType = await ProductType.find().skip(page*limit).limit(limit)
+
+    const listDeletedPromotions = await Promotion.find({
+      delete_at: { $ne: null },
+    });
+    return res.render("promotions/deletedPromotion", {
+      listDeletedPromotions,
+      mgs: "",
+    });
+  } catch (error) {
+    return res.send({ mgs: "Có lỗi xảy ra! Lấy danh sách thất bại" });
+  }
+};
 exports.getListPagePromotions = async (req, res) => {
   try {
     let page = req.body.page;

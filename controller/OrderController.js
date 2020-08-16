@@ -39,17 +39,22 @@ exports.getListOrder = async (req, res) => {
 exports.getListOrder1 = async (req, res) => {
   try {
     const listOrder = await Order.find({ status: 0 });
+    // let limit = parseInt(req.body.limit);
 
     const listAll = await Order.find({ status: 0 });
     let countPage = 1; // parseInt((await listAll).length / limit);
     // if ((await listAll).length % limit != 0) {
     //   countPage += 1;
     // }
-    return res.render("ordered/ordered", {
-      listOrder,
-      mgs: "",
-      countPage: countPage,
-    });
+    if (req.session.isLogin) {
+      return res.render("ordered/ordered", {
+        listOrder,
+        mgs: "",
+        countPage: countPage,
+      });
+    } else {
+      return res.render("login/login");
+    }
   } catch (error) {
     console.log(error);
     return res.send({ mgs: "Có lỗi xảy ra! Lấy danh sách thất bại" });
@@ -157,7 +162,7 @@ exports.downloadOrder = async (req, res) => {
       let cost = parseInt(detail.price) * parseInt(detail.quan);
       result.push([index, detail.productName, detail.quan, detail.price, cost]);
       total += cost;
-      (numProduct += detail.quan), ++index;
+      (numProduct += parseInt(detail.quan)), ++index;
     }
     let name = orderDownload.cusName;
     let fileName = `${date}.pdf`;
@@ -298,10 +303,10 @@ exports.downloadOrder = async (req, res) => {
           stack: [
             "Xin Chân Thành Cảm Ơn",
             " ",
-            "Ahihi Shop",
+            "Don Chicken",
             "65 Huỳnh Thúc Kháng - P.Bến Nghé - Q.1",
             {
-              text: "Tel: +84378314546 Email: AhihiShop@gmail.com",
+              text: "Tel: +84352467247 Email: donchicken@gmail.com",
               style: "subheader",
             },
           ],
@@ -346,7 +351,7 @@ exports.downloadOrder = async (req, res) => {
 
     pdfDoc.pipe(
       fs.createWriteStream(
-        __dirname.replace("/controller", "") + `/public/pdfFile/${fileName}`
+        __dirname.replace("controller", "") + `public/pdfFile/${fileName}`
       )
     );
     pdfDoc.end();

@@ -13,149 +13,302 @@
         <div class="container">
           <div class="row">
             <!-- top-stats -->
-           <% include ../partials/top-stats %>
-          
+            <% include ../partials/top-stats %>
+
             <!-- main-bg-->
           </div>
           <!-- Row -->
         </div>
         <!-- Container -->
         <div class="container">
-        <div class="col-md-12">
-					<div class="card">
-						<!-- BEGIN DeleteOrder modal -->
-						<div class="modal modal-colored modal-danger fade" id="DeleteOrderModal" tabindex="-1" role="dialog"
-							aria-hidden="true">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h5 class="modal-title">Cảnh báo</h5>
-										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-										</button>
-									</div>
-									<div class="modal-body m-3">
-										<p name="typeIdDel" hidden></p>
-										<p s="mb-0" name="cusNameOrderCancel"></p>
-										<label class="form-label">Vui lòng nhập lý do</label>
-										<input type="text" name="reasonCancel" class="form-control" placeholder="Lý do huỷ">
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-light" data-dismiss="modal">Huỷ</button>
-										<button type="button" onclick="cancelOrder(event)" class="btn btn-light">Xoá</button>
-									</div>
-								</div>
-							</div>
-						</div>
-          <!-- END DeleteOrder modal -->
-          </div>
-        </div>
           <div class="col-md-12">
-            <div class="widget-body">
-              <div class="widget-heading purple">
-                <i class="icon-table pull-left"></i>
-                <h3 class="pull-left">Danh sách loại sản phẩm</h3>
-              </div>
-              <h2>Danh sách đơn hàng</h2>
-					<div style="text-align:center;">
-						<input style="display: inline;" type="text" class="form-control col-6" placeholder="Search…">
-            <!-- CSS HERE -->
-            <select style="display: inline;" id="status" class="form-control col-2">
-							<option value="0">Đơn hàng mới</option>
-							<option value="1">Đơn đã được xác nhận</option>
-							<option value="2">Đơn đang giao</option>
-							<option value="3">Đơn hàng đã giao</option>
-							<option value="-1">Đơn hàng bị huỷ</option>
-							<option value="-2">Đơn hàng bị khách huỷ</option>
-						</select>
-						<select style="display: inline;" id="limit" class="form-control col-2">
-							<!-- <option value="1">1</option> -->
-							<option value="2">2</option>
-							<option value="10">10</option>
-							<option value="25">25</option>
-							<option value="50">50</option>
-							<option value="100">100</option>
-							<option value="500">500</option>
-							<option value="9999">all</option>
-						</select>
-					</div>
-              <div class="widget-sec">
-                <div class="streaming-table">
-                
-                  </div>
-                  <div class="scrollmenu">
-                    <div class="card">
-                      <br />
-                      <table class="table" id="myTable">
-                        <thead>
-                          <tr>
-                            <th hidden></th>
-                            <th style="width:20%;">Mã hoá đơn<noscript></noscript></th>
-                            <th style="width:20%;">Tên khách hàng</th>
-                            <th style="width:20%;">Địa chỉ giao hàng</th>
-                            <th style="width:20%;">Số điện thoại</th>
-                            <th style="width:20%">Tổng tiền</th>
-                            <th style="width:20%">Tình trạng</th>
-                            <th style="width:20%">Tuỳ chỉnh</th>
-                          </tr>
-                        </thead>
-                        <tbody id="bodyTable">
-                          <% for (var i = 0; i < listOrder.length; i++) { %>
-                          <tr>
-                            <td hidden><%= listOrder[i]._id %></td>
-                            <td><%= listOrder[i]._id %></td>
-                            <td class="name" name="name"><%= listOrder[i].cusName %></td>
-                            <td><%= listOrder[i].address %></td>
-                            <td><%= listOrder[i].phone %></td>
-                            <td><%= listOrder[i].total %></td>
-                            <% if (	listOrder[i].status == 1	) { %>
-                            <td>Đã xác nhận</td>
-                            <% } else if(listOrder[i].status == 0){ %>
-                            <td>Chưa xác nhận</td>
-                            <% } else if(listOrder[i].status == 2){ %>
-                            <td>Đang giao hàng</td>
-                            <% } else if(listOrder[i].status == -1){ %>
-                            <td>Đã bị huỷ</td>
-                            <% } else if(listOrder[i].status == -2){ %>
-                            <td>Khách hàng huỷ</td>
-                            <% } else if(listOrder[i].status == 3){ %>
-                            <td>Đã thanh toán</td>
-                            <% } %>
-                            <!-- <td>
-                            <img src="<%= listOrder[i].typeImg %>" class="avatar img-fluid" alt="No IMG">
-                          </td> -->
-                            <td class="table-action">
-                              <% if (	listOrder[i].status == 1	) { %>
-                              <button type="button" value="<%= listOrder[i]._id %>,2" onclick="changeStatus(this)"
-                                name="btn_delete">Giao hàng</button>
-                              <% } else if(listOrder[i].status == 0){ %>
-                              <button type="button" value="<%= listOrder[i]._id %>,1" onclick="changeStatus(this)"
-                                name="btn_delete">Xác nhận</button>
-                              <% } %>
-                              <!-- <button type="button" name="btn_delete" orderCancel"> -->
-                              <button type="button" value="<%= listOrder[i]._id %>,<%= listOrder[i].cusName %>"
-                                onclick="showDelete(this)" name="btn_delete">
-                                Huỷ đơn hàng</button>
-                              <button type="button" value="<%= listOrder[i]._id %>" onclick="showDetails(this)"
-                                name="btn_detail">
-                                Chi tiết</button>
-                            </td>
-                          </tr>
-                          <% } %>
-                        </tbody>
-                      </table>
+            <div class="card">
+              <!-- BEGIN DeleteOrder modal -->
+              <div class="col-md-12">
+                <div
+                  aria-hidden="true"
+                  role="dialog"
+                  tabindex="-1"
+                  class="modal fade"
+                  id="DeleteOrderModal"
+                  style="display: none;"
+                >
+                  <div class="modal-dialog">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button
+                            aria-hidden="true"
+                            data-dismiss="modal"
+                            class="close"
+                            type="button"
+                          >
+                            ×
+                          </button>
+                          <h4 class="modal-title">Xác nhận hủy đơn hàng</h4>
+                        </div>
+                        <div class="modal-body">
+                          <div class="col-md-12">
+                            <p name="typeIdDel" hidden></p>
+                            <p s="mb-0" name="cusNameOrderCancel"></p>
+                            <label class="form-label"
+                              >Vui lòng nhập lý do</label
+                            >
+                            <input
+                              style="width: 500px;"
+                              type="text"
+                              name="reasonCancel"
+                              class="form-control"
+                              placeholder="Lý do huỷ"
+                            />
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button
+                            data-dismiss="modal"
+                            class="btn gray"
+                            type="button"
+                          >
+                            Close
+                          </button>
+                          <button
+                            class="btn blue"
+                            onclick="cancelOrder(event)"
+                            type="button"
+                          >
+                            Hủy đơn hàng
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <!-- Page phân trang -->
-                  <div id="countPage">
-                    <% for (var i = 0; i < countPage; i++) { %>
-                    <button name="pagetype" onclick="phanTrang(i)" style="background-color:dimgray;" value="<%= i %>"
-                      type="button"><%= i %></button>
-                    <% } %>
+                  <!-- /.modal-content -->
+                </div>
+              </div>
+              <!-- END DeleteOrder modal -->
+              <div class="col-md-12">
+                <div
+                  aria-hidden="true"
+                  role="dialog"
+                  tabindex="-1"
+                  class="modal fade"
+                  id="detailsModal"
+                  style="display: none;"
+                >
+                  <div class="modal-dialog">
+                    <div class="modal-dialog">
+                      <div
+                        class="modal-content"
+                        style="width: 900px; margin-left: -150px;"
+                      >
+                        <div class="modal-header">
+                          <button
+                            aria-hidden="true"
+                            data-dismiss="modal"
+                            class="close"
+                            type="button"
+                          >
+                            ×
+                          </button>
+                          <h4 class="modal-title">Chi tiết đơn hàng</h4>
+                        </div>
+                        <div class="modal-body">
+                          <div class="col-md-12">
+                            <p s="mb-0" name="orderIDBill"></p>
+                            <p s="mb-0" name="cusName"></p>
+                            <p s="mb-0" name="cusPhone"></p>
+                            <p s="mb-0" name="cusAddress"></p>
+                            <div class="scrollmenu">
+                              <div class="card">
+                                <br />
+                                <table class="table" id="myTable">
+                                  <thead>
+                                    <tr>
+                                      <th hidden></th>
+                                      <th style="width: 20%;">
+                                        Tên sản phẩm
+                                      </th>
+                                      <th style="width: 20%;">Hình ảnh</th>
+                                      <th style="width: 20%;">Size</th>
+                                      <th style="width: 20%;">Số lương</th>
+                                      <th style="width: 20%;">Đơn giá</th>
+                                      <th style="width: 20%;">Thành tiền</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="detailsTable"></tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button
+                            data-dismiss="modal"
+                            class="btn gray"
+                            type="button"
+                          >
+                            Đóng
+                          </button>
+                          <button
+                            class="btn blue"
+                            onclick="getBill(event)"
+                            type="button"
+                          >
+                            In hóa đơn
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div id="summary">
-                    <div></div>
+                  <!-- /.modal-content -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="widget-body">
+              <br />
+              <div style="text-align: center;">
+                <!-- <input style="display: inline;" type="text" class="form-control col-6" placeholder="Search…"> -->
+                <!-- CSS HERE -->
+                <select
+                  style="display: inline; width: 50%;"
+                  id="status"
+                  class="form-control"
+                >
+                  <option value="0">Đơn hàng mới</option>
+                  <option value="1">Đơn đã được xác nhận</option>
+                  <option value="2">Đơn đang giao</option>
+                  <option value="3">Đơn hàng đã giao</option>
+                  <option value="-1">Đơn hàng bị huỷ</option>
+                  <option value="-2">Đơn hàng bị khách huỷ</option>
+                </select>
+                <select
+                  style="display: inline; width: 49%;"
+                  id="limit"
+                  class="form-control"
+                >
+                  <!-- <option value="1">1</option> -->
+                  <option value="2">2</option>
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                  <option value="500">500</option>
+                  <option value="9999">all</option>
+                </select>
+              </div>
+              <br />
+              <div class="widget-heading purple">
+                <i class="icon-table pull-left"></i>
+                <h3 class="pull-left">Danh sách hóa đơn</h3>
+              </div>
+              <div class="streaming-table">
+                <div class="scrollmenu">
+                  <div class="card">
+                    <table class="table" id="myTable">
+                      <thead>
+                        <tr>
+                          <th hidden></th>
+                          <th style="width: 20%;">
+                            Mã hoá đơn<noscript></noscript>
+                          </th>
+                          <th style="width: 20%;">Tên khách hàng</th>
+                          <th style="width: 20%;">Địa chỉ giao hàng</th>
+                          <th style="width: 20%;">Số điện thoại</th>
+                          <th style="width: 20%;">Tổng tiền</th>
+                          <th style="width: 20%;">Tình trạng</th>
+                          <th style="width: 20%;">Tuỳ chỉnh</th>
+                        </tr>
+                      </thead>
+                      <tbody id="bodyTable">
+                        <% for (var i = 0; i < listOrder.length; i++) { %>
+                        <tr>
+                          <td hidden><%= listOrder[i]._id %></td>
+                          <td><%= listOrder[i]._id %></td>
+                          <td class="name" name="name">
+                            <%= listOrder[i].cusName %>
+                          </td>
+                          <td><%= listOrder[i].address %></td>
+                          <td><%= listOrder[i].phone %></td>
+                          <td><%= listOrder[i].total %></td>
+                          <% if ( listOrder[i].status == 1 ) { %>
+                          <td>Đã xác nhận</td>
+                          <% } else if(listOrder[i].status == 0){ %>
+                          <td>Chưa xác nhận</td>
+                          <% } else if(listOrder[i].status == 2){ %>
+                          <td>Đang giao hàng</td>
+                          <% } else if(listOrder[i].status == -1){ %>
+                          <td>Đã bị huỷ</td>
+                          <% } else if(listOrder[i].status == -2){ %>
+                          <td>Khách hàng huỷ</td>
+                          <% } else if(listOrder[i].status == 3){ %>
+                          <td>Đã thanh toán</td>
+                          <% } %>
+                          <!-- <td>
+                            <img src="<%= listOrder[i].typeImg %>" class="avatar img-fluid" alt="No IMG">
+                          </td> -->
+                          <td class="table-action">
+                            <% if ( listOrder[i].status == 1 ) { %>
+                            <button
+                              type="button"
+                              value="<%= listOrder[i]._id %>,2"
+                              onclick="changeStatus(this)"
+                              name="btn_delete"
+                            >
+                              Giao hàng
+                            </button>
+                            <% } else if(listOrder[i].status == 0){ %>
+                            <button
+                              type="button"
+                              value="<%= listOrder[i]._id %>,1"
+                              onclick="changeStatus(this)"
+                              name="btn_delete"
+                            >
+                              Xác nhận
+                            </button>
+                            <% } %>
+                            <!-- <button type="button" name="btn_delete" orderCancel"> -->
+                            <button
+                              type="button"
+                              value="<%= listOrder[i]._id %>,<%= listOrder[i].cusName %>"
+                              onclick="showDelete(this)"
+                              name="btn_delete"
+                            >
+                              Huỷ đơn hàng
+                            </button>
+                            <button
+                              type="button"
+                              value="<%= listOrder[i]._id %>"
+                              onclick="showDetails(this)"
+                              name="btn_detail"
+                            >
+                              Chi tiết
+                            </button>
+                          </td>
+                        </tr>
+                        <% } %>
+                      </tbody>
+                    </table>
                   </div>
+                </div>
+                <!-- Page phân trang -->
+                <div id="countPage">
+                  <% for (var i = 0; i < countPage; i++) { %>
+                  <button
+                    name="pagetype"
+                    onclick="phanTrang(i)"
+                    style="background-color: dimgray;"
+                    value="<%= i %>"
+                    type="button"
+                  >
+                    <%= i %>
+                  </button>
+                  <% } %>
+                </div>
+                <div id="summary">
+                  <div></div>
                 </div>
               </div>
             </div>
@@ -173,67 +326,69 @@
         var limit = $("#limit option:selected").text();
         var status = $("#status option:selected").val();
         var formData = new FormData();
-        formData.append('page', page);
-        formData.append('limit', limit);
-        formData.append('status', status);
+        formData.append("page", page);
+        formData.append("limit", limit);
+        formData.append("status", status);
         $.ajax({
-          url: 'order/getList',
-          type: 'POST',
+          url: "order/getList",
+          type: "POST",
           data: formData,
           cache: false,
           contentType: false,
           processData: false,
-        }).done(function (result) {
-          if (result.success) {
-            $('#bodyTable').empty();
-            for (let order of result.listOrder) {
-              let status = ""
-              let cancel = ``
-              let changeStatus = `<button type="button" value="${order._id}" onclick="changeStatus(this)" name="btn_delete">Giao hàng</button>`
-              switch (order.status) {
-                case -2:
-                  status = "Khách đã huỷ"
-                  cancel = `<button type="button" value="${order._id},${order.cusName}"
+        })
+          .done(function (result) {
+            if (result.success) {
+              $("#bodyTable").empty();
+              for (let order of result.listOrder) {
+                let status = "";
+                let cancel = ``;
+                let changeStatus = `<button type="button" value="${order._id}" onclick="changeStatus(this)" name="btn_delete">Giao hàng</button>`;
+                switch (order.status) {
+                  case -2:
+                    status = "Khách đã huỷ";
+                    cancel = `<button type="button" value="${order._id},${order.cusName}"
                           onclick="showDelete(this)" name="btn_delete">
-                        Huỷ đơn hàng</button>`
-                  changeStatus = `<a></a>`
-                  break;
-                case -1:
-                  status = "Đã bị huỷ"
-                  changeStatus = `<a></a>`
-                  cancel = `<a></a>`
-                  break;
-                case -0:
-                  status = "Chưa xác nhận"
-                  cancel = `<button type="button" value="${order._id},${order.cusName}"
+                        Huỷ đơn hàng</button>`;
+                    changeStatus = `<a></a>`;
+                    break;
+                  case -1:
+                    status = "Đã bị huỷ";
+                    changeStatus = `<a></a>`;
+                    cancel = `<a></a>`;
+                    break;
+                  case -0:
+                    status = "Chưa xác nhận";
+                    cancel = `<button type="button" value="${order._id},${order.cusName}"
                           onclick="showDelete(this)" name="btn_delete">
-                        Huỷ đơn hàng</button>`
-                  changeStatus = `<button type="button" value="${order._id},1" onclick="changeStatus(this)" name="btn_delete">Xác nhận</button>`
-                  break;
-                case 1:
-                  status = "Đã xác nhận"
-                  cancel = `<button type="button" value="${order._id},${order.cusName}"
+                        Huỷ đơn hàng</button>`;
+                    changeStatus = `<button type="button" value="${order._id},1" onclick="changeStatus(this)" name="btn_delete">Xác nhận</button>`;
+                    break;
+                  case 1:
+                    status = "Đã xác nhận";
+                    cancel = `<button type="button" value="${order._id},${order.cusName}"
                           onclick="showDelete(this)" name="btn_delete">
-                        Huỷ đơn hàng</button>`
-                  changeStatus = `<button type="button" value="${order._id},2" onclick="changeStatus(this)" name="btn_delete">Giao hàng</button>`
-                  break;
-                case 2:
-                  status = "Đang giao hàng"
-                  changeStatus = `<a></a>`
-                  cancel = `<button type="button" value="${order._id},${order.cusName}"
+                        Huỷ đơn hàng</button>`;
+                    changeStatus = `<button type="button" value="${order._id},2" onclick="changeStatus(this)" name="btn_delete">Giao hàng</button>`;
+                    break;
+                  case 2:
+                    status = "Đang giao hàng";
+                    changeStatus = `<a></a>`;
+                    cancel = `<button type="button" value="${order._id},${order.cusName}"
                           onclick="showDelete(this)" name="btn_delete">
-                        Huỷ đơn hàng</button>`
-                  break;
-                case 3:
-                  changeStatus = `<a></a>`
-                  status = "Đã thanh toán"
-                  cancel = `<a></a>`
-                  break;
-                default: status = "Chưa xác nhận"
-                  break;
-              }
-              $('#bodyTable').append(
-                `<tr>
+                        Huỷ đơn hàng</button>`;
+                    break;
+                  case 3:
+                    changeStatus = `<a></a>`;
+                    status = "Đã thanh toán";
+                    cancel = `<a></a>`;
+                    break;
+                  default:
+                    status = "Chưa xác nhận";
+                    break;
+                }
+                $("#bodyTable").append(
+                  `<tr>
                     <td hidden>${order._id}</td>
                     <td>${order._id}</td>
                     <td>${order.cusName}</td>
@@ -249,141 +404,157 @@
                           Chi tiết</button>
                     </td>
                   </tr>`
-              )
+                );
+              }
+            } else {
+              alert(result.mgs);
             }
-          } else {
-            alert(result.mgs)
-          }
-        }).fail(() => {
-          alert("Không kết nối được với server")
-        })
-      }
+          })
+          .fail(() => {
+            alert("Không kết nối được với server");
+          });
+      };
       var cancelOrder = function (event) {
         event.preventDefault();
         var formData = new FormData();
-        var orderId = $('[name=typeIdDel]').html();
-        var reasonCancel = $('[name=reasonCancel]').val();
-        formData.append('orderId', orderId);
-        formData.append('reasonCancel', reasonCancel);
-        formData.append('status', -1);
+        var orderId = $("[name=typeIdDel]").html();
+        var reasonCancel = $("[name=reasonCancel]").val();
+        formData.append("orderId", orderId);
+        formData.append("reasonCancel", reasonCancel);
+        formData.append("status", -1);
         $.ajax({
-          url: 'Order/changeStatus',
-          type: 'POST',
+          url: "Order/changeStatus",
+          type: "POST",
           data: formData,
           cache: false,
           contentType: false,
           processData: false,
-        }).done(function (result) {
-          if (result.success) {
-            alert("Huỷ đơn hàng thành công")
-            $('#DeleteOrderModal').modal('hide');
-            phanTrang(0)
-            // location.reload()
-          } else {
-          }
-        }).fail(() => {
-          alert("Không kết nối được với server")
         })
-      }
+          .done(function (result) {
+            if (result.success) {
+              alert("Huỷ đơn hàng thành công");
+              $("#DeleteOrderModal").modal("hide");
+              phanTrang(0);
+              // location.reload()
+            } else {
+            }
+          })
+          .fail(() => {
+            alert("Không kết nối được với server");
+          });
+      };
       var getBill = function (event) {
         event.preventDefault();
         var formData = new FormData();
-        var orderId = $('[name=orderIDBill]').html();
-        formData.append('orderID', orderId);
+        var orderId = $("[name=orderIDBill]").html();
+        formData.append("orderID", orderId);
         $.ajax({
-          url: 'Order/downloadOrder',
-          type: 'POST',
+          url: "Order/downloadOrder",
+          type: "POST",
           data: formData,
           cache: false,
           contentType: false,
           processData: false,
-        }).done(function (result) {
-          if (result.success) {
-            var win = window.open(`${result.data}`, '_blank');
-            if (win) {
-              win.focus();
+        })
+          .done(function (result) {
+            if (result.success) {
+              var win = window.open(`${result.data}`, "_blank");
+              if (win) {
+                win.focus();
+              }
+              // else {
+              // 		//Browser has blocked it
+              // 		alert('Please allow popups for this website');
+              // }
+            } else {
+              alert("Không thể xuất hoá đơn");
             }
-            // else {
-            // 		//Browser has blocked it
-            // 		alert('Please allow popups for this website');
-            // }
-          } else {
-            alert("Không thể xuất hoá đơn")
-          }
-        }).fail(() => {
-          alert("Không kết nối được với server")
-        })
-      }
+          })
+          .fail(() => {
+            alert("Không kết nối được với server");
+          });
+      };
       var changeStatus = function (objButton) {
-        let value = objButton.value
+        let value = objButton.value;
         // alert(value)
-        var values = value.split(',', 2);
-        var orderID = values[0]
-        var reasonCancel = null
-        var status = values[1]
+        var values = value.split(",", 2);
+        var orderID = values[0];
+        var reasonCancel = null;
+        var status = values[1];
         var formData = new FormData();
-        var orderId = orderID
-        var reasonCancel = null
-        formData.append('orderId', orderId);
-        formData.append('reasonCancel', reasonCancel);
-        formData.append('status', status);
+        var orderId = orderID;
+        var reasonCancel = null;
+        formData.append("orderId", orderId);
+        formData.append("reasonCancel", reasonCancel);
+        formData.append("status", status);
         $.ajax({
-          url: 'Order/changeStatus',
-          type: 'POST',
+          url: "Order/changeStatus",
+          type: "POST",
           data: formData,
           cache: false,
           contentType: false,
           processData: false,
-        }).done(function (result) {
-          if (result.success) {
-            // alert("Huỷ đơn hàng thành công")
-            phanTrang(0)
-            // location.reload()
-          } else {
-          }
-        }).fail(() => {
-          alert("Không kết nối được với server")
         })
+          .done(function (result) {
+            if (result.success) {
+              // alert("Huỷ đơn hàng thành công")
+              phanTrang(0);
+              // location.reload()
+            } else {
+            }
+          })
+          .fail(() => {
+            alert("Không kết nối được với server");
+          });
       };
       var showDelete = function (objButton) {
         // alert(objButton.value);
         // aria-hidden="true"
         // $("#myModalDeleteType").show("modal")
-        $('#DeleteOrderModal').modal('show');
-        let value = objButton.value // {5f2253f290a3911d6acf7d30,asssss}
-        var values = value.split(',', 2);
-        var typeIdDel = values[0]
-        var name = values[1]
-        $('[name=typeIdDel]').text(typeIdDel);
-        $('[name=cusNameOrderCancel]').text("Bạn muốn huỷ đơn hàng của: " + name);
+        $("#DeleteOrderModal").modal("show");
+        let value = objButton.value; // {5f2253f290a3911d6acf7d30,asssss}
+        var values = value.split(",", 2);
+        var typeIdDel = values[0];
+        var name = values[1];
+        $("[name=typeIdDel]").text(typeIdDel);
+        $("[name=cusNameOrderCancel]").text(
+          "Bạn muốn huỷ đơn hàng của: " + name
+        );
       };
       var showDetails = function (objButton) {
         // alert(objButton.value);
-        let value = objButton.value // {id: "5f2253f290a3911d6acf7d30" , cusname:"asssss" }
-        var orderId = value
+        let value = objButton.value; // {id: "5f2253f290a3911d6acf7d30" , cusname:"asssss" }
+        var orderId = value;
         // event.preventDefault();
         var formData = new FormData();
-        formData.append('orderID', orderId);
+        formData.append("orderID", orderId);
         $.ajax({
-          url: 'Order/getDetails',
-          type: 'POST',
+          url: "Order/getDetails",
+          type: "POST",
           data: formData,
           cache: false,
           contentType: false,
           processData: false,
-        }).done(function (result) {
-          if (result.success) {
-            $('[name=cusAddress]').text("Địa chỉ: " + result.userOrder.address);
-            $('[name=cusPhone]').text("Số điện thoại: " + result.userOrder.phone);
-            $('[name=cusName]').text("Khách hàng: " + result.userOrder.cusName);
-            $('[name=orderIDBill]').text(result.userOrder._id);
-            $('#detailsTable').empty();
-            for (let details of result.userOrder.orderDetail) {
-              let total = parseInt(details.quan) * parseInt(details.price)
-              // productImg: 'img/product/imgProduct-1596367016472.png',
-              // Modal chi tiet
-              $('#detailsTable').append(
-                `<tr>
+        })
+          .done(function (result) {
+            if (result.success) {
+              $("[name=cusAddress]").text(
+                "Địa chỉ: " + result.userOrder.address
+              );
+              $("[name=cusPhone]").text(
+                "Số điện thoại: " + result.userOrder.phone
+              );
+              $("[name=cusName]").text(
+                "Khách hàng: " + result.userOrder.cusName
+              );
+              $("[name=orderIDBill]").text(result.userOrder._id);
+              $("#detailsTable").empty();
+              for (let details of result.userOrder.orderDetail) {
+                let total = parseInt(details.quan) * parseInt(details.price);
+                // productImg: 'img/product/imgProduct-1596367016472.png',
+                // Modal chi tiet
+                $("#detailsTable").append(
+                  `<tr>
                     <td hidden>${details._id}</td>
                     <td>${details.productName}</td>
                     <td><img src="${details.productImg}" class="avatar img-fluid" alt="No IMG"></td>
@@ -392,91 +563,97 @@
                     <td>${details.price}</td>
                     <td>${total}</td>
                   </tr>`
-              )
+                );
+              }
+              $("#detailsModal").modal("show");
+            } else {
+              alert(result.mgs);
             }
-            $('#detailsModal').modal('show');
-          } else {
-            alert(result.mgs)
-          }
-        }).fail(() => {
-          alert("Không kết nối được với server")
-        })
+          })
+          .fail(() => {
+            alert("Không kết nối được với server");
+          });
       };
       var loadImg = function (event) {
-        $('#typeImgForm').attr('src', URL.createObjectURL(event.target.files[0]));
+        $("#typeImgForm").attr(
+          "src",
+          URL.createObjectURL(event.target.files[0])
+        );
       };
-      $('#status').on('change', function () {
-        phanTrang(0)
-      })
-      //Phan trang
-      $('#limit').on('change', function () {
-        phanTrang(0)
+      $("#status").on("change", function () {
+        phanTrang(0);
       });
-      $('[name=pagetype]').click(function () {
-        var page = ($(this).val());
+      //Phan trang
+      $("#limit").on("change", function () {
+        phanTrang(0);
+      });
+      $("[name=pagetype]").click(function () {
+        var page = $(this).val();
         var limit = $("#limit option:selected").text();
         var formData = new FormData();
-        formData.append('page', page);
-        formData.append('limit', limit);
-        formData.append('status', 0);
+        formData.append("page", page);
+        formData.append("limit", limit);
+        formData.append("status", 0);
         $.ajax({
-          url: 'order/getList',
-          type: 'POST',
+          url: "order/getList",
+          type: "POST",
           data: formData,
           cache: false,
           contentType: false,
           processData: false,
-        }).done(function (result) {
-          if (result.success) {
-            $('#bodyTable').empty();
-            for (let order of result.listOrder) {
-              let status = ""
-              let cancel = ``
-              let changeStatus = `<button type="button" value="${order._id},1" onclick="changeStatus(this)" name="btn_delete">Giao hàng</button>`
-              switch (order.status) {
-                case -2:
-                  status = "Khách đã huỷ"
-                  cancel = `<button type="button" value="${order._id},${order.cusName}"
+        })
+          .done(function (result) {
+            if (result.success) {
+              $("#bodyTable").empty();
+              for (let order of result.listOrder) {
+                let status = "";
+                let cancel = ``;
+                let changeStatus = `<button type="button" value="${order._id},1" onclick="changeStatus(this)" name="btn_delete">Giao hàng</button>`;
+                switch (order.status) {
+                  case -2:
+                    status = "Khách đã huỷ";
+                    cancel = `<button type="button" value="${order._id},${order.cusName}"
                           onclick="showDelete(this)" name="btn_delete">
-                        Huỷ đơn hàng</button>`
-                  changeStatus = `<a></a>`
-                  break;
-                case -1:
-                  status = "Đã bị huỷ"
-                  changeStatus = `<a></a>`
-                  cancel = `<a></a>`
-                  break;
-                case -0:
-                  status = "Chưa xác nhận"
-                  cancel = `<button type="button" value="${order._id},${order.cusName}"
+                        Huỷ đơn hàng</button>`;
+                    changeStatus = `<a></a>`;
+                    break;
+                  case -1:
+                    status = "Đã bị huỷ";
+                    changeStatus = `<a></a>`;
+                    cancel = `<a></a>`;
+                    break;
+                  case -0:
+                    status = "Chưa xác nhận";
+                    cancel = `<button type="button" value="${order._id},${order.cusName}"
                           onclick="showDelete(this)" name="btn_delete">
-                        Huỷ đơn hàng</button>`
-                  changeStatus = `<button type="button" value="${order._id},1" onclick="changeStatus(this)" name="btn_delete">Xác nhận</button>`
-                  break;
-                case 1:
-                  status = "Đã xác nhận"
-                  cancel = `<button type="button" value="${order._id},${order.cusName}"
+                        Huỷ đơn hàng</button>`;
+                    changeStatus = `<button type="button" value="${order._id},1" onclick="changeStatus(this)" name="btn_delete">Xác nhận</button>`;
+                    break;
+                  case 1:
+                    status = "Đã xác nhận";
+                    cancel = `<button type="button" value="${order._id},${order.cusName}"
                           onclick="showDelete(this)" name="btn_delete">
-                        Huỷ đơn hàng</button>`
-                  changeStatus = `<button type="button" value="${order._id},2" onclick="changeStatus(this)" name="btn_delete">Giao hàng</button>`
-                  break;
-                case 2:
-                  status = "Đang giao hàng"
-                  changeStatus = `<a></a>`
-                  cancel = `<button type="button" value="${order._id},${order.cusName}"
+                        Huỷ đơn hàng</button>`;
+                    changeStatus = `<button type="button" value="${order._id},2" onclick="changeStatus(this)" name="btn_delete">Giao hàng</button>`;
+                    break;
+                  case 2:
+                    status = "Đang giao hàng";
+                    changeStatus = `<a></a>`;
+                    cancel = `<button type="button" value="${order._id},${order.cusName}"
                           onclick="showDelete(this)" name="btn_delete">
-                        Huỷ đơn hàng</button>`
-                  break;
-                case 3:
-                  changeStatus = `<a></a>`
-                  status = "Đã thanh toán"
-                  cancel = `<a></a>`
-                  break;
-                default: status = "Chưa xác nhận"
-                  break;
-              }
-              $('#bodyTable').append(
-                `<tr>
+                        Huỷ đơn hàng</button>`;
+                    break;
+                  case 3:
+                    changeStatus = `<a></a>`;
+                    status = "Đã thanh toán";
+                    cancel = `<a></a>`;
+                    break;
+                  default:
+                    status = "Chưa xác nhận";
+                    break;
+                }
+                $("#bodyTable").append(
+                  `<tr>
                     <td hidden>${order._id}</td>
                     <td>${order._id}</td>
                     <td>${order.cusName}</td>
@@ -492,24 +669,32 @@
                           Chi tiết</button>
                     </td>
                   </tr>`
-              )
+                );
+              }
+            } else {
+              alert(result.mgs);
             }
-          } else {
-            alert(result.mgs)
-          }
-        }).fail(() => {
-          alert("Không kết nối được với server")
-        })
+          })
+          .fail(() => {
+            alert("Không kết nối được với server");
+          });
       });
-      $('[name=btn_edit]').click(function () {
-        var typeId = ($(this).parent().parent().children().eq(0).html());
-        var name = ($(this).parent().parent().children().eq(1).html());
-        var des = ($(this).parent().parent().children().eq(2).html());
-        var img = ($(this).parent().parent().children().eq(3).children().eq(0).attr("src"));
-        $('#editTypeImgForm').attr('src', img);
-        $('[name=editTypeId]').val(typeId);
-        $('[name=editTypeName]').val(name);
-        $('[name=editDescription]').val(des);
+      $("[name=btn_edit]").click(function () {
+        var typeId = $(this).parent().parent().children().eq(0).html();
+        var name = $(this).parent().parent().children().eq(1).html();
+        var des = $(this).parent().parent().children().eq(2).html();
+        var img = $(this)
+          .parent()
+          .parent()
+          .children()
+          .eq(3)
+          .children()
+          .eq(0)
+          .attr("src");
+        $("#editTypeImgForm").attr("src", img);
+        $("[name=editTypeId]").val(typeId);
+        $("[name=editTypeName]").val(name);
+        $("[name=editDescription]").val(des);
       });
     </script>
     <style>
