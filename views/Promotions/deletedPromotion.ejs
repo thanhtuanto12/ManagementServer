@@ -125,7 +125,7 @@
                 role="dialog"
                 tabindex="-1"
                 class="modal fade"
-                id="myModalReturnType"
+                id="myModalRestorePromotions"
                 style="display: none;"
               >
                 <div class="modal-dialog">
@@ -145,13 +145,8 @@
                       <div class="modal-body">
                         <div class="col-md-12">
                           <form id="deleteProTypeForm" enctype="multipart/form-data">
-                            <p name="typeId" hidden> 
-                            </p>
-                            
-							<p> Bạn muốn khôi phục chương trình khuyến mãi này?
-							</p>
-							<p name="typeName">
-							</p>
+                            <p name="promotionId">  </p>
+							<p> Bạn muốn khôi phục chương trình khuyến mãi này?</p>
                           </form>
                         </div>
                       </div>
@@ -163,7 +158,7 @@
                         >
                           Close
                         </button>
-                        <button type="button" id="btnSubmit" onclick="returnType(event)" 
+                        <button type="button" id="btnSubmit" onclick="restorePromotion(event)" 
 												class="btn blue">Khôi phục</button>
                       </div>
                     </div>
@@ -199,14 +194,14 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <% for (var i = 0; i < listPromotions.length; i++) { %>
+                      <% for (var i = 0; i < listDeletedPromotions.length; i++) { %>
                       <tr>
-                        <td hidden><%= listPromotions[i]._id %></td>
-                        <td><%= listPromotions[i].promotionsName %></td>
-                        <td><%= listPromotions[i].description %></td>
+                        <td hidden><%= listDeletedPromotions[i]._id %></td>
+                        <td><%= listDeletedPromotions[i].promotionsName %></td>
+                        <td><%= listDeletedPromotions[i].description %></td>
                         <td style="height: 10%;">
                           <img
-                            src="<%= listPromotions[i].promotionsImg %>"
+                            src="<%= listDeletedPromotions[i].promotionsImg %>"
                             class="avatar img-fluid"
                             alt="No IMG"
                             style="width: 100%; height: 10%;"
@@ -245,13 +240,13 @@
     <!-- Body -->
 
     <script type="text/javascript">
-      var returnType = function (event) {
+      var restorePromotion = function (event) {
         event.preventDefault();
 
         var formData = new FormData();
-        var typeId = $("[name=typeId]").text();
+        var promotionId = $("[name=promotionId]").text();
 
-        formData.append("typeId", typeId);
+        formData.append("promotionId", promotionId);
         $.ajax({
           url: "deletedPromotions/restorePromotions",
           type: "POST",
@@ -273,10 +268,10 @@
           });
       };
       
-      $("[name=btn_return]").click(function () {
-        var typeId = $(this).parent().parent().children().eq(0).html();
+      $("[name=btn_delete]").click(function () {
+        var promotionId = $(this).parent().parent().children().eq(0).html();
       
-        $("[name=typeId]").text(typeId);
+        $("[name=promotionId]").text(promotionId);
       });
     </script>
     <script src="js/app.js"></script>

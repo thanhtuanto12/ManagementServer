@@ -79,6 +79,7 @@ input:focus { box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgb
           placeholder="Password"
           required="required"
         />
+        <p id="validateUsername" style="color: red" name="validateUsername"></p>
       </form>
       <button
           name="btn_Login"
@@ -93,6 +94,7 @@ input:focus { box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgb
           event.preventDefault();
           var user = $("[name='username']").val();
           var pass = $("[name='password']").val();
+          
           // if(user == '' || pass == ''){
           // 	alert('Username and password must required');
           // }
@@ -111,7 +113,8 @@ input:focus { box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgb
                 if (result.success) {
                   window.location.href = "/home";
                 } else if (result.mgs != undefined && result.mgs != "") {
-                  alert("" + result.mgs);
+                  // alert("" + result.mgs);
+                  document.getElementById("validateUsername").innerHTML ="" +  result.mgs;
                 }
               }
             })

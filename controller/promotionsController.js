@@ -303,3 +303,28 @@ exports.deletePromotions = async (req, res) => {
     });
   }
 };
+exports.restorePromotion = async (req, res) => {
+  //Type infor
+  try {
+    let promotionId = req.body.promotionId;
+    let date = new Date();
+    let today = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+    await Promotion.findOneAndUpdate(
+      { _id: promotionId },
+      {
+        delete_at: null,
+        last_modified: today,
+      }
+    );
+    return res.json({
+      success: true,
+      mgs: "khôi phục thành công",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({
+      success: false,
+      mgs: "Có lỗi xảy ra! khôi phục thất bại",
+    });
+  }
+};

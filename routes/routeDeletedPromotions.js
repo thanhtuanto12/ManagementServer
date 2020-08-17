@@ -14,6 +14,8 @@ let multer = require("multer");
 
 routeDeletedPromotions.get("/", Promotinonsontroller.getListDeletedPromotions);
 
-// routeDeletedType.route("/restorePromotions").post(ProductController.returnProductType);
+routeDeletedPromotions
+  .route("/restorePromotions")
+  .post(Promotinonsontroller.restorePromotion);
 
 module.exports = routeDeletedPromotions;
