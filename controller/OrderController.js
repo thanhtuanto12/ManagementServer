@@ -12,7 +12,9 @@ exports.getListOrder = async (req, res) => {
     let page = req.body.page;
     let status = parseInt(req.body.status);
     let limit = parseInt(req.body.limit);
-    const listAll = Order.find({});
+    const listAll = Order.find({
+      status: status,
+    });
     let listOrder = await Order.find({
       status: status,
     })
@@ -38,14 +40,21 @@ exports.getListOrder = async (req, res) => {
 };
 exports.getListOrder1 = async (req, res) => {
   try {
-    const listOrder = await Order.find({ status: 0 });
-    // let limit = parseInt(req.body.limit);
-
-    const listAll = await Order.find({ status: 0 });
-    let countPage = 1; // parseInt((await listAll).length / limit);
-    // if ((await listAll).length % limit != 0) {
-    //   countPage += 1;
-    // }
+    let page = 0;
+    let status = 0;
+    let limit = 5;
+    const listAll = Order.find({
+      status: status,
+    });
+    let listOrder = await Order.find({
+      status: status,
+    })
+      .skip(page * limit)
+      .limit(limit);
+    let countPage = parseInt((await listAll).length / limit);
+    if ((await listAll).length % limit != 0) {
+      countPage += 1;
+    }
     if (req.session.isLogin) {
       return res.render("ordered/ordered", {
         listOrder,

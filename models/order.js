@@ -27,6 +27,10 @@ const orderDetail = new Schema({
     type: String,
     require: true,
   },
+  productImg: {
+    type: String,
+    require: false,
+  },
   price: {
     type: String,
     require: true,

@@ -340,6 +340,12 @@
           .done(function (result) {
             if (result.success) {
               $("#bodyTable").empty();
+              $("#countPage").empty();
+              for (let i = 0; i < result.countPage; i++) {
+                $("#countPage")
+                  .append(`<button name="pagetype" onclick="phanTrang(${i})" style="background-color:dimgray;" value="${i}"
+							type="button">${i}</button>`);
+              }
               for (let order of result.listOrder) {
                 let status = "";
                 let cancel = ``;
@@ -461,11 +467,10 @@
               var win = window.open(`${result.data}`, "_blank");
               if (win) {
                 win.focus();
+              } else {
+                //Browser has blocked it
+                alert("Please allow popups for this website");
               }
-              // else {
-              // 		//Browser has blocked it
-              // 		alert('Please allow popups for this website');
-              // }
             } else {
               alert("Không thể xuất hoá đơn");
             }
@@ -557,7 +562,7 @@
                   `<tr>
                     <td hidden>${details._id}</td>
                     <td>${details.productName}</td>
-                    <td><img src="${details.productImg}" class="avatar img-fluid" alt="No IMG"></td>
+                    <td><img src="${details.productImg}" style="width:200px; height:100px" class="avatar img-fluid" alt="No IMG"></td>
                     <td>${details.quan}</td>
                     <td>${details.price}</td>
                     <td>${details.price}</td>
@@ -589,112 +594,7 @@
       });
       $("[name=pagetype]").click(function () {
         var page = $(this).val();
-        var limit = $("#limit option:selected").text();
-        var formData = new FormData();
-        formData.append("page", page);
-        formData.append("limit", limit);
-        formData.append("status", 0);
-        $.ajax({
-          url: "order/getList",
-          type: "POST",
-          data: formData,
-          cache: false,
-          contentType: false,
-          processData: false,
-        })
-          .done(function (result) {
-            if (result.success) {
-              $("#bodyTable").empty();
-              for (let order of result.listOrder) {
-                let status = "";
-                let cancel = ``;
-                let changeStatus = `<button type="button" value="${order._id},1" onclick="changeStatus(this)" name="btn_delete">Giao hàng</button>`;
-                switch (order.status) {
-                  case -2:
-                    status = "Khách đã huỷ";
-                    cancel = `<button type="button" value="${order._id},${order.cusName}"
-                          onclick="showDelete(this)" name="btn_delete">
-                        Huỷ đơn hàng</button>`;
-                    changeStatus = `<a></a>`;
-                    break;
-                  case -1:
-                    status = "Đã bị huỷ";
-                    changeStatus = `<a></a>`;
-                    cancel = `<a></a>`;
-                    break;
-                  case -0:
-                    status = "Chưa xác nhận";
-                    cancel = `<button type="button" value="${order._id},${order.cusName}"
-                          onclick="showDelete(this)" name="btn_delete">
-                        Huỷ đơn hàng</button>`;
-                    changeStatus = `<button type="button" value="${order._id},1" onclick="changeStatus(this)" name="btn_delete">Xác nhận</button>`;
-                    break;
-                  case 1:
-                    status = "Đã xác nhận";
-                    cancel = `<button type="button" value="${order._id},${order.cusName}"
-                          onclick="showDelete(this)" name="btn_delete">
-                        Huỷ đơn hàng</button>`;
-                    changeStatus = `<button type="button" value="${order._id},2" onclick="changeStatus(this)" name="btn_delete">Giao hàng</button>`;
-                    break;
-                  case 2:
-                    status = "Đang giao hàng";
-                    changeStatus = `<a></a>`;
-                    cancel = `<button type="button" value="${order._id},${order.cusName}"
-                          onclick="showDelete(this)" name="btn_delete">
-                        Huỷ đơn hàng</button>`;
-                    break;
-                  case 3:
-                    changeStatus = `<a></a>`;
-                    status = "Đã thanh toán";
-                    cancel = `<a></a>`;
-                    break;
-                  default:
-                    status = "Chưa xác nhận";
-                    break;
-                }
-                $("#bodyTable").append(
-                  `<tr>
-                    <td hidden>${order._id}</td>
-                    <td>${order._id}</td>
-                    <td>${order.cusName}</td>
-                    <td>${order.address}</td>
-                    <td>${order.phone}</td>
-                    <td>${order.total}</td>
-                    <td>${status}</td>
-                    <td class="table-action">
-                      ${changeStatus}
-                      ${cancel}
-                        <button type="button" value="${order._id}" onclick="showDetails(this)"
-                          name="btn_delete">
-                          Chi tiết</button>
-                    </td>
-                  </tr>`
-                );
-              }
-            } else {
-              alert(result.mgs);
-            }
-          })
-          .fail(() => {
-            alert("Không kết nối được với server");
-          });
-      });
-      $("[name=btn_edit]").click(function () {
-        var typeId = $(this).parent().parent().children().eq(0).html();
-        var name = $(this).parent().parent().children().eq(1).html();
-        var des = $(this).parent().parent().children().eq(2).html();
-        var img = $(this)
-          .parent()
-          .parent()
-          .children()
-          .eq(3)
-          .children()
-          .eq(0)
-          .attr("src");
-        $("#editTypeImgForm").attr("src", img);
-        $("[name=editTypeId]").val(typeId);
-        $("[name=editTypeName]").val(name);
-        $("[name=editDescription]").val(des);
+        phanTrang(page);
       });
     </script>
     <style>
