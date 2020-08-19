@@ -65,7 +65,7 @@ router.route("/Product/getTopProduct").get(productApi.getTopProduct);
 //Cart
 router.route("/Cart/GetCart").post(cartApi.findCartByUser);
 router.route("/Cart/AddToCart").post(cartApi.addToCart);
-router.route("/Cart/EditQuanTi").post(cartApi.changeQuanti);
+router.route("/Cart/EditQuanTi").post(cartApi.changeQuanti2);
 // router.route("/Cart/PlusOneToCart").post(cartApi.PlusOneToCart);
 router.route("/Cart/RemoveFromCart").post(cartApi.removeFromCart);
 //Order

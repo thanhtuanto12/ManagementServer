@@ -346,6 +346,92 @@ exports.changeQuanti = async (req, res) => {
     });
   }
 };
+exports.changeQuanti2 = async (req, res) => {
+  try {
+    //get data when addproduct to cart
+    let productId = req.body.productId;
+    let quan = parseInt(req.body.quan);
+    let accountId = handleAccountJwt.getAccountId(req);
+    let date = new Date();
+    let today = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+    //check account
+    if (accountId == null) {
+      return res.json({
+        status: -1,
+        message: "Không tìm thấy người dùng này!",
+        data: null,
+      });
+    }
+    //check product is exit
+    if (productId == null) {
+      return res.json({
+        status: -1,
+        message: "Không tìm thấy sản phẩm này!",
+        data: null,
+      });
+    }
+    //get cart by user
+    let userCart = await Cart.findOne({ userId: accountId });
+    let oldTotal = 0;
+    if (userCart.total !== null) {
+      oldTotal = userCart.total;
+    }
+    //check if product is exit in cart
+    const cartDetail = userCart.cartDetail.filter(
+      (data) => data.productId.toString() === productId.toString()
+    );
+    let cartDetailIndex = userCart.cartDetail.findIndex(
+      (data) => data.productId.toString() === productId.toString()
+    );
+
+    if (cartDetail.length === 0) {
+      return res.json({
+        status: -1,
+        message: "Sản phẩm không tồn tại trong giỏ hàng",
+        data: {
+          productId: productId,
+        },
+      });
+    } else {
+      //edit quanti
+      let oldQuan = cartDetail[0].quan;
+      let priceProduct = cartDetail[0].price;
+      let newTotal = parseInt(quan) * parseInt(priceProduct);
+      await Cart.findOneAndUpdate(
+        {
+          userId: accountId,
+        },
+        {
+          $set: { [`cartDetail.${cartDetailIndex}.quan`]: quan },
+          total: newTotal,
+        }
+      ).then(async (data) => {
+        if (data == null) {
+          return res.json({
+            status: -1,
+            message: "Cập nhật số lượng thất bại!",
+            data: {
+              productId: productId,
+            },
+          });
+        }
+        return res.json({
+          status: 1,
+          message: "Cập nhật số lượng thành công!",
+          data: {
+            productId: productId,
+          },
+        });
+      });
+    }
+  } catch (error) {
+    return res.json({
+      status: -1,
+      message: "Có sự cố xảy ra. Không thêm được vào giỏ hàng!",
+      data: null,
+    });
+  }
+};
 exports.removeFromCart = async (req, res) => {
   try {
     //get data when addproduct to cart
