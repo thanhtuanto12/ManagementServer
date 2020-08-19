@@ -263,7 +263,7 @@ exports.changeQuanti = async (req, res) => {
       let priceProduct = cartDetail[0].price;
       if (quan < 0) {
         if (oldQuan > 1) {
-          let newQuan = parseInt(oldQuan) - 1;
+          let newQuan = parseInt(oldQuan) + parseInt(quan);
           let newTotal = parseInt(oldTotal) - parseInt(priceProduct);
           await Cart.findOneAndUpdate(
             {
@@ -308,7 +308,7 @@ exports.changeQuanti = async (req, res) => {
             });
         }
       } else {
-        let newQuan = parseInt(oldQuan) + 1;
+        let newQuan = parseInt(oldQuan) + parseInt(quan);
         let newTotal = parseInt(oldTotal) + parseInt(priceProduct);
         await Cart.findOneAndUpdate(
           {
