@@ -1,5 +1,5 @@
 var Cart = require("../models/Cart");
-var Order = require("../models/Order");
+var Order = require("../models/order");
 const Customer = require("../models/customer");
 const API_URL = require("../config");
 var jwt = require("jsonwebtoken");
