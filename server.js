@@ -55,7 +55,8 @@ server.use(expressSession({ cookie: { maxAge: 60000 } }));
 // routes(server)
 server.use("/", routes);
 server.use("/api", routesApi);
-server.listen(8080);
+// server.listen(8080);
+server.listen(process.env.PORT || 5000);
 console.log("server run in port 8080");
 
 mongoose.connect(
