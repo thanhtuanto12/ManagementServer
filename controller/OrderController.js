@@ -1,4 +1,4 @@
-var Order = require("../models/Order");
+var Order = require("../models/order");
 const Account = require("../models/account");
 let handleAccountJwt = require("../handleAccountJwt");
 let api = require("../config");
