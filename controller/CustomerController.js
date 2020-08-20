@@ -1,5 +1,6 @@
 var passport = require("passport");
 var Customer = require("../models/customer");
+var Cart = require("../models/Cart");
 var jwt = require("jsonwebtoken");
 let request = require("request-promise");
 let base64 = require("base-64");
@@ -110,10 +111,20 @@ exports.addCustomer = async (req, res) => {
         created_at: today,
         last_modified: today,
       });
+      const newCart = new Cart({
+        _id: new mongoose.Types.ObjectId(),
+        userId: newAccount._id,
+        delete_at: null,
+        total: null,
+        last_modified: date,
+        created_at: date,
+      });
       await newAccount.save().then(async () => {
-        return res.json({
-          success: true,
-          mgs: "Thêm khách hàng thành công",
+        await newCart.save().then((data) => {
+          return res.json({
+            success: true,
+            mgs: "Thêm khách hàng thành công",
+          });
         });
       });
     } else {
