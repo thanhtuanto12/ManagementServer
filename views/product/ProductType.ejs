@@ -13,99 +13,7 @@
         <div class="responsive-logo">
           <img src="images/logo.png" alt="" />
         </div>
-        <div class="responsive-menu">
-          <div class="responsive-menu-dropdown">
-            <a title="" class="red">MENU <i class="icon-align-justify"></i></a>
-          </div>
-
-          <ul>
-            <li>
-              <a href="dashboard.html" title=""
-                ><i class="icon-laptop"></i>Dashboard</a
-              >
-            </li>
-            <li>
-              <a href="hosting-dashboard.html" title=""
-                ><i class="icon-laptop"></i>Hosting Dashboard</a
-              >
-            </li>
-            <li>
-              <a href="sale-purchase-dashboard.html" title=""
-                ><i class="icon-laptop"></i>For Sale & Purchase</a
-              >
-            </li>
-            <li>
-              <a title=""><i class="icon-cogs"></i>Components<span>13</span></a>
-              <ul>
-                <li>
-                  <a href="charts.html" title=""
-                    ><i class="icon-angle-right"></i>Charts</a
-                  >
-                </li>
-                <li>
-                  <a href="notification.html" title=""
-                    ><i class="icon-angle-right"></i>Notifications</a
-                  >
-                </li>
-                <li>
-                  <a href="grids.html" title=""
-                    ><i class="icon-angle-right"></i>Grids</a
-                  >
-                </li>
-                <li>
-                  <a href="ribbon-grids.html" title=""
-                    ><i class="icon-angle-right"></i>Ribbon Grids</a
-                  >
-                </li>
-                <li>
-                  <a href="buttons.html" title=""
-                    ><i class="icon-angle-right"></i>Buttons</a
-                  >
-                </li>
-                <li>
-                  <a href="calendars.html" title=""
-                    ><i class="icon-angle-right"></i>Calendars</a
-                  >
-                </li>
-                <li>
-                  <a href="progressbar.html" title=""
-                    ><i class="icon-angle-right"></i>Progress Bar</a
-                  >
-                </li>
-                <li>
-                  <a href="file-manager.html" title=""
-                    ><i class="icon-angle-right"></i>File Manager</a
-                  >
-                </li>
-                <li>
-                  <a href="gallery.html" title=""
-                    ><i class="icon-angle-right"></i>Gallery</a
-                  >
-                </li>
-                <li>
-                  <a href="slider.html" title=""
-                    ><i class="icon-angle-right"></i>Slider</a
-                  >
-                </li>
-                <li>
-                  <a href="dashboard.html" title=""
-                    ><i class="icon-angle-right"></i>Page Tour</a
-                  >
-                </li>
-                <li>
-                  <a href="collapse.html" title=""
-                    ><i class="icon-angle-right"></i>Collapse</a
-                  >
-                </li>
-                <li>
-                  <a href="range-slider.html" title=""
-                    ><i class="icon-angle-right"></i>Range Slider</a
-                  >
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div>
+    
         <div class="container">
           <div class="row">
             <!-- top-stats -->
@@ -152,6 +60,7 @@
                                 class="form-control"
                                 placeholder="Tên loại sản phẩm"
                               />
+                              <p class="text-danger" id="validateName"></p>
                             </div>
                             <div class="form-group">
                               <label class="form-label">Mô tả</label>
@@ -161,6 +70,7 @@
                                 placeholder="Mô tả loại sản phẩm"
                                 rows="3"
                               ></textarea>
+                              <p class="text-danger" id="validateDes"></p>
                             </div>
                             <div class="form-group">
                               <label class="form-label w-100">Ảnh loại</label>
@@ -181,6 +91,7 @@
                                   alt="No IMG"
                                 />
                               </small>
+                              <p class="text-danger" id="validateImg"></p>
                             </div>
                           </form>
                         </div>
@@ -254,6 +165,7 @@
                                 class="form-control"
                                 placeholder="Tên loại sản phẩm"
                               />
+                              <p class="text-danger" id="validateNameEdit"></p>
                             </div>
                             <div class="form-group">
                               <label class="form-label">Mô tả</label>
@@ -263,6 +175,7 @@
                                 placeholder="Mô tả loại sản phẩm"
                                 rows="3"
                               ></textarea>
+                              <p class="text-danger" id="validateDesEdit"></p>
                             </div>
                             <div class="form-group">
                               <label class="form-label w-100">Ảnh loại</label>
@@ -448,7 +361,20 @@
         var typeName = $("[name=typeName]").val();
         var des = $("[name=addDescription]").val();
         var file = $("[name=typeImg]").get(0).files;
+        if(!typeName){
+        $("#validateName").text("Tên không được để trống");
+      } 
+       if(!des){
+        $("#validateDes").text("Mô tả không được để trống");
+      } 
+     
+       if(file.length==0){
+        $("#validateImg").text("Hình không được để trống");
 
+      } 
+
+      if(typeName&&des&&file.length!=0)
+       { 
         formData.append("imgType", file[0]);
         formData.append("typeName", typeName);
         formData.append("description", des);
@@ -472,6 +398,7 @@
           .fail(() => {
             alert("Không kết nối được với server");
           });
+        }
       };
       var editType = function (event) {
         event.preventDefault();
@@ -481,6 +408,15 @@
         var typeName = $("[name=editTypeName]").val();
         var des = $("[name=editDescription]").val();
         var file = $("[name=editTypeImg]").get(0).files;
+
+        if(!typeName){
+        $("#validateNameEdit").text("Tên không được để trống");
+      } 
+       if(!des){
+        $("#validateDesEdit").text("Mô tả không được để trống");
+      } 
+      if(typeName&&des)
+       { 
         formData.append("typeId", typeId);
         formData.append("imgType", file[0]);
         formData.append("typeName", typeName);
@@ -505,6 +441,7 @@
           .fail(() => {
             alert("Không kết nối được với server");
           });
+        }
       };
       var deleteType = function (event) {
         event.preventDefault();

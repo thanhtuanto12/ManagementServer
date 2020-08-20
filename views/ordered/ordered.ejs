@@ -179,10 +179,10 @@
                 >
                   <option value="0">Đơn hàng mới</option>
                   <option value="1">Đơn đã được xác nhận</option>
-                  <option value="2">Đơn đang giao</option>
-                  <option value="3">Đơn hàng đã giao</option>
+                  <!-- <option value="2">Đơn đang giao</option>
+                  <option value="3">Đơn hàng đã giao</option> -->
                   <option value="-1">Đơn hàng bị huỷ</option>
-                  <option value="-2">Đơn hàng bị khách huỷ</option>
+                  <!-- <option value="-2">Đơn hàng bị khách huỷ</option> -->
                 </select>
                 <select
                   style="display: inline; width: 49%;"
@@ -251,14 +251,14 @@
                           </td> -->
                           <td class="table-action">
                             <% if ( listOrder[i].status == 1 ) { %>
-                            <button
+                            <!-- <button
                               type="button"
                               value="<%= listOrder[i]._id %>,2"
                               onclick="changeStatus(this)"
                               name="btn_delete"
                             >
                               Giao hàng
-                            </button>
+                            </button> -->
                             <% } else if(listOrder[i].status == 0){ %>
                             <button
                               type="button"
@@ -349,7 +349,8 @@
               for (let order of result.listOrder) {
                 let status = "";
                 let cancel = ``;
-                let changeStatus = `<button type="button" value="${order._id}" onclick="changeStatus(this)" name="btn_delete">Giao hàng</button>`;
+                let changeStatus = "";
+                // let changeStatus = `<button type="button" value="${order._id}" onclick="changeStatus(this)" name="btn_delete">Giao hàng</button>`;
                 switch (order.status) {
                   case -2:
                     status = "Khách đã huỷ";
@@ -375,7 +376,7 @@
                     cancel = `<button type="button" value="${order._id},${order.cusName}"
                           onclick="showDelete(this)" name="btn_delete">
                         Huỷ đơn hàng</button>`;
-                    changeStatus = `<button type="button" value="${order._id},2" onclick="changeStatus(this)" name="btn_delete">Giao hàng</button>`;
+                    // changeStatus = `<button type="button" value="${order._id},2" onclick="changeStatus(this)" name="btn_delete">Giao hàng</button>`;
                     break;
                   case 2:
                     status = "Đang giao hàng";

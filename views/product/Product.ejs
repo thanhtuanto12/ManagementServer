@@ -39,8 +39,8 @@
                             <div class="row">
                               <div class="col-md-6">
                                 <label class="form-label col-6 col-xl-6">Tên sản phẩm</label>
-                                <input type="text" name="productName" class="form-control" required="required"
-                                  placeholder="Tên sản phẩm">
+                                <input type="text" name="productName" class="form-control" placeholder="Tên sản phẩm">
+                                <p class="text-danger" id="productNameAddCheck"></p>
                               </div>
                               <div class="col-md-6">
                                 <label class="form-label">Loại sản phẩm</label>
@@ -62,16 +62,19 @@
                                 <label class="form-label col-6 col-xl-6">Đơn vị</label>
                                 <input type="text" name="unit" class="form-control" required="required"
                                   placeholder="Đơn vị">
+                                  <p class="text-danger" id="productUnitAddCheck"></p>
                               </div>
                               <div class="col-md-4">
                                 <label class="form-label">Số lượng</label>
                                 <input type="number" min="0" name="quan" required="required" class="form-control"
                                   placeholder="Số lượng">
+                                  <p class="text-danger" id="productQuanAddCheck"></p>
                               </div>
                               <div class="col-md-4">
                                 <label class="form-label col-6 col-xl-6">Đơn giá</label>
                                 <input type="number" min="0" name="price" required="required" class="form-control"
                                   placeholder="Đơn giá">
+                                  <p class="text-danger" id="productPriceAddCheck"></p>
                               </div>
                             </div>
                           </div>
@@ -79,14 +82,16 @@
                             <label class="form-label">Mô tả</label>
                             <textarea class="form-control" name="addDescription" placeholder="Mô tả sản phẩm"
                               rows="3"></textarea>
+                              <p class="text-danger" id="productDesAddCheck"></p>
                           </div>
                           <div class="form-group">
                             <label class="form-label w-100">Ảnh sản phẩm</label>
                             <input name="inputImg" id="inputImg" type="file" required="required"
                               onchange="loadImg(event)" accept="image/png, image/jpeg">
                             <small class="form-text text-muted">
-                              <img name="productImg" id="productImg" src="img/default.png" alt="No IMG">
+                              <img name="productImg" width="400px" height="200px" id="productImg" src="img/default.png" alt="No IMG">
                             </small>
+                            <p class="text-danger" name="productImgAddCheck"></p>
                           </div>
                           <div class="form-group">
                             <label class="custom-control custom-checkbox">
@@ -136,6 +141,7 @@
                                 <label class="form-label col-6 col-xl-6">Tên sản phẩm</label>
                                 <input type="text" name="productNameEdit" class="form-control" required="required"
                                   placeholder="Tên sản phẩm">
+                                  <p class="text-danger" id="productNameEditCheck"></p>
                               </div>
                               <div class="col-md-6">
                                 <label class="form-label">Loại sản phẩm</label>
@@ -157,16 +163,19 @@
                                 <label class="form-label col-6 col-xl-6">Đơn vị</label>
                                 <input type="text" name="unitEdit" class="form-control" required="required"
                                   placeholder="Đơn vị">
+                                  <p class="text-danger" id="productUnitEditCheck"></p>
                               </div>
                               <div class="col-md-4">
                                 <label class="form-label">Số lượng</label>
                                 <input type="number" min="0" name="quanEdit" required="required" class="form-control"
                                   placeholder="Số lượng">
+                                  <p class="text-danger" id="productQuanEditCheck"></p>
                               </div>
                               <div class="col-md-4">
                                 <label class="form-label col-6 col-xl-6">Đơn giá</label>
                                 <input type="number" min="0" name="priceEdit" required="required" class="form-control"
                                   placeholder="Đơn giá">
+                                  <p class="text-danger" id="productPriceEditCheck"></p>
                               </div>
                             </div>
                           </div>
@@ -182,6 +191,7 @@
                             <small class="form-text text-muted">
                               <img name="productImgEdit" id="productImgEdit" src="#" height="200px" width="200px" alt="No IMG">
                             </small>
+                            <p class="text-danger" id="productImgEditCheck"></p>
                           </div>
                           <div class="form-group">
                             <label class="custom-control custom-checkbox">
@@ -335,7 +345,29 @@
       var price = $("[name=price]").val();
       var unit = $("[name=unit]").val();
       var file = $("[name=inputImg]").get(0).files;
+      if(proName==""|| proName== null){
+        $("#productNameAddCheck").text("Tên không được để trống");
+      } 
+       if(des==""|| des== null){
+        $("#productDesAddCheck").text("Mô tả không được để trống");
+      } 
+       if(quan==""|| quan== null){
+        $("#productQuanAddCheck").text("Số lượng không được để trống");
+      } 
+       if(unit==""|| unit== null){
+        $("#productUnitAddCheck").text("Đơn vị không được để trống");
+      } 
+       if(price==""|| price== null){
+        $("#productPriceAddCheck").text("Giá không được để trống");
 
+      } 
+      if(file.length == 0){
+        $("[name=productImgAddCheck]" ).text("Hình ảnh không được để trống");
+      }
+      // if(price!=""&& price!= null && unit!=""&& unit!= null && quan!=""&& quan!= null && proName!="" && proName != null
+      //  )
+      if(price&& unit && quan && proName&&des&&file.length!=0)
+       { 
       formData.append("productName", proName);
       formData.append("productType", typeName);
       formData.append("description", des);
@@ -351,8 +383,7 @@
         cache: false,
         contentType: false,
         processData: false,
-      })
-        .done(function (result) {
+      }).done(function (result) {
           if (result.success) {
             alert(result.mgs);
             location.reload();
@@ -362,15 +393,19 @@
         })
         .fail(() => {
           alert("Không kết nối được với server");
-        });
-    };
+        })
+    }
+  };
     var editProduct = function (event) {
       event.preventDefault();
 
       var formData = new FormData();
       var productId= $("[name=editProductId]").val();
+
       var proName = $("[name=productNameEdit]").val();
-      // var typeName = $("[name=productTypeEdit]").val();
+
+      
+        // var typeName = $("[name=productTypeEdit]").val();
       var typeName = $("#productTypeEdit option:selected").text();
       var des = $("[name=descriptionEdit]").val();
       var quan = $("[name=quanEdit]").val();
@@ -378,6 +413,26 @@
       var unit = $("[name=unitEdit]").val();
       var file = $("[name=inputImgEdit]").get(0).files;
 
+      if(proName==""|| proName== null){
+        $("#productNameEditCheck").text("Tên không được để trống");
+      } 
+       if(des==""|| des== null){
+        $("#productDesEditCheck").text("Mô tả không được để trống");
+      } 
+       if(quan==""|| quan== null){
+        $("#productQuanEditCheck").text("Số lượng không được để trống");
+      } 
+       if(unit==""|| unit== null){
+        $("#productUnitEditCheck").text("Đơn vị không để trống");
+      } 
+       if(price==""|| price== null){
+        $("#productPriceEditCheck").text("Giá không được để trống");
+
+      } 
+      // if(price!=""&& price!= null && unit!=""&& unit!= null && quan!=""&& quan!= null && proName!="" && proName != null
+      //  )
+      if(price&& unit && quan && proName&&des)
+       { 
       formData.append("productId", productId);
       formData.append("productName", proName);
       formData.append("productType", typeName);
@@ -386,8 +441,7 @@
       formData.append("unit", unit);
       formData.append("price", price);
       formData.append("imgProduct", file[0]);
-
-      $.ajax({
+        $.ajax({
         url: "product/editProduct",
         type: "POST",
         data: formData,
@@ -406,6 +460,10 @@
         .fail(() => {
           alert("Không kết nối được với server");
         });
+      }
+    
+
+     
     };
     var deleteProduct= function (event) {
       event.preventDefault();

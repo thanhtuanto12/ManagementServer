@@ -122,7 +122,7 @@ exports.addToCart = async (req, res) => {
         (data) => data._id.toString() === productId.toString()
       );
       const Product = Products[0];
-      let ProductPrice = Product.price;
+      var ProductPrice = Product.price;
       //add product to cart
       let newDetails = {
         _id: new mongoose.Types.ObjectId(),
@@ -204,6 +204,7 @@ exports.addToCart = async (req, res) => {
       });
     }
   } catch (error) {
+    console.log(error);
     return res.json({
       status: -1,
       message: "Có sự cố xảy ra. Không thêm được vào giỏ hàng!",
@@ -396,7 +397,10 @@ exports.changeQuanti2 = async (req, res) => {
       //edit quanti
       let oldQuan = cartDetail[0].quan;
       let priceProduct = cartDetail[0].price;
-      let newTotal = parseInt(quan) * parseInt(priceProduct);
+      let newTotal =
+        parseInt(oldTotal) +
+        (parseInt(quan) - parseInt(oldQuan)) * parseInt(priceProduct);
+      // let newTotal = parseInt(quan) * parseInt(priceProduct);
       await Cart.findOneAndUpdate(
         {
           userId: accountId,
